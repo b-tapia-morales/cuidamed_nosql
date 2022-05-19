@@ -5,7 +5,6 @@ import com.bairontapia.projects.cuidamed.daotemplate.CrudDAO;
 import com.bairontapia.projects.cuidamed.utils.paths.DirectoryPathUtils;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

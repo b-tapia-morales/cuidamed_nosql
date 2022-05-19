@@ -4,10 +4,10 @@ import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 import com.bairontapia.projects.cuidamed.disease.DiseaseDAO;
+import com.bairontapia.projects.cuidamed.disease.diagnostic.DiagnosticDAO;
 import com.bairontapia.projects.cuidamed.disease.medication.MedicationDAO;
 import com.bairontapia.projects.cuidamed.disease.medicationadministration.MedicationAdministrationDAO;
 import com.bairontapia.projects.cuidamed.disease.medicationprescription.MedicationPrescriptionDAO;
-import com.bairontapia.projects.cuidamed.disease.diagnostic.DiagnosticDAO;
 import com.bairontapia.projects.cuidamed.medicalrecord.MedicalRecordDAO;
 import com.bairontapia.projects.cuidamed.medicalrecord.routinecheckup.RoutineCheckupDAO;
 import com.bairontapia.projects.cuidamed.person.elder.ElderDAO;
@@ -79,7 +79,8 @@ public class CuidaMedApplication {
         var responsiblePOJO = new ResponsiblePOJO(responsible);
         var medicalRecord = MedicalRecordDAO.getInstance().find(elder.rut()).orElseThrow();
         var medicalRecordPOJO = new MedicalRecordPOJO(medicalRecord);
-        var elderPOJO = new ElderPOJO(elderId, elder, responsiblePOJO, medicalRecordPOJO, diagnosticPOJOS);
+        var elderPOJO = new ElderPOJO(elderId, elder, responsiblePOJO, medicalRecordPOJO,
+            diagnosticPOJOS);
         elderColl.insertOne(elderPOJO);
         var routineCheckupPOJOS =
             RoutineCheckupDAO.getInstance().findAll(medicalRecord.rut()).stream()

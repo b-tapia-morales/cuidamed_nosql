@@ -1,13 +1,15 @@
-SET search_path = "residence";
+SET
+search_path = "residence";
 
 DROP PROCEDURE IF EXISTS insert_diseases();
 DROP PROCEDURE IF EXISTS insert_medications();
 
-CREATE OR REPLACE PROCEDURE insert_diseases()
+CREATE
+OR REPLACE PROCEDURE insert_diseases()
     LANGUAGE plpgsql AS
 $$
 DECLARE
-    names_disease TEXT ARRAY DEFAULT ARRAY [
+names_disease TEXT ARRAY DEFAULT ARRAY [
         'Bupivacaína',
         'Artritis',
         'Alzheimer',
@@ -108,23 +110,26 @@ DECLARE
         'Sarcoidosis',
         'Sarna'
         ];
-    n             INTEGER DEFAULT cardinality(names_disease);
-    chronic       BOOLEAN ARRAY DEFAULT ARRAY [TRUE, FALSE];
+    n
+INTEGER DEFAULT cardinality(names_disease);
+    chronic
+BOOLEAN ARRAY DEFAULT ARRAY [TRUE, FALSE];
 BEGIN
-    FOR i in 1..n
+FOR i in 1..n
         LOOP
             INSERT INTO disease
             VALUES (names_disease[i], floor(random() * 14 + 1)::smallint,
                     chronic[floor(random() * 2 + 1)::int]);
-        END LOOP;
+END LOOP;
 END;
 $$;
 
-CREATE OR REPLACE PROCEDURE insert_medications()
+CREATE
+OR REPLACE PROCEDURE insert_medications()
     LANGUAGE plpgsql AS
 $$
 DECLARE
-    medication_names TEXT ARRAY DEFAULT ARRAY [
+medication_names TEXT ARRAY DEFAULT ARRAY [
         'Paracetamol',
         'Ibuprofeno',
         'Galantamina',
@@ -224,14 +229,15 @@ DECLARE
         'Flucitosina',
         'Ioduro de Potasio',
         'Aciclovir'];
-    n                INTEGER DEFAULT cardinality(medication_names);
+    n
+INTEGER DEFAULT cardinality(medication_names);
 BEGIN
-    FOR i in 1..n
+FOR i in 1..n
         LOOP
             INSERT INTO medication
             VALUES (medication_names[i], floor(random() * 2 + 1)::smallint,
                     floor(random() * 4 + 1)::smallint,
                     floor(random() * 2 + 1)::smallint);
-        END LOOP;
+END LOOP;
 END;
 $$;

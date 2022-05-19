@@ -47,17 +47,18 @@ ORDER BY M.start_date;
  Mostrar la fecha de chequeo rutinario, el rut, el nombre completo y el IMC de todos los adultos
  mayores que estén en condición de obesidad o de desnutrición.
  */
-SELECT DISTINCT ON (Ch.checkup_date) checkup_date,
-                                     E.rut,
-                                     CONCAT(P.first_names, ' ', P.last_name, ' ',
-                                            P.second_last_name) AS full_name,
-                                     Ch.bmi
+SELECT DISTINCT
+ON (Ch.checkup_date) checkup_date,
+    E.rut,
+    CONCAT(P.first_names, ' ', P.last_name, ' ',
+    P.second_last_name) AS full_name,
+    Ch.bmi
 FROM residence.elder E,
-     residence.person P,
-     residence.routine_checkup Ch
+    residence.person P,
+    residence.routine_checkup Ch
 WHERE P.rut = E.rut
-    AND E.rut = Ch.rut
-    AND Ch.bmi <= 18.4
+  AND E.rut = Ch.rut
+  AND Ch.bmi <= 18.4
    OR Ch.bmi >= 25.0
 ORDER BY checkup_date DESC;
 
@@ -160,22 +161,23 @@ WHERE P.rut = E.rut
  Mostrar la fecha de chequeo rutinario, el rut, el nombre completo, la presión diastólica y sistólica
  y el ritmo cardiaco de todos los adultos mayores que hayan sido diagnosticados com Hipertensión.
  */
-SELECT DISTINCT ON (RC.checkup_date) checkup_date,
-                                     P.rut,
-                                     CONCAT(P.first_names, ' ', P.last_name, ' ',
-                                            P.second_last_name) as full_name,
-                                     RC.diastolic_pressure,
-                                     RC.systolic_pressure,
-                                     RC.heart_rate
+SELECT DISTINCT
+ON (RC.checkup_date) checkup_date,
+    P.rut,
+    CONCAT(P.first_names, ' ', P.last_name, ' ',
+    P.second_last_name) as full_name,
+    RC.diastolic_pressure,
+    RC.systolic_pressure,
+    RC.heart_rate
 FROM residence.person P,
-     residence.elder E,
-     residence.routine_checkup RC,
-     residence.sick_elderly SE
+    residence.elder E,
+    residence.routine_checkup RC,
+    residence.sick_elderly SE
 WHERE P.rut = E.rut
-    AND E.rut = RC.rut
-    AND RC.rut = SE.rut
-    AND lower(SE.disease_name) LIKE '%hipertension%'
-   OR lower(SE.disease_name) LIKE '%hipertensión%'
+  AND E.rut = RC.rut
+  AND RC.rut = SE.rut
+  AND lower (SE.disease_name) LIKE '%hipertension%'
+   OR lower (SE.disease_name) LIKE '%hipertensión%'
 ORDER BY checkup_date DESC;
 
 /*

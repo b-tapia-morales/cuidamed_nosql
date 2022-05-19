@@ -1,4 +1,5 @@
-SET search_path = "residence";
+SET
+search_path = "residence";
 
 DROP PROCEDURE IF EXISTS batch_insert(INTEGER);
 
@@ -6,19 +7,20 @@ DROP INDEX IF EXISTS bmi_btree;
 DROP INDEX IF EXISTS heart_rate_btree;
 
 -- Se crea el procedimiento que se encarga de insertar generar todos los datos al azar.
-CREATE OR REPLACE PROCEDURE batch_insert(n INTEGER)
+CREATE
+OR REPLACE PROCEDURE batch_insert(n INTEGER)
     LANGUAGE plpgsql AS
 $func$
 BEGIN
-    TRUNCATE disease CASCADE;
-    TRUNCATE medication CASCADE;
-    TRUNCATE person CASCADE;
-    CALL insert_diseases();
-    CALL insert_medications();
-    CALL batch_insert_people(n);
-    CALL insert_random_medical_records();
-    CALL insert_random_routine_checkups();
-    CALL insert_random_diagnostic();
+TRUNCATE disease CASCADE;
+TRUNCATE medication CASCADE;
+TRUNCATE person CASCADE;
+CALL insert_diseases();
+CALL insert_medications();
+CALL batch_insert_people(n);
+CALL insert_random_medical_records();
+CALL insert_random_routine_checkups();
+CALL insert_random_diagnostic();
 END;
 $func$;
 
@@ -45,7 +47,8 @@ FROM person p
          INNER JOIN routine_checkup rc USING (rut);
 
 -- Primera consulta, sin joins. El índice no ha sido creado aún.
-EXPLAIN analyze
+EXPLAIN
+analyze
 SELECT *
 FROM routine_checkup
 WHERE heart_rate > 100
@@ -55,14 +58,16 @@ WHERE heart_rate > 100
 CREATE INDEX heart_rate_btree ON routine_checkup USING btree (heart_rate);
 
 -- Se hace la misma consulta, pero esta vez con el índice creado.
-EXPLAIN analyze
+EXPLAIN
+analyze
 SELECT *
 FROM routine_checkup
 WHERE heart_rate > 100
    OR heart_rate < 60;
 
 -- Segunda consulta, además utilizando joins. El índice no ha sido creado aún.
-EXPLAIN ANALYZE
+EXPLAIN
+ANALYZE
 SELECT *
 FROM person p
          INNER JOIN elder e USING (rut)
@@ -75,7 +80,8 @@ WHERE bmi <= 18.00
 CREATE INDEX bmi_btree ON routine_checkup USING btree (bmi);
 
 -- Se hace la misma consulta, pero esta vez con el índice creado.
-EXPLAIN ANALYZE
+EXPLAIN
+ANALYZE
 SELECT *
 FROM person p
          INNER JOIN elder e USING (rut)

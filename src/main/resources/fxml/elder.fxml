@@ -1,408 +1,433 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="anchor" prefHeight="680.0" prefWidth="720.0"
-            xmlns="http://javafx.com/javafx/11.0.1" fx:controller="com.bairontapia.projects.cuidamed.mvc.person.ElderView">
-    <VBox layoutX="240.0" layoutY="29.0" prefHeight="640.0" prefWidth="720.0" AnchorPane.bottomAnchor="0.0"
-          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <AnchorPane prefHeight="420.0">
-            <HBox layoutX="230.0" layoutY="87.0" prefHeight="300.0" prefWidth="710.0" AnchorPane.bottomAnchor="0.0"
-                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                <AnchorPane prefHeight="200.0" prefWidth="355.0">
-                    <VBox alignment="CENTER" layoutX="110.0" layoutY="47.0" prefHeight="375.0" prefWidth="355.0"
-                          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                          AnchorPane.topAnchor="0.0">
-                        <HBox alignment="CENTER" prefHeight="35.0" spacing="10.0">
-                            <Separator prefWidth="100.0"/>
-                            <Label text="Ficha del adulto mayor"/>
-                            <Separator prefWidth="100.0"/>
-                        </HBox>
-                        <GridPane alignment="CENTER">
-                            <CheckBox fx:id="isActiveCheckBox" mnemonicParsing="false" GridPane.columnIndex="1"
-                                      GridPane.rowIndex="7">
-                                <GridPane.margin>
-                                    <Insets left="5.0"/>
-                                </GridPane.margin>
-                            </CheckBox>
-                            <ComboBox fx:id="genderComboBox" prefWidth="160.0" GridPane.columnIndex="1"
-                                      GridPane.rowIndex="6">
-                                <GridPane.margin>
-                                    <Insets left="5.0"/>
-                                </GridPane.margin>
-                            </ComboBox>
-                            <ComboBox fx:id="bloodTypeComboBox" prefWidth="160.0" GridPane.columnIndex="1"
-                                      GridPane.rowIndex="9">
-                                <GridPane.margin>
-                                    <Insets left="5.0"/>
-                                </GridPane.margin>
-                            </ComboBox>
-                            <ComboBox fx:id="healthCareComboBox" prefWidth="160.0" GridPane.columnIndex="1"
-                                      GridPane.rowIndex="10">
-                                <GridPane.margin>
-                                    <Insets left="5.0"/>
-                                </GridPane.margin>
-                            </ComboBox>
-                            <DatePicker fx:id="birthDatePicker" editable="false" GridPane.columnIndex="1"
-                                        GridPane.rowIndex="4">
-                                <GridPane.margin>
-                                    <Insets left="5.0"/>
-                                </GridPane.margin>
-                            </DatePicker>
-                            <DatePicker fx:id="admissionDatePicker" editable="false" GridPane.columnIndex="1"
-                                        GridPane.rowIndex="8">
-                                <GridPane.margin>
-                                    <Insets left="5.0"/>
-                                </GridPane.margin>
-                            </DatePicker>
-                            <Label text="Rut" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
-                                <GridPane.margin>
-                                    <Insets right="10.0"/>
-                                </GridPane.margin>
-                            </Label>
-                            <Label text="Nombre" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-                                <GridPane.margin>
-                                    <Insets right="10.0"/>
-                                </GridPane.margin>
-                            </Label>
-                            <Label text="Apellido paterno" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
-                                <GridPane.margin>
-                                    <Insets right="10.0"/>
-                                </GridPane.margin>
-                            </Label>
-                            <Label text="Apellido materno" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
-                                <GridPane.margin>
-                                    <Insets right="10.0"/>
-                                </GridPane.margin>
-                            </Label>
-                            <Label text="Fecha de nacimiento" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
-                                <GridPane.margin>
-                                    <Insets right="10.0"/>
-                                </GridPane.margin>
-                            </Label>
-                            <Label text="Sexo" GridPane.halignment="RIGHT" GridPane.rowIndex="6">
-                                <GridPane.margin>
-                                    <Insets right="10.0"/>
-                                </GridPane.margin>
-                            </Label>
-                            <Label text="Activo" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
-                                <GridPane.margin>
-                                    <Insets right="10.0"/>
-                                </GridPane.margin>
-                            </Label>
-                            <Label text="Fecha de admisión" GridPane.halignment="RIGHT" GridPane.rowIndex="8">
-                                <GridPane.margin>
-                                    <Insets right="10.0"/>
-                                </GridPane.margin>
-                            </Label>
-                            <Label text="Grupo sanguíneo" GridPane.halignment="RIGHT" GridPane.rowIndex="9">
-                                <GridPane.margin>
-                                    <Insets right="10.0"/>
-                                </GridPane.margin>
-                            </Label>
-                            <Label text="Sistema de Salud" GridPane.halignment="RIGHT" GridPane.rowIndex="10">
-                                <GridPane.margin>
-                                    <Insets right="10.0"/>
-                                </GridPane.margin>
-                            </Label>
-                            <Label text="Edad" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
-                                <GridPane.margin>
-                                    <Insets right="10.0"/>
-                                </GridPane.margin>
-                            </Label>
-                            <TextField fx:id="rut" editable="false" opacity="0.67" GridPane.columnIndex="1">
-                                <GridPane.margin>
-                                    <Insets left="5.0" right="5.0"/>
-                                </GridPane.margin>
-                            </TextField>
-                            <TextField fx:id="name" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                <GridPane.margin>
-                                    <Insets left="5.0" right="5.0"/>
-                                </GridPane.margin>
-                            </TextField>
-                            <TextField fx:id="lastName" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                <GridPane.margin>
-                                    <Insets left="5.0" right="5.0"/>
-                                </GridPane.margin>
-                            </TextField>
-                            <TextField fx:id="secondLastName" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                <GridPane.margin>
-                                    <Insets left="5.0" right="5.0"/>
-                                </GridPane.margin>
-                            </TextField>
-                            <TextField fx:id="age" editable="false" opacity="0.67" GridPane.columnIndex="1"
-                                       GridPane.rowIndex="5">
-                                <GridPane.margin>
-                                    <Insets left="5.0" right="5.0"/>
-                                </GridPane.margin>
-                            </TextField>
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                            </columnConstraints>
-                            <opaqueInsets>
-                                <Insets/>
-                            </opaqueInsets>
-                            <rowConstraints>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                            </rowConstraints>
-                        </GridPane>
-                        <HBox alignment="CENTER" prefHeight="45.0">
-                            <Button fx:id="updateData" alignment="CENTER" minHeight="36.0" minWidth="36.0"
-                                    mnemonicParsing="false" onAction="#onUpdatedFields">
-                                <graphic>
-                                    <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true"
-                                               preserveRatio="true">
-                                        <Image url="@../icons/update.png"/>
-                                    </ImageView>
-                                </graphic>
-                            </Button>
-                        </HBox>
-                    </VBox>
-                </AnchorPane>
-                <Separator orientation="VERTICAL" prefHeight="200.0"/>
-                <AnchorPane prefWidth="355.0">
-                    <VBox alignment="CENTER" layoutX="128.0" layoutY="59.0" prefHeight="420.0" prefWidth="355.0"
-                          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                          AnchorPane.topAnchor="0.0">
-                        <HBox alignment="CENTER" prefHeight="35.0" spacing="10.0">
-                            <Separator prefWidth="65.0"/>
-                            <Label text="Información personal del responsable"/>
-                            <Separator prefWidth="65.0"/>
-                        </HBox>
-                        <GridPane>
-                            <Label text="Rut" GridPane.halignment="RIGHT">
-                                <GridPane.margin>
-                                    <Insets right="10.0"/>
-                                </GridPane.margin>
-                            </Label>
-                            <Label text="Nombre completo" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-                                <GridPane.margin>
-                                    <Insets right="10.0"/>
-                                </GridPane.margin>
-                            </Label>
-                            <Label text="Fecha de nacimiento" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
-                                <GridPane.margin>
-                                    <Insets right="10.0"/>
-                                </GridPane.margin>
-                            </Label>
-                            <Label text="Edad" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
-                                <GridPane.margin>
-                                    <Insets right="10.0"/>
-                                </GridPane.margin>
-                            </Label>
-                            <Label text="Sexo" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
-                                <GridPane.margin>
-                                    <Insets right="10.0"/>
-                                </GridPane.margin>
-                            </Label>
-                            <Label text="Teléfono móvil" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
-                                <GridPane.margin>
-                                    <Insets right="10.0"/>
-                                </GridPane.margin>
-                            </Label>
-                            <TextField fx:id="responsibleRut" editable="false" opacity="0.67" GridPane.columnIndex="1">
-                                <GridPane.margin>
-                                    <Insets left="5.0" right="5.0"/>
-                                </GridPane.margin>
-                            </TextField>
-                            <TextField fx:id="responsibleFullName" editable="false" opacity="0.67"
-                                       GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                <GridPane.margin>
-                                    <Insets left="5.0" right="5.0"/>
-                                </GridPane.margin>
-                            </TextField>
-                            <TextField fx:id="responsibleBirthDate" editable="false" opacity="0.67"
-                                       GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                <GridPane.margin>
-                                    <Insets left="5.0" right="5.0"/>
-                                </GridPane.margin>
-                            </TextField>
-                            <TextField fx:id="responsibleAge" editable="false" opacity="0.67" GridPane.columnIndex="1"
-                                       GridPane.rowIndex="3">
-                                <GridPane.margin>
-                                    <Insets left="5.0" right="5.0"/>
-                                </GridPane.margin>
-                            </TextField>
-                            <TextField fx:id="responsibleGender" editable="false" opacity="0.67"
-                                       GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                <GridPane.margin>
-                                    <Insets left="5.0" right="5.0"/>
-                                </GridPane.margin>
-                            </TextField>
-                            <TextField fx:id="responsibleMobilePhone" editable="false" opacity="0.67"
-                                       GridPane.columnIndex="1" GridPane.rowIndex="5">
-                                <GridPane.margin>
-                                    <Insets left="5.0" right="5.0"/>
-                                </GridPane.margin>
-                            </TextField>
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="40.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                            </rowConstraints>
-                        </GridPane>
-                        <HBox alignment="CENTER" prefHeight="35.0" spacing="10.0">
-                            <Separator prefWidth="95.0"/>
-                            <Label text="Dirección del responsable"/>
-                            <Separator prefWidth="95.0"/>
-                        </HBox>
-                        <GridPane>
-                            <Label text="Región" GridPane.halignment="RIGHT">
-                                <GridPane.margin>
-                                    <Insets right="10.0"/>
-                                </GridPane.margin>
-                            </Label>
-                            <Label text="Provincia" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-                                <GridPane.margin>
-                                    <Insets right="10.0"/>
-                                </GridPane.margin>
-                            </Label>
-                            <Label text="Comuna" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
-                                <GridPane.margin>
-                                    <Insets right="10.0"/>
-                                </GridPane.margin>
-                            </Label>
-                            <Label text="Calle" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
-                                <GridPane.margin>
-                                    <Insets right="10.0"/>
-                                </GridPane.margin>
-                            </Label>
-                            <Label text="Número" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
-                                <GridPane.margin>
-                                    <Insets right="10.0"/>
-                                </GridPane.margin>
-                            </Label>
-                            <TextField fx:id="region" editable="false" opacity="0.67" GridPane.columnIndex="1">
-                                <GridPane.margin>
-                                    <Insets left="5.0" right="5.0"/>
-                                </GridPane.margin>
-                            </TextField>
-                            <TextField fx:id="province" editable="false" opacity="0.67" GridPane.columnIndex="1"
-                                       GridPane.rowIndex="1">
-                                <GridPane.margin>
-                                    <Insets left="5.0" right="5.0"/>
-                                </GridPane.margin>
-                            </TextField>
-                            <TextField fx:id="commune" editable="false" opacity="0.67" GridPane.columnIndex="1"
-                                       GridPane.rowIndex="2">
-                                <GridPane.margin>
-                                    <Insets left="5.0" right="5.0"/>
-                                </GridPane.margin>
-                            </TextField>
-                            <TextField fx:id="street" opacity="0.67" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                <GridPane.margin>
-                                    <Insets left="5.0" right="5.0"/>
-                                </GridPane.margin>
-                            </TextField>
-                            <TextField fx:id="number" editable="false" opacity="0.67" GridPane.columnIndex="1"
-                                       GridPane.rowIndex="4">
-                                <GridPane.margin>
-                                    <Insets left="5.0" right="5.0"/>
-                                </GridPane.margin>
-                            </TextField>
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="173.0" minWidth="10.0" prefWidth="40.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="207.0" minWidth="10.0"
-                                                   prefWidth="200.0"/>
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                            </rowConstraints>
-                        </GridPane>
-                    </VBox>
-                </AnchorPane>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="680.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/11.0.1"
+  fx:controller="com.bairontapia.projects.cuidamed.mvc.person.ElderView"
+  fx:id="anchor">
+  <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+    layoutX="240.0"
+    layoutY="29.0" prefHeight="640.0" prefWidth="720.0">
+    <AnchorPane prefHeight="420.0">
+      <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+        layoutX="230.0"
+        layoutY="87.0" prefHeight="300.0" prefWidth="710.0">
+        <AnchorPane prefHeight="200.0" prefWidth="355.0">
+          <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+            alignment="CENTER"
+            layoutX="110.0" layoutY="47.0" prefHeight="375.0"
+            prefWidth="355.0">
+            <GridPane alignment="CENTER">
+              <CheckBox GridPane.columnIndex="1" GridPane.rowIndex="7" mnemonicParsing="false"
+                fx:id="isActiveCheckBox">
+                <GridPane.margin>
+                  <Insets left="5.0"/>
+                </GridPane.margin>
+              </CheckBox>
+              <ComboBox GridPane.columnIndex="1" GridPane.rowIndex="6" prefWidth="160.0"
+                fx:id="genderComboBox">
+                <GridPane.margin>
+                  <Insets left="5.0"/>
+                </GridPane.margin>
+              </ComboBox>
+              <ComboBox GridPane.columnIndex="1" GridPane.rowIndex="9" prefWidth="160.0"
+                fx:id="bloodTypeComboBox">
+                <GridPane.margin>
+                  <Insets left="5.0"/>
+                </GridPane.margin>
+              </ComboBox>
+              <ComboBox GridPane.columnIndex="1" GridPane.rowIndex="10" prefWidth="160.0"
+                fx:id="healthCareComboBox">
+                <GridPane.margin>
+                  <Insets left="5.0"/>
+                </GridPane.margin>
+              </ComboBox>
+              <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="4" editable="false"
+                fx:id="birthDatePicker">
+                <GridPane.margin>
+                  <Insets left="5.0"/>
+                </GridPane.margin>
+              </DatePicker>
+              <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="8" editable="false"
+                fx:id="admissionDatePicker">
+                <GridPane.margin>
+                  <Insets left="5.0"/>
+                </GridPane.margin>
+              </DatePicker>
+              <Label GridPane.halignment="RIGHT" GridPane.valignment="CENTER" text="Rut">
+                <GridPane.margin>
+                  <Insets right="10.0"/>
+                </GridPane.margin>
+              </Label>
+              <Label GridPane.halignment="RIGHT" GridPane.rowIndex="1" text="Nombre">
+                <GridPane.margin>
+                  <Insets right="10.0"/>
+                </GridPane.margin>
+              </Label>
+              <Label GridPane.halignment="RIGHT" GridPane.rowIndex="2" text="Apellido paterno">
+                <GridPane.margin>
+                  <Insets right="10.0"/>
+                </GridPane.margin>
+              </Label>
+              <Label GridPane.halignment="RIGHT" GridPane.rowIndex="3" text="Apellido materno">
+                <GridPane.margin>
+                  <Insets right="10.0"/>
+                </GridPane.margin>
+              </Label>
+              <Label GridPane.halignment="RIGHT" GridPane.rowIndex="4" text="Fecha de nacimiento">
+                <GridPane.margin>
+                  <Insets right="10.0"/>
+                </GridPane.margin>
+              </Label>
+              <Label GridPane.halignment="RIGHT" GridPane.rowIndex="6" text="Sexo">
+                <GridPane.margin>
+                  <Insets right="10.0"/>
+                </GridPane.margin>
+              </Label>
+              <Label GridPane.halignment="RIGHT" GridPane.rowIndex="7" text="Activo">
+                <GridPane.margin>
+                  <Insets right="10.0"/>
+                </GridPane.margin>
+              </Label>
+              <Label GridPane.halignment="RIGHT" GridPane.rowIndex="8" text="Fecha de admisión">
+                <GridPane.margin>
+                  <Insets right="10.0"/>
+                </GridPane.margin>
+              </Label>
+              <Label GridPane.halignment="RIGHT" GridPane.rowIndex="9" text="Grupo sanguíneo">
+                <GridPane.margin>
+                  <Insets right="10.0"/>
+                </GridPane.margin>
+              </Label>
+              <Label GridPane.halignment="RIGHT" GridPane.rowIndex="10" text="Sistema de Salud">
+                <GridPane.margin>
+                  <Insets right="10.0"/>
+                </GridPane.margin>
+              </Label>
+              <Label GridPane.halignment="RIGHT" GridPane.rowIndex="5" text="Edad">
+                <GridPane.margin>
+                  <Insets right="10.0"/>
+                </GridPane.margin>
+              </Label>
+              <TextField GridPane.columnIndex="1" editable="false" opacity="0.67" fx:id="rut">
+                <GridPane.margin>
+                  <Insets left="5.0" right="5.0"/>
+                </GridPane.margin>
+              </TextField>
+              <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="name">
+                <GridPane.margin>
+                  <Insets left="5.0" right="5.0"/>
+                </GridPane.margin>
+              </TextField>
+              <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" fx:id="lastName">
+                <GridPane.margin>
+                  <Insets left="5.0" right="5.0"/>
+                </GridPane.margin>
+              </TextField>
+              <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" fx:id="secondLastName">
+                <GridPane.margin>
+                  <Insets left="5.0" right="5.0"/>
+                </GridPane.margin>
+              </TextField>
+              <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" editable="false" opacity="0.67"
+                fx:id="age">
+                <GridPane.margin>
+                  <Insets left="5.0" right="5.0"/>
+                </GridPane.margin>
+              </TextField>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+              </columnConstraints>
+              <opaqueInsets>
+                <Insets/>
+              </opaqueInsets>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+              </rowConstraints>
+            </GridPane>
+            <HBox alignment="CENTER" prefHeight="35.0" spacing="10.0">
+              <Label text="Ficha del adulto mayor"/>
+              <Separator prefWidth="100.0"/>
+              <Separator prefWidth="100.0"/>
             </HBox>
+            <HBox alignment="CENTER" prefHeight="45.0">
+              <Button alignment="CENTER" minHeight="36.0" minWidth="36.0" mnemonicParsing="false"
+                onAction="#onUpdatedFields" fx:id="updateData">
+                <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true"
+                    preserveRatio="true">
+                    <Image url="@../icons/update.png"/>
+                  </ImageView>
+                </graphic>
+              </Button>
+            </HBox>
+          </VBox>
         </AnchorPane>
-        <AnchorPane prefHeight="260.0" prefWidth="200.0">
-            <VBox prefHeight="250.0" prefWidth="720.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                <TabPane fx:id="tabPane" prefHeight="215.0" tabClosingPolicy="UNAVAILABLE">
-                    <Tab text="Alergias">
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                            <TableView fx:id="allergyTableView" layoutX="47.0" layoutY="6.0" prefHeight="211.0"
-                                       prefWidth="710.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                       AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <columns>
-                                    <TableColumn fx:id="allergyType" prefWidth="250.0" text="Tipo"/>
-                                    <TableColumn fx:id="allergyDetails" prefWidth="450.0" text="Detalles"/>
-                                </columns>
-                            </TableView>
-                        </AnchorPane>
-                    </Tab>
-                    <Tab text="Chequeos rutinarios">
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                            <TableView fx:id="checkupTableView" layoutX="31.0" layoutY="6.0" prefHeight="211.0"
-                                       prefWidth="710.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                       AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <columns>
-                                    <TableColumn fx:id="checkupDate" resizable="false" text="Fecha"/>
-                                    <TableColumn fx:id="height" prefWidth="70.0" resizable="false" text="Altura"/>
-                                    <TableColumn fx:id="weight" prefWidth="70.0" resizable="false" text="Peso"/>
-                                    <TableColumn fx:id="bmi" prefWidth="70.0" resizable="false" text="IMC"/>
-                                    <TableColumn fx:id="heartRate" prefWidth="100.0" resizable="false"
-                                                 text="Ritmo cardíaco"/>
-                                    <TableColumn fx:id="diastolicPressure" prefWidth="110.0" resizable="false"
-                                                 text="Presión diastólica"/>
-                                    <TableColumn fx:id="systolicPressure" prefWidth="110.0" resizable="false"
-                                                 text="Presión sistólica"/>
-                                    <TableColumn fx:id="bodyTemperature" prefWidth="90.0" resizable="false"
-                                                 text="Temperatura"/>
-                                </columns>
-                            </TableView>
-                        </AnchorPane>
-                    </Tab>
-                    <Tab text="Intervenciones quirúrgicas">
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                            <TableView fx:id="surgicalInterventionTable" layoutX="93.0" layoutY="11.0"
-                                       prefHeight="221.0" prefWidth="710.0" AnchorPane.bottomAnchor="0.0"
-                                       AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                                       AnchorPane.topAnchor="0.0">
-                                <columns>
-                                    <TableColumn fx:id="interventionDate" prefWidth="120.0" text="Fecha"/>
-                                    <TableColumn fx:id="hospital" prefWidth="150.0" text="Hospital"/>
-                                    <TableColumn fx:id="severity" prefWidth="120.0" text="Severidad"/>
-                                    <TableColumn fx:id="description" prefWidth="310.0" text="Descripción"/>
-                                </columns>
-                            </TableView>
-                        </AnchorPane>
-                    </Tab>
-                </TabPane>
-                <HBox alignment="CENTER" prefHeight="45.0">
-                    <Button fx:id="addData" minHeight="36.0" minWidth="36.0" mnemonicParsing="false"
-                            onAction="#addColumn">
-                        <graphic>
-                            <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                <Image url="@../icons/add.png"/>
-                            </ImageView>
-                        </graphic>
-                    </Button>
-                </HBox>
-            </VBox>
+        <AnchorPane prefWidth="355.0">
+          <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+            alignment="CENTER"
+            layoutX="128.0" layoutY="59.0" prefHeight="420.0"
+            prefWidth="355.0">
+            <GridPane>
+              <Label GridPane.halignment="RIGHT" text="Rut">
+                <GridPane.margin>
+                  <Insets right="10.0"/>
+                </GridPane.margin>
+              </Label>
+              <Label GridPane.halignment="RIGHT" GridPane.rowIndex="1" text="Nombre completo">
+                <GridPane.margin>
+                  <Insets right="10.0"/>
+                </GridPane.margin>
+              </Label>
+              <Label GridPane.halignment="RIGHT" GridPane.rowIndex="2" text="Fecha de nacimiento">
+                <GridPane.margin>
+                  <Insets right="10.0"/>
+                </GridPane.margin>
+              </Label>
+              <Label GridPane.halignment="RIGHT" GridPane.rowIndex="3" text="Edad">
+                <GridPane.margin>
+                  <Insets right="10.0"/>
+                </GridPane.margin>
+              </Label>
+              <Label GridPane.halignment="RIGHT" GridPane.rowIndex="4" text="Sexo">
+                <GridPane.margin>
+                  <Insets right="10.0"/>
+                </GridPane.margin>
+              </Label>
+              <Label GridPane.halignment="RIGHT" GridPane.rowIndex="5" text="Teléfono móvil">
+                <GridPane.margin>
+                  <Insets right="10.0"/>
+                </GridPane.margin>
+              </Label>
+              <TextField GridPane.columnIndex="1" editable="false" opacity="0.67"
+                fx:id="responsibleRut">
+                <GridPane.margin>
+                  <Insets left="5.0" right="5.0"/>
+                </GridPane.margin>
+              </TextField>
+              <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" editable="false"
+                opacity="0.67" fx:id="responsibleFullName">
+                <GridPane.margin>
+                  <Insets left="5.0" right="5.0"/>
+                </GridPane.margin>
+              </TextField>
+              <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" editable="false"
+                opacity="0.67" fx:id="responsibleBirthDate">
+                <GridPane.margin>
+                  <Insets left="5.0" right="5.0"/>
+                </GridPane.margin>
+              </TextField>
+              <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" editable="false"
+                opacity="0.67"
+                fx:id="responsibleAge">
+                <GridPane.margin>
+                  <Insets left="5.0" right="5.0"/>
+                </GridPane.margin>
+              </TextField>
+              <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" editable="false"
+                opacity="0.67" fx:id="responsibleGender">
+                <GridPane.margin>
+                  <Insets left="5.0" right="5.0"/>
+                </GridPane.margin>
+              </TextField>
+              <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" editable="false"
+                opacity="0.67" fx:id="responsibleMobilePhone">
+                <GridPane.margin>
+                  <Insets left="5.0" right="5.0"/>
+                </GridPane.margin>
+              </TextField>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="40.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+              </rowConstraints>
+            </GridPane>
+            <GridPane>
+              <Label GridPane.halignment="RIGHT" text="Región">
+                <GridPane.margin>
+                  <Insets right="10.0"/>
+                </GridPane.margin>
+              </Label>
+              <Label GridPane.halignment="RIGHT" GridPane.rowIndex="1" text="Provincia">
+                <GridPane.margin>
+                  <Insets right="10.0"/>
+                </GridPane.margin>
+              </Label>
+              <Label GridPane.halignment="RIGHT" GridPane.rowIndex="2" text="Comuna">
+                <GridPane.margin>
+                  <Insets right="10.0"/>
+                </GridPane.margin>
+              </Label>
+              <Label GridPane.halignment="RIGHT" GridPane.rowIndex="3" text="Calle">
+                <GridPane.margin>
+                  <Insets right="10.0"/>
+                </GridPane.margin>
+              </Label>
+              <Label GridPane.halignment="RIGHT" GridPane.rowIndex="4" text="Número">
+                <GridPane.margin>
+                  <Insets right="10.0"/>
+                </GridPane.margin>
+              </Label>
+              <TextField GridPane.columnIndex="1" editable="false" opacity="0.67" fx:id="region">
+                <GridPane.margin>
+                  <Insets left="5.0" right="5.0"/>
+                </GridPane.margin>
+              </TextField>
+              <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" editable="false" opacity="0.67"
+                fx:id="province">
+                <GridPane.margin>
+                  <Insets left="5.0" right="5.0"/>
+                </GridPane.margin>
+              </TextField>
+              <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" editable="false" opacity="0.67"
+                fx:id="commune">
+                <GridPane.margin>
+                  <Insets left="5.0" right="5.0"/>
+                </GridPane.margin>
+              </TextField>
+              <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" opacity="0.67"
+                fx:id="street">
+                <GridPane.margin>
+                  <Insets left="5.0" right="5.0"/>
+                </GridPane.margin>
+              </TextField>
+              <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" editable="false" opacity="0.67"
+                fx:id="number">
+                <GridPane.margin>
+                  <Insets left="5.0" right="5.0"/>
+                </GridPane.margin>
+              </TextField>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="173.0" minWidth="10.0"
+                  prefWidth="40.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="207.0" minWidth="10.0"
+                  prefWidth="200.0"/>
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+              </rowConstraints>
+            </GridPane>
+            <HBox alignment="CENTER" prefHeight="35.0" spacing="10.0">
+              <Label text="Dirección del responsable"/>
+              <Separator prefWidth="95.0"/>
+              <Separator prefWidth="95.0"/>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="35.0" spacing="10.0">
+              <Label text="Información personal del responsable"/>
+              <Separator prefWidth="65.0"/>
+              <Separator prefWidth="65.0"/>
+            </HBox>
+          </VBox>
         </AnchorPane>
-    </VBox>
+        <Separator orientation="VERTICAL" prefHeight="200.0"/>
+      </HBox>
+    </AnchorPane>
+    <AnchorPane prefHeight="260.0" prefWidth="200.0">
+      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+        AnchorPane.topAnchor="0.0"
+        prefHeight="250.0" prefWidth="720.0">
+        <HBox alignment="CENTER" prefHeight="45.0">
+          <Button minHeight="36.0" minWidth="36.0" mnemonicParsing="false" onAction="#addColumn"
+            fx:id="addData">
+            <graphic>
+              <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../icons/add.png"/>
+              </ImageView>
+            </graphic>
+          </Button>
+        </HBox>
+        <TabPane prefHeight="215.0" tabClosingPolicy="UNAVAILABLE" fx:id="tabPane">
+          <Tab text="Alergias">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <TableView AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+                layoutX="47.0" layoutY="6.0" prefHeight="211.0"
+                prefWidth="710.0" fx:id="allergyTableView">
+                <columns>
+                  <TableColumn prefWidth="250.0" text="Tipo" fx:id="allergyType"/>
+                  <TableColumn prefWidth="450.0" text="Detalles" fx:id="allergyDetails"/>
+                </columns>
+              </TableView>
+            </AnchorPane>
+          </Tab>
+          <Tab text="Chequeos rutinarios">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <TableView AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+                layoutX="31.0" layoutY="6.0" prefHeight="211.0"
+                prefWidth="710.0" fx:id="checkupTableView">
+                <columns>
+                  <TableColumn resizable="false" text="Fecha" fx:id="checkupDate"/>
+                  <TableColumn prefWidth="70.0" resizable="false" text="Altura" fx:id="height"/>
+                  <TableColumn prefWidth="70.0" resizable="false" text="Peso" fx:id="weight"/>
+                  <TableColumn prefWidth="70.0" resizable="false" text="IMC" fx:id="bmi"/>
+                  <TableColumn prefWidth="100.0" resizable="false" text="Ritmo cardíaco"
+                    fx:id="heartRate"/>
+                  <TableColumn prefWidth="110.0" resizable="false" text="Presión diastólica"
+                    fx:id="diastolicPressure"/>
+                  <TableColumn prefWidth="110.0" resizable="false" text="Presión sistólica"
+                    fx:id="systolicPressure"/>
+                  <TableColumn prefWidth="90.0" resizable="false" text="Temperatura"
+                    fx:id="bodyTemperature"/>
+                </columns>
+              </TableView>
+            </AnchorPane>
+          </Tab>
+          <Tab text="Intervenciones quirúrgicas">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <TableView AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                AnchorPane.topAnchor="0.0" layoutX="93.0" layoutY="11.0"
+                prefHeight="221.0" prefWidth="710.0"
+                fx:id="surgicalInterventionTable">
+                <columns>
+                  <TableColumn prefWidth="120.0" text="Fecha" fx:id="interventionDate"/>
+                  <TableColumn prefWidth="150.0" text="Hospital" fx:id="hospital"/>
+                  <TableColumn prefWidth="120.0" text="Severidad" fx:id="severity"/>
+                  <TableColumn prefWidth="310.0" text="Descripción" fx:id="description"/>
+                </columns>
+              </TableView>
+            </AnchorPane>
+          </Tab>
+        </TabPane>
+      </VBox>
+    </AnchorPane>
+  </VBox>
 </AnchorPane>
