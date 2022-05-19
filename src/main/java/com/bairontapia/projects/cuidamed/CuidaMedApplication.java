@@ -7,7 +7,7 @@ import com.bairontapia.projects.cuidamed.disease.DiseaseDAO;
 import com.bairontapia.projects.cuidamed.disease.medication.MedicationDAO;
 import com.bairontapia.projects.cuidamed.disease.medicationadministration.MedicationAdministrationDAO;
 import com.bairontapia.projects.cuidamed.disease.medicationprescription.MedicationPrescriptionDAO;
-import com.bairontapia.projects.cuidamed.disease.prescription.DiagnosticDAO;
+import com.bairontapia.projects.cuidamed.disease.diagnostic.DiagnosticDAO;
 import com.bairontapia.projects.cuidamed.medicalrecord.MedicalRecordDAO;
 import com.bairontapia.projects.cuidamed.medicalrecord.routinecheckup.RoutineCheckupDAO;
 import com.bairontapia.projects.cuidamed.person.elder.ElderDAO;

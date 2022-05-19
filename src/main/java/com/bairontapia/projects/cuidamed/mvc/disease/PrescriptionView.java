@@ -2,8 +2,8 @@ package com.bairontapia.projects.cuidamed.mvc.disease;
 
 import com.bairontapia.projects.cuidamed.disease.Disease;
 import com.bairontapia.projects.cuidamed.disease.DiseaseDAO;
-import com.bairontapia.projects.cuidamed.disease.prescription.Diagnostic;
-import com.bairontapia.projects.cuidamed.disease.prescription.DiagnosticDAO;
+import com.bairontapia.projects.cuidamed.disease.diagnostic.Diagnostic;
+import com.bairontapia.projects.cuidamed.disease.diagnostic.DiagnosticDAO;
 import com.bairontapia.projects.cuidamed.disease.sickelderly.SickElderly;
 import com.bairontapia.projects.cuidamed.disease.sickelderly.SickElderlyDAO;
 import com.bairontapia.projects.cuidamed.person.elder.Elder;

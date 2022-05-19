@@ -1,4 +1,4 @@
-package com.bairontapia.projects.cuidamed.disease.prescription;
+package com.bairontapia.projects.cuidamed.disease.diagnostic;
 
 import com.bairontapia.projects.cuidamed.daotemplate.CrudDAO;
 import com.bairontapia.projects.cuidamed.daotemplate.OneToManyDAO;
