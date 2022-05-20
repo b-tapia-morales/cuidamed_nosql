@@ -1,7 +1,7 @@
 package com.bairontapia.projects.cuidamed.person.elder;
 
 import com.bairontapia.projects.cuidamed.connection.ConnectionSingleton;
-import com.bairontapia.projects.cuidamed.daotemplate.CrudDAO;
+import com.bairontapia.projects.cuidamed.daotemplate.relational.CrudDAO;
 import com.bairontapia.projects.cuidamed.utils.paths.DirectoryPathUtils;
 import java.io.IOException;
 import java.nio.charset.Charset;

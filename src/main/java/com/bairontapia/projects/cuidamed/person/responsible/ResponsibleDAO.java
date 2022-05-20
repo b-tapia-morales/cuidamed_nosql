@@ -1,6 +1,6 @@
 package com.bairontapia.projects.cuidamed.person.responsible;
 
-import com.bairontapia.projects.cuidamed.daotemplate.CrudDAO;
+import com.bairontapia.projects.cuidamed.daotemplate.relational.CrudDAO;
 import com.bairontapia.projects.cuidamed.utils.paths.DirectoryPathUtils;
 import java.io.IOException;
 import java.nio.charset.Charset;

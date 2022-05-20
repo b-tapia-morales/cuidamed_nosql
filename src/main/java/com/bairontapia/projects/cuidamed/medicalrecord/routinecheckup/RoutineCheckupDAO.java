@@ -1,7 +1,7 @@
 package com.bairontapia.projects.cuidamed.medicalrecord.routinecheckup;
 
-import com.bairontapia.projects.cuidamed.daotemplate.OneToManyDAO;
-import com.bairontapia.projects.cuidamed.daotemplate.ReadAndWriteDAO;
+import com.bairontapia.projects.cuidamed.daotemplate.relational.OneToManyDAO;
+import com.bairontapia.projects.cuidamed.daotemplate.relational.ReadAndWriteDAO;
 import com.bairontapia.projects.cuidamed.utils.paths.DirectoryPathUtils;
 import java.io.IOException;
 import java.nio.charset.Charset;

@@ -4,34 +4,16 @@ import static com.mongodb.client.model.Filters.eq;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
-import com.bairontapia.projects.cuidamed.disease.DiseaseDAO;
-import com.bairontapia.projects.cuidamed.disease.diagnostic.DiagnosticDAO;
-import com.bairontapia.projects.cuidamed.disease.medication.MedicationDAO;
-import com.bairontapia.projects.cuidamed.disease.medicationadministration.MedicationAdministrationDAO;
-import com.bairontapia.projects.cuidamed.disease.medicationprescription.MedicationPrescriptionDAO;
-import com.bairontapia.projects.cuidamed.medicalrecord.MedicalRecordDAO;
-import com.bairontapia.projects.cuidamed.medicalrecord.routinecheckup.RoutineCheckupDAO;
-import com.bairontapia.projects.cuidamed.person.elder.ElderDAO;
-import com.bairontapia.projects.cuidamed.person.responsible.ResponsibleDAO;
-import com.bairontapia.projects.cuidamed.pojo.DiagnosticPOJO;
 import com.bairontapia.projects.cuidamed.pojo.ElderPOJO;
-import com.bairontapia.projects.cuidamed.pojo.MedicalRecordPOJO;
-import com.bairontapia.projects.cuidamed.pojo.MedicationAdministrationPOJO;
-import com.bairontapia.projects.cuidamed.pojo.MedicationPrescriptionPOJO;
-import com.bairontapia.projects.cuidamed.pojo.ResponsiblePOJO;
 import com.bairontapia.projects.cuidamed.pojo.RoutineCheckupPOJO;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
-import com.mongodb.client.model.Indexes;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.bson.codecs.pojo.PojoCodecProvider;
-import org.bson.types.ObjectId;
 
 public class CuidaMedApplication {
 

@@ -1,4 +1,4 @@
-package com.bairontapia.projects.cuidamed.daotemplate;
+package com.bairontapia.projects.cuidamed.daotemplate.relational;
 
 import com.bairontapia.projects.cuidamed.connection.ConnectionSingleton;
 import java.io.IOException;
