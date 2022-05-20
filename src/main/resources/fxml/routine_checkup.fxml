@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="425.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bairontapia.projects.cuidamed.mvc.medical_record.RoutineCheckupView">
+   <VBox maxHeight="1.7976931348623157E308" prefHeight="409.0" prefWidth="425.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+         <HBox alignment="CENTER" spacing="25.0">
+            <children>
+               <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../../../../../cuidamed/src/main/resources/icons/checkup.png" />
+                  </image>
+               </ImageView>
+               <Label alignment="CENTER" contentDisplay="CENTER" text="Chequeo rutinario" textAlignment="CENTER">
+                  <font>
+                     <Font name="System Bold" size="13.0" />
+                  </font>
+               </Label>
+            </children>
+            <padding>
+               <Insets bottom="5.0" top="5.0" />
+            </padding>
+         </HBox>
+         <Separator prefWidth="200.0">
+            <VBox.margin>
+               <Insets bottom="5.0" top="5.0" />
+            </VBox.margin>
+         </Separator>
+         <GridPane prefHeight="275.0">
+            <columnConstraints>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="75.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+               <HBox prefHeight="100.0" prefWidth="200.0" />
+               <Label text="Fecha" GridPane.halignment="RIGHT">
+                  <GridPane.margin>
+                     <Insets right="10.0" />
+                  </GridPane.margin>
+               </Label>
+               <Label text="Altura" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                  <GridPane.margin>
+                     <Insets right="10.0" />
+                  </GridPane.margin>
+               </Label>
+               <Label text="Peso" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                  <GridPane.margin>
+                     <Insets right="10.0" />
+                  </GridPane.margin>
+               </Label>
+               <Label text="IMC" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                  <GridPane.margin>
+                     <Insets right="10.0" />
+                  </GridPane.margin>
+               </Label>
+               <Label text="Ritmo cardíaco" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                  <GridPane.margin>
+                     <Insets right="10.0" />
+                  </GridPane.margin>
+               </Label>
+               <Label text="Presión diastólica" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+                  <GridPane.margin>
+                     <Insets right="10.0" />
+                  </GridPane.margin>
+               </Label>
+               <Label text="Presión sistólica" GridPane.halignment="RIGHT" GridPane.rowIndex="6">
+                  <GridPane.margin>
+                     <Insets right="10.0" />
+                  </GridPane.margin>
+               </Label>
+               <Label text="Temperatura corporal" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
+                  <GridPane.margin>
+                     <Insets right="10.0" />
+                  </GridPane.margin>
+               </Label>
+               <DatePicker fx:id="checkupDatePicker" editable="false" GridPane.columnIndex="1">
+                  <GridPane.margin>
+                     <Insets left="5.0" />
+                  </GridPane.margin>
+               </DatePicker>
+               <TextField fx:id="height" prefHeight="25.0" prefWidth="142.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <GridPane.margin>
+                     <Insets left="5.0" right="15.0" />
+                  </GridPane.margin>
+               </TextField>
+               <TextField fx:id="weight" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <GridPane.margin>
+                     <Insets left="5.0" right="15.0" />
+                  </GridPane.margin>
+               </TextField>
+               <TextField fx:id="bmi" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <GridPane.margin>
+                     <Insets left="5.0" right="15.0" />
+                  </GridPane.margin>
+               </TextField>
+               <TextField fx:id="heartRate" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <GridPane.margin>
+                     <Insets left="5.0" right="15.0" />
+                  </GridPane.margin>
+               </TextField>
+               <TextField fx:id="diastolicPressure" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                  <GridPane.margin>
+                     <Insets left="5.0" right="15.0" />
+                  </GridPane.margin>
+               </TextField>
+               <TextField fx:id="systolicPressure" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                  <GridPane.margin>
+                     <Insets left="5.0" right="15.0" />
+                  </GridPane.margin>
+               </TextField>
+               <TextField fx:id="bodyTemperature" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                  <GridPane.margin>
+                     <Insets left="5.0" right="15.0" />
+                  </GridPane.margin>
+               </TextField>
+            </children>
+         </GridPane>
+         <Separator prefWidth="200.0">
+            <padding>
+               <Insets bottom="5.0" top="5.0" />
+            </padding>
+         </Separator>
+         <HBox alignment="CENTER" spacing="25.0">
+            <children>
+               <Button fx:id="add" mnemonicParsing="false" onAction="#addRoutineCheckup" text="Aceptar" />
+               <Button fx:id="cancel" mnemonicParsing="false" onAction="#cancelRoutineCheckup" text="Cancelar" />
+            </children>
+            <VBox.margin>
+               <Insets bottom="5.0" />
+            </VBox.margin>
+         </HBox>
+      </children>
+   </VBox>
+</AnchorPane>

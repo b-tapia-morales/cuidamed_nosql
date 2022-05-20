@@ -2,19 +2,28 @@ package com.bairontapia.projects.cuidamed.mvc;
 
 import com.bairontapia.projects.cuidamed.pojo.ElderPOJO;
 import com.bairontapia.projects.cuidamed.utils.validation.RutUtils;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Objects;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class EldersView {
+
+  private static final ClassLoader CLASS_LOADER = Thread.currentThread().getContextClassLoader();
 
   @FXML
   private AnchorPane eldersListPane;
@@ -53,16 +62,38 @@ public class EldersView {
   }
 
   @FXML
-  public void loadPanel(final MouseEvent event) {
-    if (!event.getButton().equals(MouseButton.PRIMARY) || event.getClickCount() != 2
-        || tableView.getSelectionModel().isEmpty()) {
+  public void onRegistryDoubleClicked(final MouseEvent event) throws IOException {
+    loadPanelAndData(event);
+  }
+
+  public void onViewRegistryButtonClicked(final MouseEvent event) {
+    if (!event.getButton().equals(MouseButton.PRIMARY) || event.getClickCount() != 2) {
       return;
     }
+    loadPanelAndData(event);
   }
 
-  public void onViewRegistryClicked(final MouseEvent mouseEvent) {
+  public void onAddRegistryButtonClicked(final MouseEvent event) {
+
   }
 
-  public void onAddRegistryClicked(final MouseEvent mouseEvent) {
+  private void loadPanelAndData(final MouseEvent event) {
+    if (tableView.getSelectionModel().isEmpty()) {
+      return;
+    }
+    var elder = tableView.getSelectionModel().getSelectedItem();
+    var node = (Node) event.getSource();
+    var stage = (Stage) node.getScene().getWindow();
+    stage.close();
+    try {
+      var root = FXMLLoader.<Parent>load(
+          Objects.requireNonNull(CLASS_LOADER.getResource("fxml/elder_editable.fxml")));
+      stage.setUserData(elder);
+      var scene = new Scene(root);
+      stage.setScene(scene);
+      stage.show();
+    } catch (IOException exception) {
+      exception.printStackTrace();
+    }
   }
 }
