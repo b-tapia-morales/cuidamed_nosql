@@ -7,6 +7,7 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 import com.bairontapia.projects.cuidamed.connection.MongoConnectionSingleton;
 import com.bairontapia.projects.cuidamed.pojo.ElderPOJO;
 import com.bairontapia.projects.cuidamed.pojo.ElderPOJODAO;
+import com.bairontapia.projects.cuidamed.pojo.ResponsiblePOJODAO;
 import com.bairontapia.projects.cuidamed.pojo.RoutineCheckupPOJO;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
@@ -29,10 +30,14 @@ public class CuidaMedApplication {
     //var routineCheckupColl = database.getCollection("routine_checkup", RoutineCheckupPOJO.class);
     var routineCheckups = new ArrayList<RoutineCheckupPOJO>();
     var elderDao = new ElderPOJODAO();
+    var responsibleDAO = new ResponsiblePOJODAO();
     var e = elderDao.find("3988832-7");
     e.orElseThrow().setFirstName("el pepe");
     elderDao.update(e.get());
     System.out.println(elderDao.find("3988832-7"));
+    System.out.println(responsibleDAO.find("12308230-3"));
+    System.out.println(responsibleDAO.findAll());
+
     //System.out.println(elderDao.findAll());
     /*
     var e = elderColl.find(eq("rut", "3988832-7")).first();
