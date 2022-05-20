@@ -1,19 +1,34 @@
 package com.bairontapia.projects.cuidamed;
 
-import static com.mongodb.client.model.Filters.eq;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
+import com.bairontapia.projects.cuidamed.disease.DiseaseDAO;
+import com.bairontapia.projects.cuidamed.disease.diagnostic.DiagnosticDAO;
+import com.bairontapia.projects.cuidamed.disease.medication.MedicationDAO;
+import com.bairontapia.projects.cuidamed.disease.medicationadministration.MedicationAdministrationDAO;
+import com.bairontapia.projects.cuidamed.disease.medicationprescription.MedicationPrescriptionDAO;
+import com.bairontapia.projects.cuidamed.medicalrecord.MedicalRecordDAO;
+import com.bairontapia.projects.cuidamed.medicalrecord.routinecheckup.RoutineCheckupDAO;
+import com.bairontapia.projects.cuidamed.person.elder.ElderDAO;
+import com.bairontapia.projects.cuidamed.person.responsible.ResponsibleDAO;
+import com.bairontapia.projects.cuidamed.pojo.DiagnosticPOJO;
 import com.bairontapia.projects.cuidamed.pojo.ElderPOJO;
+import com.bairontapia.projects.cuidamed.pojo.MedicalRecordPOJO;
+import com.bairontapia.projects.cuidamed.pojo.MedicationAdministrationPOJO;
+import com.bairontapia.projects.cuidamed.pojo.MedicationPrescriptionPOJO;
+import com.bairontapia.projects.cuidamed.pojo.ResponsiblePOJO;
 import com.bairontapia.projects.cuidamed.pojo.RoutineCheckupPOJO;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
+import com.mongodb.client.model.Indexes;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.bson.types.ObjectId;
 
 public class CuidaMedApplication {
 
@@ -25,11 +40,10 @@ public class CuidaMedApplication {
             MongoClient.getDefaultCodecRegistry(),
             fromProviders(PojoCodecProvider.builder().automatic(true).build()));
     try (var mongoClient =
-        new MongoClient(
-            "localhost:27017",
+        new MongoClient("localhost:27017",
             MongoClientOptions.builder().codecRegistry(pojoCodecRegistry).build())) {
-
-      // cambiar el nombre de la base de datos a admin
+      /*
+      cambiar el nombre de la base de datos a admin
       var database = mongoClient.getDatabase("Cuidamed_DB");
       var elderColl = database.getCollection("elder", ElderPOJO.class);
       var routineCheckupColl = database.getCollection("routine_checkup", RoutineCheckupPOJO.class);
@@ -39,15 +53,12 @@ public class CuidaMedApplication {
       System.out.println(e);
       System.out.println(e.getResponsible().toString());
       System.out.println(routineCheckups);
-      /*
+      */
       var database = mongoClient.getDatabase("admin");
       var elderColl = database.getCollection("elder", ElderPOJO.class);
       elderColl.drop();
       var routineCheckupColl = database.getCollection("routine_checkup", RoutineCheckupPOJO.class);
       routineCheckupColl.drop();
-      var administrationColl = database.getCollection("medication_administration",
-          MedicationAdministrationPOJO.class);
-      administrationColl.drop();
       for (var elder : ElderDAO.getInstance().findAll()) {
         var elderId = new ObjectId();
         var diagnostics = DiagnosticDAO.getInstance().findAll(elder.rut());
@@ -66,11 +77,8 @@ public class CuidaMedApplication {
                     medication.name());
             var administrationPOJOS = administrations.stream()
                 .map(MedicationAdministrationPOJO::new).toList();
-            administrationColl.insertMany(administrationPOJOS);
-            var administrationIds =
-                administrationPOJOS.stream().map(MedicationAdministrationPOJO::getId).toList();
             prescriptionPOJOS.add(
-                new MedicationPrescriptionPOJO(prescription, medication, administrationIds));
+                new MedicationPrescriptionPOJO(prescription, medication, administrationPOJOS));
           }
           diagnosticPOJOS.add(new DiagnosticPOJO(diagnostic, disease, prescriptionPOJOS));
         }
@@ -89,7 +97,6 @@ public class CuidaMedApplication {
         elderColl.createIndex(Indexes.hashed("{diagnostics.medicationPrescriptions"
             + ".administrationIds:1}"));
       }
-       */
     }
   }
 }

@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-import org.bson.types.ObjectId;
 
 public class MedicationPrescriptionPOJO {
 
@@ -24,17 +23,18 @@ public class MedicationPrescriptionPOJO {
   private Short quantity;
   @Getter
   @Setter
-  private List<ObjectId> administrationIds;
+  private List<MedicationAdministrationPOJO> medicationAdministrations;
 
   public MedicationPrescriptionPOJO() {
   }
 
   public MedicationPrescriptionPOJO(final MedicationPrescription medicationPrescription,
-      final Medication medication, final List<ObjectId> administrationIds) {
+      final Medication medication,
+      final List<MedicationAdministrationPOJO> medicationAdministrations) {
     this.medication = new MedicationPOJO(medication);
     this.startDate = medicationPrescription.startDate();
     this.endDate = medicationPrescription.endDate();
     this.quantity = medicationPrescription.quantity();
-    this.administrationIds = administrationIds;
+    this.medicationAdministrations = medicationAdministrations;
   }
 }
