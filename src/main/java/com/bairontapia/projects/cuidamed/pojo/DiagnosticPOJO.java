@@ -23,7 +23,7 @@ public class DiagnosticPOJO {
   }
 
   public DiagnosticPOJO(final Diagnostic diagnostic, final Disease disease,
-                        final List<MedicationPrescriptionPOJO> medicationPrescriptions) {
+      final List<MedicationPrescriptionPOJO> medicationPrescriptions) {
     this.date = diagnostic.prescriptionDate();
     this.disease = new DiseasePOJO(disease);
     this.medicationPrescriptions = medicationPrescriptions;
