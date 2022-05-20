@@ -48,7 +48,7 @@ FROM person p
 
 -- Primera consulta, sin joins. El índice no ha sido creado aún.
 EXPLAIN
-analyze
+ANALYZE
 SELECT *
 FROM routine_checkup
 WHERE heart_rate > 100
@@ -59,7 +59,7 @@ CREATE INDEX heart_rate_btree ON routine_checkup USING btree (heart_rate);
 
 -- Se hace la misma consulta, pero esta vez con el índice creado.
 EXPLAIN
-analyze
+ANALYZE
 SELECT *
 FROM routine_checkup
 WHERE heart_rate > 100
