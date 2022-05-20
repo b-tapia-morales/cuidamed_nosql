@@ -2,15 +2,22 @@ package com.bairontapia.projects.cuidamed.pojo;
 
 import com.bairontapia.projects.cuidamed.disease.Disease;
 import lombok.Getter;
+import lombok.Setter;
 
 public class DiseasePOJO {
 
   @Getter
-  private final String name;
+  @Setter
+  private String name;
   @Getter
-  private final String diseaseType;
+  @Setter
+  private String diseaseType;
   @Getter
-  private final Boolean isChronic;
+  @Setter
+  private Boolean isChronic;
+
+  public DiseasePOJO() {
+  }
 
   public DiseasePOJO(final Disease disease) {
     this.name = disease.name();

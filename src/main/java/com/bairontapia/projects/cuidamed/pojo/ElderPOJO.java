@@ -5,40 +5,57 @@ import com.bairontapia.projects.cuidamed.utils.validation.RutUtils;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.bson.types.ObjectId;
 
 public class ElderPOJO {
 
   @Getter
-  private final ObjectId id;
+  @Setter
+  private ObjectId id;
   @Getter
-  private final String rut;
+  @Setter
+  private String rut;
   @Getter
-  private final String firstName;
+  @Setter
+  private String firstName;
   @Getter
-  private final String lastName;
+  @Setter
+  private String lastName;
   @Getter
-  private final String secondLastName;
+  @Setter
+  private String secondLastName;
   @Getter
-  private final LocalDate birthDate;
+  @Setter
+  private LocalDate birthDate;
   @Getter
-  private final Integer age;
+  @Setter
+  private Integer age;
   @Getter
-  private final String gender;
+  @Setter
+  private String gender;
   @Getter
-  private final Boolean isActive;
+  @Setter
+  private Boolean isActive;
   @Getter
-  private final LocalDate admissionDate;
+  @Setter
+  private LocalDate admissionDate;
   @Getter
-  private final ResponsiblePOJO responsible;
+  @Setter
+  private ResponsiblePOJO responsible;
   @Getter
-  private final MedicalRecordPOJO medicalRecord;
+  @Setter
+  private MedicalRecordPOJO medicalRecord;
   @Getter
-  private final List<DiagnosticPOJO> diagnostics;
+  @Setter
+  private List<DiagnosticPOJO> diagnostics;
+
+  public ElderPOJO() {
+  }
 
   public ElderPOJO(final ObjectId id, final Elder elder, final ResponsiblePOJO responsiblePOJO,
-      final MedicalRecordPOJO medicalRecordPOJO, final List<DiagnosticPOJO> diagnostics) {
+                   final MedicalRecordPOJO medicalRecordPOJO, final List<DiagnosticPOJO> diagnostics) {
     this.id = id;
     this.rut = elder.rut();
     this.firstName = elder.firstName();
@@ -57,18 +74,18 @@ public class ElderPOJO {
   @Override
   public String toString() {
     return String.format("""
-            Rut:\t\t\t\t\t\t\t\t\t%s
-            Nombre completo:\t\t\t%s
-            Fecha de nacimiento:\t%s
-            Edad:\t\t\t\t\t\t\t\t\t%s
-            Sexo:\t\t\t\t\t\t\t\t\t%s
-            Activo:\t\t\t\t\t\t\t\t%s
-            Fecha de admisión:\t\t%s
-                                            
-            Ficha Médica:
-            %s
-                    """, RutUtils.format(rut),
-        StringUtils.joinWith(" ", firstName, lastName, secondLastName), birthDate, age, gender,
-        isActive.equals(Boolean.TRUE) ? "Sí" : "No", admissionDate, medicalRecord);
+                        Rut:\t\t\t\t\t\t\t\t\t%s
+                        Nombre completo:\t\t\t%s
+                        Fecha de nacimiento:\t%s
+                        Edad:\t\t\t\t\t\t\t\t\t%s
+                        Sexo:\t\t\t\t\t\t\t\t\t%s
+                        Activo:\t\t\t\t\t\t\t\t%s
+                        Fecha de admisión:\t\t%s
+                                                        
+                        Ficha Médica:
+                        %s
+                                """, RutUtils.format(rut),
+            StringUtils.joinWith(" ", firstName, lastName, secondLastName), birthDate, age, gender,
+            isActive.equals(Boolean.TRUE) ? "Sí" : "No", admissionDate, medicalRecord);
   }
 }

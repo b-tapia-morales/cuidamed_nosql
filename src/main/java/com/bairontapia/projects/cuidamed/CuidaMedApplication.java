@@ -1,5 +1,6 @@
 package com.bairontapia.projects.cuidamed;
 
+import static com.mongodb.client.model.Filters.eq;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
@@ -22,11 +23,13 @@ import com.bairontapia.projects.cuidamed.pojo.RoutineCheckupPOJO;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.client.model.Indexes;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.types.ObjectId;
 
@@ -36,11 +39,25 @@ public class CuidaMedApplication {
     var mongoLogger = Logger.getLogger("org.mongodb.driver");
     mongoLogger.setLevel(Level.WARNING);
     var pojoCodecRegistry =
-        fromRegistries(MongoClient.getDefaultCodecRegistry(),
+        fromRegistries(
+            MongoClient.getDefaultCodecRegistry(),
             fromProviders(PojoCodecProvider.builder().automatic(true).build()));
     try (var mongoClient =
-        new MongoClient("localhost:27017",
+        new MongoClient(
+            "localhost:27017",
             MongoClientOptions.builder().codecRegistry(pojoCodecRegistry).build())) {
+
+      // cambiar el nombre de la base de datos a admin
+      var database = mongoClient.getDatabase("Cuidamed_DB");
+      var elderColl = database.getCollection("elder", ElderPOJO.class);
+      var routineCheckupColl = database.getCollection("routine_checkup", RoutineCheckupPOJO.class);
+      var routineCheckups = new ArrayList<RoutineCheckupPOJO>();
+      var e = elderColl.find(eq("rut", "3988832-7")).first();
+      var rc = routineCheckupColl.find(eq("elderId", e.getId())).into(routineCheckups);
+      System.out.println(e);
+      System.out.println(e.getResponsible().toString());
+      System.out.println(routineCheckups);
+      /*
       var database = mongoClient.getDatabase("admin");
       var elderColl = database.getCollection("elder", ElderPOJO.class);
       elderColl.drop();
@@ -90,6 +107,7 @@ public class CuidaMedApplication {
         elderColl.createIndex(Indexes.hashed("{diagnostics.medicationPrescriptions"
             + ".administrationIds:1}"));
       }
+       */
     }
   }
 }

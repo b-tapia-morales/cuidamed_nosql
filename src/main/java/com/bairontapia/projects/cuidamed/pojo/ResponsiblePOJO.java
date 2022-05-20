@@ -1,36 +1,64 @@
 package com.bairontapia.projects.cuidamed.pojo;
 
 import com.bairontapia.projects.cuidamed.person.responsible.Responsible;
+
 import java.time.LocalDate;
+
 import lombok.Getter;
+import lombok.Setter;
 
 public class ResponsiblePOJO {
 
-  @Getter
-  private final String rut;
-  @Getter
-  private final String firstName;
-  @Getter
-  private final String lastName;
-  @Getter
-  private final String secondLastName;
-  @Getter
-  private final LocalDate birthDate;
-  @Getter
-  private final Integer age;
-  @Getter
-  private final String gender;
-  @Getter
-  private final Integer mobilePhone;
+    @Getter
+    @Setter
+    private String rut;
+    @Getter
+    @Setter
+    private String firstName;
+    @Getter
+    @Setter
+    private String lastName;
+    @Getter
+    @Setter
+    private String secondLastName;
+    @Getter
+    @Setter
+    private LocalDate birthDate;
+    @Getter
+    @Setter
+    private Integer age;
+    @Getter
+    @Setter
+    private String gender;
+    @Getter
+    @Setter
+    private Integer mobilePhone;
 
-  public ResponsiblePOJO(final Responsible responsible) {
-    rut = responsible.rut();
-    firstName = responsible.firstName();
-    lastName = responsible.lastName();
-    secondLastName = responsible.secondLastName();
-    birthDate = responsible.birthDate();
-    gender = responsible.gender().toString();
-    age = responsible.age();
-    mobilePhone = responsible.mobilePhone();
-  }
+    public ResponsiblePOJO() {
+    }
+
+    public ResponsiblePOJO(Responsible responsible) {
+        rut = responsible.rut();
+        firstName = responsible.firstName();
+        lastName = responsible.lastName();
+        secondLastName = responsible.secondLastName();
+        birthDate = responsible.birthDate();
+        gender = responsible.gender().toString();
+        age = responsible.age();
+        mobilePhone = responsible.mobilePhone();
+    }
+
+    @Override
+    public String toString() {
+        return "ResponsiblePOJO{" +
+                "rut='" + rut + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", secondLastName='" + secondLastName + '\'' +
+                ", birthDate=" + birthDate +
+                ", age=" + age +
+                ", gender='" + gender + '\'' +
+                ", mobilePhone=" + mobilePhone +
+                '}';
+    }
 }
