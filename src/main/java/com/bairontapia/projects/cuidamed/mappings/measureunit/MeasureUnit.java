@@ -1,5 +1,10 @@
 package com.bairontapia.projects.cuidamed.mappings.measureunit;
 
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import lombok.Getter;
 
 @Getter
@@ -8,6 +13,10 @@ public enum MeasureUnit {
   ML("Ml");
 
   private static final MeasureUnit[] VALUES = values();
+  private static final Map<String, MeasureUnit> MAP = Arrays.stream(VALUES).collect(
+      Collectors.toMap(MeasureUnit::toString, Function.identity(), (v1, v2) -> v1,
+          LinkedHashMap::new));
+
   private final String value;
 
   MeasureUnit(final String value) {
@@ -23,6 +32,13 @@ public enum MeasureUnit {
       throw new IllegalArgumentException();
     }
     return VALUES[index - 1];
+  }
+
+  public static MeasureUnit getValueFromName(final String name) {
+    if (!MAP.containsKey(name)) {
+      throw new IllegalArgumentException();
+    }
+    return MAP.get(name);
   }
 
   public int getIndex() {

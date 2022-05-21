@@ -1,5 +1,10 @@
 package com.bairontapia.projects.cuidamed.mappings.diseasetype;
 
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import lombok.Getter;
 
 @Getter
@@ -21,6 +26,9 @@ public enum DiseaseType {
   CONGENITAL("Congénitas y Alteraciones Cromosómicas");
 
   private static final DiseaseType[] VALUES = values();
+  private static final Map<String, DiseaseType> MAP = Arrays.stream(VALUES).collect(
+      Collectors.toMap(DiseaseType::toString, Function.identity(), (v1, v2) -> v1,
+          LinkedHashMap::new));
 
   private final String name;
 
@@ -37,6 +45,13 @@ public enum DiseaseType {
       throw new IllegalArgumentException();
     }
     return VALUES[index - 1];
+  }
+
+  public static DiseaseType getValueFromName(final String name) {
+    if (!MAP.containsKey(name)) {
+      throw new IllegalArgumentException();
+    }
+    return MAP.get(name);
   }
 
   @Override

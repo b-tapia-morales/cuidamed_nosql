@@ -1,5 +1,10 @@
 package com.bairontapia.projects.cuidamed.mappings.healthcaresystem;
 
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import lombok.Getter;
 
 @Getter
@@ -8,6 +13,9 @@ public enum HealthCare {
   PRIVATE("Isapre");
 
   private static final HealthCare[] VALUES = values();
+  private static final Map<String, HealthCare> MAP = Arrays.stream(VALUES).collect(
+      Collectors.toMap(HealthCare::toString, Function.identity(), (v1, v2) -> v1,
+          LinkedHashMap::new));
 
   private final String name;
 
@@ -24,6 +32,13 @@ public enum HealthCare {
       throw new IllegalArgumentException();
     }
     return VALUES[index - 1];
+  }
+
+  public static HealthCare getValueFromName(final String name) {
+    if (!MAP.containsKey(name)) {
+      throw new IllegalArgumentException();
+    }
+    return MAP.get(name);
   }
 
   @Override

@@ -1,5 +1,10 @@
 package com.bairontapia.projects.cuidamed.mappings.bloodtype;
 
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import lombok.Getter;
 
 @Getter
@@ -14,6 +19,9 @@ public enum BloodType {
   O_PLUS("O+");
 
   private static final BloodType[] VALUES = values();
+  private static final Map<String, BloodType> MAP = Arrays.stream(VALUES).collect(
+      Collectors.toMap(BloodType::toString, Function.identity(), (v1, v2) -> v1,
+          LinkedHashMap::new));
 
   private final String name;
 
@@ -30,6 +38,13 @@ public enum BloodType {
       throw new IllegalArgumentException();
     }
     return VALUES[index - 1];
+  }
+
+  public static BloodType getValueFromName(final String name) {
+    if (!MAP.containsKey(name)) {
+      throw new IllegalArgumentException();
+    }
+    return MAP.get(name);
   }
 
   @Override
