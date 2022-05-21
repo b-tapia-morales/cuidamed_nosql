@@ -21,7 +21,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class EldersView {
+public class EldersListView {
 
   private static final ClassLoader CLASS_LOADER = Thread.currentThread().getContextClassLoader();
 
@@ -62,12 +62,16 @@ public class EldersView {
   }
 
   @FXML
-  public void onRegistryDoubleClicked(final MouseEvent event) throws IOException {
+  public void onTableRegistryDoubleClicked(final MouseEvent event) throws IOException {
+    if (!event.getButton().equals(MouseButton.PRIMARY) || event.getClickCount() != 2 ||
+        tableView.getSelectionModel().isEmpty()) {
+      return;
+    }
     loadPanelAndData(event);
   }
 
-  public void onViewRegistryButtonClicked(final MouseEvent event) {
-    if (!event.getButton().equals(MouseButton.PRIMARY) || event.getClickCount() != 2) {
+  public void onViewRegistryButtonClicked(final MouseEvent event) throws IOException {
+    if (tableView.getSelectionModel().isEmpty()) {
       return;
     }
     loadPanelAndData(event);
@@ -77,23 +81,16 @@ public class EldersView {
 
   }
 
-  private void loadPanelAndData(final MouseEvent event) {
-    if (tableView.getSelectionModel().isEmpty()) {
-      return;
-    }
+  private void loadPanelAndData(final MouseEvent event) throws IOException {
     var elder = tableView.getSelectionModel().getSelectedItem();
     var node = (Node) event.getSource();
     var stage = (Stage) node.getScene().getWindow();
     stage.close();
-    try {
-      var root = FXMLLoader.<Parent>load(
-          Objects.requireNonNull(CLASS_LOADER.getResource("fxml/elder_editable.fxml")));
-      stage.setUserData(elder);
-      var scene = new Scene(root);
-      stage.setScene(scene);
-      stage.show();
-    } catch (IOException exception) {
-      exception.printStackTrace();
-    }
+    var root = FXMLLoader.<Parent>load(
+        Objects.requireNonNull(CLASS_LOADER.getResource("fxml/elder_view.fxml")));
+    stage.setUserData(elder);
+    var scene = new Scene(root);
+    stage.setScene(scene);
+    stage.show();
   }
 }
