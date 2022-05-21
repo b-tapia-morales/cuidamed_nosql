@@ -1,6 +1,5 @@
 package com.bairontapia.projects.cuidamed.pojo;
 
-import com.bairontapia.projects.cuidamed.connection.MongoConnectionSingleton;
 import com.bairontapia.projects.cuidamed.daotemplate.IReadOnlyDAO;
 import org.bson.types.ObjectId;
 
@@ -15,7 +14,7 @@ import static com.mongodb.client.model.Filters.eq;
 public class MedicalRecordPOJODAO implements IReadOnlyDAO<MedicalRecordPOJO, ObjectId> {
   @Override
   public Optional<MedicalRecordPOJO> find(ObjectId elderId) {
-    var mongoConnection = MongoConnectionSingleton.getConnection();
+    var mongoConnection = MongoClientSingleton.getInstance();
     var database = mongoConnection.getDatabase("admin");
     var elderColl = database.getCollection("elder", ElderPOJO.class);
     var elder = elderColl.find(eq("_id", elderId)).first();
@@ -24,7 +23,7 @@ public class MedicalRecordPOJODAO implements IReadOnlyDAO<MedicalRecordPOJO, Obj
 
   @Override
   public Collection<MedicalRecordPOJO> findAll() {
-    var mongoConnection = MongoConnectionSingleton.getConnection();
+    var mongoConnection = MongoClientSingleton.getInstance();
     var database = mongoConnection.getDatabase("admin");
     var elderColl = database.getCollection("elder", ElderPOJO.class);
     var elders = elderColl.find().into(new ArrayList<>());

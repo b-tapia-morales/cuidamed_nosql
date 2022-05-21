@@ -1,6 +1,5 @@
 package com.bairontapia.projects.cuidamed.pojo;
 
-import com.bairontapia.projects.cuidamed.connection.MongoConnectionSingleton;
 import com.bairontapia.projects.cuidamed.daotemplate.ICrudDAO;
 import org.bson.types.ObjectId;
 
@@ -17,7 +16,7 @@ import static com.mongodb.client.model.Updates.set;
 public class ElderPOJODAO implements ICrudDAO<ElderPOJO, ObjectId> {
   @Override
   public void update(ElderPOJO elderPOJO) {
-    var mongoConnection = MongoConnectionSingleton.getConnection();
+    var mongoConnection = MongoClientSingleton.getInstance();
     var database = mongoConnection.getDatabase("admin");
     var elderColl = database.getCollection("elder", ElderPOJO.class);
 
@@ -42,7 +41,7 @@ public class ElderPOJODAO implements ICrudDAO<ElderPOJO, ObjectId> {
 
   @Override
   public Optional<ElderPOJO> find(ObjectId elderId) {
-    var mongoConnection = MongoConnectionSingleton.getConnection();
+    var mongoConnection = MongoClientSingleton.getInstance();
     var database = mongoConnection.getDatabase("admin");
     var elderColl = database.getCollection("elder", ElderPOJO.class);
     var elder = elderColl.find(eq("_id", elderId)).first();
@@ -51,7 +50,7 @@ public class ElderPOJODAO implements ICrudDAO<ElderPOJO, ObjectId> {
 
   // only for testing
   public Optional<ElderPOJO> findByRut(String rut) {
-    var mongoConnection = MongoConnectionSingleton.getConnection();
+    var mongoConnection = MongoClientSingleton.getInstance();
     var database = mongoConnection.getDatabase("admin");
     var elderColl = database.getCollection("elder", ElderPOJO.class);
     var elder = elderColl.find(eq("rut", rut)).first();
@@ -60,7 +59,7 @@ public class ElderPOJODAO implements ICrudDAO<ElderPOJO, ObjectId> {
 
   @Override
   public Collection<ElderPOJO> findAll() {
-    var mongoConnection = MongoConnectionSingleton.getConnection();
+    var mongoConnection = MongoClientSingleton.getInstance();
     var database = mongoConnection.getDatabase("admin");
     var elderColl = database.getCollection("elder", ElderPOJO.class);
     var elders = new ArrayList<ElderPOJO>();

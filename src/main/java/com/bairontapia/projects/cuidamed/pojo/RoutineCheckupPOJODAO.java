@@ -17,7 +17,7 @@ public class RoutineCheckupPOJODAO
 
   @Override
   public void save(RoutineCheckupPOJO routineCheckupPOJO) {
-    var mongoConnection = MongoConnectionSingleton.getConnection();
+    var mongoConnection = MongoClientSingleton.getInstance();
     var database = mongoConnection.getDatabase("admin");
     var rcColl = database.getCollection("routine_checkup", RoutineCheckupPOJO.class);
     rcColl.insertOne(routineCheckupPOJO);
@@ -30,7 +30,7 @@ public class RoutineCheckupPOJODAO
 
   @Override
   public Collection<RoutineCheckupPOJO> findAll() {
-    var mongoConnection = MongoConnectionSingleton.getConnection();
+    var mongoConnection = MongoClientSingleton.getInstance();
     var database = mongoConnection.getDatabase("admin");
     var rcColl = database.getCollection("routine_checkup", RoutineCheckupPOJO.class);
     return rcColl.find().into(new ArrayList<>());
@@ -38,7 +38,7 @@ public class RoutineCheckupPOJODAO
 
   @Override
   public Collection<RoutineCheckupPOJO> findAll(ObjectId elderId) {
-    var mongoConnection = MongoConnectionSingleton.getConnection();
+    var mongoConnection = MongoClientSingleton.getInstance();
     var database = mongoConnection.getDatabase("admin");
     var rcColl = database.getCollection("routine_checkup", RoutineCheckupPOJO.class);
     return rcColl.find(eq("elderId", elderId)).sort(descending("checkupDate"))

@@ -21,7 +21,7 @@ public class DiagnosticPOJODAO
 
   // using this one instead
   public void saveIntoElder(ObjectId elderId, DiagnosticPOJO diagnosticPOJO) {
-    var mongoConnection = MongoConnectionSingleton.getConnection();
+    var mongoConnection = MongoClientSingleton.getInstance();
     var database = mongoConnection.getDatabase("admin");
     var elderColl = database.getCollection("elder", ElderPOJO.class);
     var elder = elderColl.find(eq("_id", elderId)).first();
@@ -55,7 +55,7 @@ public class DiagnosticPOJODAO
 
   @Override
   public Collection<DiagnosticPOJO> findAll(ObjectId elderId) {
-    var mongoConnection = MongoConnectionSingleton.getConnection();
+    var mongoConnection = MongoClientSingleton.getInstance();
     var database = mongoConnection.getDatabase("admin");
 
     var elderColl = database.getCollection("elder", ElderPOJO.class);
