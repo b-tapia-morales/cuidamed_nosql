@@ -28,4 +28,14 @@ public class MedicationPOJO {
     this.measureUnit = medication.measureUnit().toString();
     this.pharmaceuticalForm = medication.pharmaceuticalForm().toString();
   }
+
+  @Override
+  public String toString() {
+    return "MedicationPOJO{" +
+            "name='" + name + '\'' +
+            ", administrationRoute='" + administrationRoute + '\'' +
+            ", measureUnit='" + measureUnit + '\'' +
+            ", pharmaceuticalForm='" + pharmaceuticalForm + '\'' +
+            '}';
+  }
 }

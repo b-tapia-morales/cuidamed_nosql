@@ -5,14 +5,14 @@ import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 import com.bairontapia.projects.cuidamed.connection.MongoConnectionSingleton;
-import com.bairontapia.projects.cuidamed.pojo.ElderPOJO;
-import com.bairontapia.projects.cuidamed.pojo.ElderPOJODAO;
-import com.bairontapia.projects.cuidamed.pojo.ResponsiblePOJODAO;
-import com.bairontapia.projects.cuidamed.pojo.RoutineCheckupPOJO;
+import com.bairontapia.projects.cuidamed.medicalrecord.routinecheckup.RoutineCheckup;
+import com.bairontapia.projects.cuidamed.pojo.*;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,19 +26,28 @@ public class CuidaMedApplication {
 
     var mongoConnection = MongoConnectionSingleton.getConnection();
 
-    //var elderColl = database.getCollection("elder", ElderPOJO.class);
-    //var routineCheckupColl = database.getCollection("routine_checkup", RoutineCheckupPOJO.class);
+    // var elderColl = database.getCollection("elder", ElderPOJO.class);
+    // var routineCheckupColl = database.getCollection("routine_checkup", RoutineCheckupPOJO.class);
     var routineCheckups = new ArrayList<RoutineCheckupPOJO>();
     var elderDao = new ElderPOJODAO();
     var responsibleDAO = new ResponsiblePOJODAO();
+    var medicalRecordDAO = new MedicalRecordPOJODAO();
+    var routineCheckupDAO = new RoutineCheckupPOJODAO();
     var e = elderDao.find("3988832-7");
-    e.orElseThrow().setFirstName("el pepe");
     elderDao.update(e.get());
     System.out.println(elderDao.find("3988832-7"));
-    System.out.println(responsibleDAO.find("12308230-3"));
-    System.out.println(responsibleDAO.findAll());
+    System.out.println(medicalRecordDAO.findAll());
+    System.out.println(responsibleDAO.find("3988832-7"));
+    // System.out.println(responsibleDAO.findAll());
 
-    //System.out.println(elderDao.findAll());
+    var newRC =
+        RoutineCheckup.createInstance(
+            "3988832-7", Date.valueOf("2022-05-23"), 2.21, 60.0, 20.0, 55, 170, 180, 36.5);
+    routineCheckupDAO.save(new RoutineCheckupPOJO(newRC,e.get().getId()));
+    System.out.println(routineCheckupDAO.findAll(e.get().getId()));
+    // System.out.println(routineCheckupDAO.findAll());
+
+    // System.out.println(elderDao.findAll());
     /*
     var e = elderColl.find(eq("rut", "3988832-7")).first();
     var rc = routineCheckupColl.find(eq("elderId", e.getId())).into(routineCheckups);
@@ -46,7 +55,7 @@ public class CuidaMedApplication {
     System.out.println(e.getResponsible().toString());
      */
 
-    //System.out.println(routineCheckups);
+    // System.out.println(routineCheckups);
     /*
     var database = mongoClient.getDatabase("admin");
     var elderColl = database.getCollection("elder", ElderPOJO.class);
