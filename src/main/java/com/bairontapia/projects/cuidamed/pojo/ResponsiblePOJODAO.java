@@ -1,20 +1,18 @@
 package com.bairontapia.projects.cuidamed.pojo;
 
-import com.bairontapia.projects.cuidamed.connection.MongoConnectionSingleton;
-import com.bairontapia.projects.cuidamed.daotemplate.IReadOnlyDAO;
-import com.mongodb.Block;
+import static com.mongodb.client.model.Filters.eq;
 
+import com.bairontapia.projects.cuidamed.connection.MongoClientSingleton;
+import com.bairontapia.projects.cuidamed.daotemplate.IReadOnlyDAO;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
-import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Filters.lte;
-
 public class ResponsiblePOJODAO implements IReadOnlyDAO<ResponsiblePOJO, String> {
+
   @Override
   public Optional<ResponsiblePOJO> find(String elderRut) {
-    var mongoConnection = MongoConnectionSingleton.getConnection();
+    var mongoConnection = MongoClientSingleton.getInstance();
     var database = mongoConnection.getDatabase("Cuidamed_DB");
     var elderColl = database.getCollection("elder", ElderPOJO.class);
     var e = elderColl.find(eq("rut", elderRut)).first();
@@ -23,7 +21,7 @@ public class ResponsiblePOJODAO implements IReadOnlyDAO<ResponsiblePOJO, String>
 
   @Override
   public Collection<ResponsiblePOJO> findAll() {
-    var mongoConnection = MongoConnectionSingleton.getConnection();
+    var mongoConnection = MongoClientSingleton.getInstance();
     var database = mongoConnection.getDatabase("Cuidamed_DB");
     var elderColl = database.getCollection("elder", ElderPOJO.class);
     var elders = elderColl.find().into(new ArrayList<>());

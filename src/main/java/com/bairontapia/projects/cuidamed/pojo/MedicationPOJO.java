@@ -32,10 +32,10 @@ public class MedicationPOJO {
   @Override
   public String toString() {
     return "MedicationPOJO{" +
-            "name='" + name + '\'' +
-            ", administrationRoute='" + administrationRoute + '\'' +
-            ", measureUnit='" + measureUnit + '\'' +
-            ", pharmaceuticalForm='" + pharmaceuticalForm + '\'' +
-            '}';
+        "name='" + name + '\'' +
+        ", administrationRoute='" + administrationRoute + '\'' +
+        ", measureUnit='" + measureUnit + '\'' +
+        ", pharmaceuticalForm='" + pharmaceuticalForm + '\'' +
+        '}';
   }
 }

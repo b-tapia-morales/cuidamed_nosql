@@ -9,11 +9,18 @@ import lombok.Setter;
 
 public class DiagnosticPOJO {
 
-  @Getter @Setter private LocalDate date;
-  @Getter @Setter private DiseasePOJO disease;
-  @Getter @Setter private List<MedicationPrescriptionPOJO> medicationPrescriptions;
+  @Getter
+  @Setter
+  private LocalDate date;
+  @Getter
+  @Setter
+  private DiseasePOJO disease;
+  @Getter
+  @Setter
+  private List<MedicationPrescriptionPOJO> medicationPrescriptions;
 
-  public DiagnosticPOJO() {}
+  public DiagnosticPOJO() {
+  }
 
   public DiagnosticPOJO(
       final Diagnostic diagnostic,

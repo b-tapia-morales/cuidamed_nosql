@@ -1,25 +1,25 @@
 package com.bairontapia.projects.cuidamed.pojo;
 
-import com.bairontapia.projects.cuidamed.connection.MongoConnectionSingleton;
-import com.bairontapia.projects.cuidamed.daotemplate.IOneToManyDAO;
-import com.bairontapia.projects.cuidamed.daotemplate.IReadAndWriteDAO;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Optional;
-
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
 
+import com.bairontapia.projects.cuidamed.connection.MongoClientSingleton;
+import com.bairontapia.projects.cuidamed.daotemplate.IOneToManyDAO;
+import com.bairontapia.projects.cuidamed.daotemplate.IReadAndWriteDAO;
+import java.util.Collection;
+import java.util.Optional;
+
 public class DiagnosticPOJODAO
     implements IOneToManyDAO<DiagnosticPOJO, String>, IReadAndWriteDAO<DiagnosticPOJO, String> {
+
   @Override
-  public void save(DiagnosticPOJO diagnosticPOJO) {}
+  public void save(DiagnosticPOJO diagnosticPOJO) {
+  }
 
   // using this one instead
   public void saveIntoElder(String elderRut, DiagnosticPOJO diagnosticPOJO) {
-    var mongoConnection = MongoConnectionSingleton.getConnection();
+    var mongoConnection = MongoClientSingleton.getInstance();
     var database = mongoConnection.getDatabase("Cuidamed_DB");
     var elderColl = database.getCollection("elder", ElderPOJO.class);
     var elder = elderColl.find(eq("rut", elderRut)).first();
@@ -53,7 +53,7 @@ public class DiagnosticPOJODAO
 
   @Override
   public Collection<DiagnosticPOJO> findAll(String elderRut) {
-    var mongoConnection = MongoConnectionSingleton.getConnection();
+    var mongoConnection = MongoClientSingleton.getInstance();
     var database = mongoConnection.getDatabase("Cuidamed_DB");
     var elderColl = database.getCollection("elder", ElderPOJO.class);
     var elder = elderColl.find(eq("rut", elderRut)).first();
