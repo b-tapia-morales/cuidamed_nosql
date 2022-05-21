@@ -4,9 +4,10 @@ import com.bairontapia.projects.cuidamed.connection.MongoConnectionSingleton;
 import com.bairontapia.projects.cuidamed.daotemplate.ICrudDAO;
 import org.bson.types.ObjectId;
 
+import com.bairontapia.projects.cuidamed.connection.MongoClientSingleton;
+import com.bairontapia.projects.cuidamed.daotemplate.ICrudDAO;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 import static com.mongodb.client.model.Filters.eq;
@@ -36,7 +37,8 @@ public class ElderPOJODAO implements ICrudDAO<ElderPOJO, ObjectId> {
   }
 
   @Override
-  public void save(ElderPOJO elderPOJO) {}
+  public void save(ElderPOJO elderPOJO) {
+  }
 
   @Override
   public Optional<ElderPOJO> find(ObjectId elderId) {

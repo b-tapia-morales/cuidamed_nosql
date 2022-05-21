@@ -5,6 +5,8 @@ import com.bairontapia.projects.cuidamed.daotemplate.IReadOnlyDAO;
 import com.mongodb.Block;
 import org.bson.types.ObjectId;
 
+import com.bairontapia.projects.cuidamed.connection.MongoClientSingleton;
+import com.bairontapia.projects.cuidamed.daotemplate.IReadOnlyDAO;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
