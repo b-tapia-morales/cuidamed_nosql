@@ -1,6 +1,7 @@
 package com.bairontapia.projects.cuidamed.mvc;
 
 import com.bairontapia.projects.cuidamed.pojo.ElderPOJO;
+import com.bairontapia.projects.cuidamed.pojo.ElderPojoDAO;
 import com.bairontapia.projects.cuidamed.utils.validation.RutUtils;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -59,6 +60,7 @@ public class EldersListView {
     genderColumn.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().getGender()));
     admissionColumn.setCellValueFactory(
         e -> new SimpleObjectProperty<>(e.getValue().getAdmissionDate()));
+    tableView.getItems().addAll(ElderPojoDAO.getInstance().findAll());
   }
 
   @FXML

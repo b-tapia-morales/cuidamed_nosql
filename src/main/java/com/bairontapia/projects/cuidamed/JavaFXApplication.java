@@ -16,10 +16,10 @@ public class JavaFXApplication extends Application {
 
   @Override
   public void start(final Stage stage) throws IOException {
-    final Parent root =
-        FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/main_window.fxml")));
+    final Parent root = FXMLLoader.load(
+        Objects.requireNonNull(getClass().getResource("/fxml/elders_list_view.fxml")));
     final var scene = new Scene(root);
-    stage.setTitle("Cuidamed");
+    stage.setTitle("CuidaMed");
     stage.setScene(scene);
     stage.setResizable(false);
     stage.show();
