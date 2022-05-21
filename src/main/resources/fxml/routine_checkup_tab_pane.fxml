@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="186.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TableView fx:id="checkupTableView" prefHeight="186.0" prefWidth="747.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <columns>
+            <TableColumn fx:id="checkupDate" editable="false" prefWidth="90.0" resizable="false" text="Fecha" />
+            <TableColumn fx:id="height" editable="false" prefWidth="75.0" resizable="false" text="Altura" />
+            <TableColumn fx:id="weight" editable="false" prefWidth="75.0" resizable="false" text="Peso" />
+            <TableColumn fx:id="bmi" editable="false" prefWidth="75.0" resizable="false" text="IMC" />
+            <TableColumn fx:id="heartRate" editable="false" prefWidth="110.0" resizable="false" text="Ritmo cardíaco" />
+            <TableColumn fx:id="diastolicPressure" editable="false" prefWidth="110.0" resizable="false" text="Presión diastólica" />
+            <TableColumn fx:id="systolicPressure" editable="false" prefWidth="110.0" resizable="false" text="Presión sistólica" />
+            <TableColumn fx:id="bodyTemperature" editable="false" prefWidth="100.0" resizable="false" text="Temperatura" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>
