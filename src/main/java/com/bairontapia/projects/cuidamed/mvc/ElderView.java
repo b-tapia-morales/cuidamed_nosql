@@ -6,6 +6,7 @@ import com.bairontapia.projects.cuidamed.mappings.healthcaresystem.HealthCare;
 import com.bairontapia.projects.cuidamed.pojo.ElderPOJO;
 import com.bairontapia.projects.cuidamed.pojo.MedicalRecordPOJO;
 import com.bairontapia.projects.cuidamed.pojo.ResponsiblePOJO;
+import com.bairontapia.projects.cuidamed.pojo.RoutineCheckupPojoDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -72,10 +73,6 @@ public class ElderView {
   @FXML
   private MedicationPrescriptionView medicationPrescriptionController;
 
-
-  @FXML
-  private RoutineCheckupView routineCheckupView;
-
   public void initialize() {
     genderComboBox.getItems().addAll(Gender.getValues());
     bloodTypeComboBox.getItems().addAll(BloodType.getValues());
@@ -95,6 +92,8 @@ public class ElderView {
     fillElderFields(elder);
     fillMedicalRecordFields(elder.getMedicalRecord());
     fillResponsibleFields(elder.getResponsible());
+    var routineCheckups = RoutineCheckupPojoDAO.getInstance().findAll(elder.getId());
+    routineCheckupController.getCheckupTableView().getItems().addAll(routineCheckups);
   }
 
   private void fillElderFields(ElderPOJO elder) {
