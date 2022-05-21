@@ -309,11 +309,11 @@
     </HBox>
     <VBox>
       <TabPane fx:id="tabPane" prefHeight="215.0" tabClosingPolicy="UNAVAILABLE">
-        <Tab text="Chequeos rutinarios">
-          <fx:include fx:id="routineCheckupTab" source="routine_checkup_tab_pane.fxml"/>
+        <Tab text="Chequeos rutinarios" fx:id="routineCheckupTab">
+          <fx:include fx:id="routineCheckup" source="routine_checkup_tab_pane.fxml"/>
         </Tab>
-        <Tab text="Medicamentos">
-          <fx:include fx:id="prescriptionTab" source="medication_prescription_tab_pane.fxml"/>
+        <Tab text="Medicamentos" fx:id="prescriptionTab">
+          <fx:include fx:id="prescription" source="medication_prescription_tab_pane.fxml"/>
         </Tab>
       </TabPane>
     </VBox>

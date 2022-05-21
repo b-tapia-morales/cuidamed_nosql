@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -64,9 +65,17 @@ public class ElderView {
   @FXML
   private TabPane tabPane;
   @FXML
-  private AnchorPane routineCheckupTab;
+  private Tab routineCheckupTab;
   @FXML
-  private AnchorPane prescriptionTab;
+  private RoutineCheckupView routineCheckupController;
+  @FXML
+  private Tab prescriptionTab;
+  @FXML
+  private MedicationPrescriptionView medicationPrescriptionController;
+
+
+  @FXML
+  private RoutineCheckupView routineCheckupView;
 
   @FXML
   private void receiveData(MouseEvent event) {

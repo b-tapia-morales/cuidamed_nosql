@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-public class MedicationPrescriptionTabPane {
+public class MedicationPrescriptionView {
 
   @FXML
   private TableView<DiagnosticPOJO> administrationTable;

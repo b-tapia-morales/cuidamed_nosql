@@ -7,7 +7,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
   prefHeight="186.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
-  fx:controller="com.bairontapia.projects.cuidamed.mvc.RoutineCheckupTabPane">
+  fx:controller="com.bairontapia.projects.cuidamed.mvc.RoutineCheckupView">
    <TableView fx:id="checkupTableView" prefHeight="186.0" prefWidth="747.0"
      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
      AnchorPane.topAnchor="0.0">

@@ -4,7 +4,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <AnchorPane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
-  fx:controller="com.bairontapia.projects.cuidamed.mvc.MedicationPrescriptionTabPane">
+  fx:controller="com.bairontapia.projects.cuidamed.mvc.MedicationPrescriptionView">
   <TableView fx:id="administrationTable" prefHeight="186.0">
     <columns>
       <TableColumn fx:id="diseaseName" editable="false" prefWidth="140.0" text="Enfermedad"/>
