@@ -5,6 +5,9 @@ import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 import com.bairontapia.projects.cuidamed.connection.MongoConnectionSingleton;
+import com.bairontapia.projects.cuidamed.disease.Disease;
+import com.bairontapia.projects.cuidamed.disease.diagnostic.Diagnostic;
+import com.bairontapia.projects.cuidamed.mappings.diseasetype.DiseaseType;
 import com.bairontapia.projects.cuidamed.medicalrecord.routinecheckup.RoutineCheckup;
 import com.bairontapia.projects.cuidamed.pojo.*;
 import com.mongodb.MongoClient;
@@ -33,6 +36,7 @@ public class CuidaMedApplication {
     var responsibleDAO = new ResponsiblePOJODAO();
     var medicalRecordDAO = new MedicalRecordPOJODAO();
     var routineCheckupDAO = new RoutineCheckupPOJODAO();
+    var diagnosticDAO = new DiagnosticPOJODAO();
     var e = elderDao.find("3988832-7");
     elderDao.update(e.get());
     System.out.println(elderDao.find("3988832-7"));
@@ -42,9 +46,15 @@ public class CuidaMedApplication {
 
     var newRC =
         RoutineCheckup.createInstance(
-            "3988832-7", Date.valueOf("2022-05-23"), 2.21, 60.0, 20.0, 55, 170, 180, 36.5);
+            e.get().getRut(), Date.valueOf("2022-05-23"), 2.21, 60.0, 20.0, 55, 170, 180, 36.5);
     routineCheckupDAO.save(new RoutineCheckupPOJO(newRC,e.get().getId()));
     System.out.println(routineCheckupDAO.findAll(e.get().getId()));
+
+    var newDiagnostic = Diagnostic.createInstance(e.get().getRut(),"Resfriado súper mega fuerte", Date.valueOf("2022-05-21"),"Bastante fuerte");
+    var newDisease = Disease.createInstance(newDiagnostic.diseaseName(),(short) DiseaseType.getValueFromIndex(1).getIndex(),true);
+    diagnosticDAO.saveIntoElder(e.get().getRut(), new DiagnosticPOJO(newDiagnostic, newDisease, new ArrayList<>()));
+    System.out.println(diagnosticDAO.findAll(e.get().getRut()));
+
     // System.out.println(routineCheckupDAO.findAll());
 
     // System.out.println(elderDao.findAll());
