@@ -3,6 +3,7 @@ package com.bairontapia.projects.cuidamed.mvc;
 import com.bairontapia.projects.cuidamed.mappings.bloodtype.BloodType;
 import com.bairontapia.projects.cuidamed.mappings.gender.Gender;
 import com.bairontapia.projects.cuidamed.mappings.healthcaresystem.HealthCare;
+import com.bairontapia.projects.cuidamed.person.elder.Elder;
 import com.bairontapia.projects.cuidamed.pojo.ElderPOJO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -77,14 +78,22 @@ public class ElderView {
   @FXML
   private RoutineCheckupView routineCheckupView;
 
-  @FXML
-  private void receiveData(MouseEvent event) {
-    Node node = (Node) event.getSource();
-    Stage stage = (Stage) node.getScene().getWindow();
-    var elder = (ElderPOJO) stage.getUserData();
+  public void receiveData(ElderPOJO elder) {
+    fillFields(elder);
   }
 
   @FXML
   public void addColumn(ActionEvent actionEvent) {
+  }
+
+  private void fillFields(ElderPOJO elder) {
+    rut.setText(elder.getRut());
+    name.setText(elder.getFirstName());
+    lastName.setText(elder.getLastName());
+    secondLastName.setText(elder.getSecondLastName());
+    age.setText(elder.getAge().toString());
+    birthDatePicker.setValue(elder.getBirthDate());
+    isActiveCheckBox.setSelected(elder.getIsActive());
+    admissionDatePicker.setValue(elder.getAdmissionDate());
   }
 }
