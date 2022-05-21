@@ -7,22 +7,24 @@ import static com.mongodb.client.model.Updates.set;
 import com.bairontapia.projects.cuidamed.connection.MongoClientSingleton;
 import com.bairontapia.projects.cuidamed.daotemplate.IOneToManyDAO;
 import com.bairontapia.projects.cuidamed.daotemplate.IReadAndWriteDAO;
+import org.bson.types.ObjectId;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
 public class DiagnosticPOJODAO
-    implements IOneToManyDAO<DiagnosticPOJO, String>, IReadAndWriteDAO<DiagnosticPOJO, String> {
-
+    implements IOneToManyDAO<DiagnosticPOJO, ObjectId>, IReadAndWriteDAO<DiagnosticPOJO, ObjectId> {
   @Override
   public void save(DiagnosticPOJO diagnosticPOJO) {
   }
 
   // using this one instead
-  public void saveIntoElder(String elderRut, DiagnosticPOJO diagnosticPOJO) {
+  public void saveIntoElder(ObjectId elderId, DiagnosticPOJO diagnosticPOJO) {
     var mongoConnection = MongoClientSingleton.getInstance();
-    var database = mongoConnection.getDatabase("Cuidamed_DB");
+    var database = mongoConnection.getDatabase("admin");
     var elderColl = database.getCollection("elder", ElderPOJO.class);
-    var elder = elderColl.find(eq("rut", elderRut)).first();
+    var elder = elderColl.find(eq("_id", elderId)).first();
     var diagnostics = elder.getDiagnostics();
     diagnostics.add(diagnosticPOJO);
 
@@ -42,7 +44,7 @@ public class DiagnosticPOJODAO
   }
 
   @Override
-  public Optional<DiagnosticPOJO> find(String elderRut) {
+  public Optional<DiagnosticPOJO> find(ObjectId elderId) {
     return Optional.empty();
   }
 
@@ -52,11 +54,12 @@ public class DiagnosticPOJODAO
   }
 
   @Override
-  public Collection<DiagnosticPOJO> findAll(String elderRut) {
+  public Collection<DiagnosticPOJO> findAll(ObjectId elderId) {
     var mongoConnection = MongoClientSingleton.getInstance();
-    var database = mongoConnection.getDatabase("Cuidamed_DB");
+    var database = mongoConnection.getDatabase("admin");
+
     var elderColl = database.getCollection("elder", ElderPOJO.class);
-    var elder = elderColl.find(eq("rut", elderRut)).first();
+    var elder = elderColl.find(eq("_id", elderId)).first();
     return elder.getDiagnostics();
   }
 }

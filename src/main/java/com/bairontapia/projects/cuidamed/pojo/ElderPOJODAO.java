@@ -1,8 +1,7 @@
 package com.bairontapia.projects.cuidamed.pojo;
 
-import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Updates.combine;
-import static com.mongodb.client.model.Updates.set;
+import com.bairontapia.projects.cuidamed.daotemplate.ICrudDAO;
+import org.bson.types.ObjectId;
 
 import com.bairontapia.projects.cuidamed.connection.MongoClientSingleton;
 import com.bairontapia.projects.cuidamed.daotemplate.ICrudDAO;
@@ -10,16 +9,19 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
-public class ElderPOJODAO implements ICrudDAO<ElderPOJO, String> {
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Updates.combine;
+import static com.mongodb.client.model.Updates.set;
 
+public class ElderPOJODAO implements ICrudDAO<ElderPOJO, ObjectId> {
   @Override
   public void update(ElderPOJO elderPOJO) {
     var mongoConnection = MongoClientSingleton.getInstance();
-    var database = mongoConnection.getDatabase("Cuidamed_DB");
+    var database = mongoConnection.getDatabase("admin");
     var elderColl = database.getCollection("elder", ElderPOJO.class);
 
     elderColl.updateOne(
-        eq("rut", elderPOJO.getRut()),
+        eq("_id", elderPOJO.getId()),
         combine(
             set("rut", elderPOJO.getRut()),
             set("firstName", elderPOJO.getFirstName()),
@@ -38,9 +40,18 @@ public class ElderPOJODAO implements ICrudDAO<ElderPOJO, String> {
   }
 
   @Override
-  public Optional<ElderPOJO> find(String rut) {
+  public Optional<ElderPOJO> find(ObjectId elderId) {
     var mongoConnection = MongoClientSingleton.getInstance();
-    var database = mongoConnection.getDatabase("Cuidamed_DB");
+    var database = mongoConnection.getDatabase("admin");
+    var elderColl = database.getCollection("elder", ElderPOJO.class);
+    var elder = elderColl.find(eq("_id", elderId)).first();
+    return Optional.of(elder);
+  }
+
+  // only for testing
+  public Optional<ElderPOJO> findByRut(String rut) {
+    var mongoConnection = MongoClientSingleton.getInstance();
+    var database = mongoConnection.getDatabase("admin");
     var elderColl = database.getCollection("elder", ElderPOJO.class);
     var elder = elderColl.find(eq("rut", rut)).first();
     return Optional.of(elder);
@@ -49,7 +60,7 @@ public class ElderPOJODAO implements ICrudDAO<ElderPOJO, String> {
   @Override
   public Collection<ElderPOJO> findAll() {
     var mongoConnection = MongoClientSingleton.getInstance();
-    var database = mongoConnection.getDatabase("Cuidamed_DB");
+    var database = mongoConnection.getDatabase("admin");
     var elderColl = database.getCollection("elder", ElderPOJO.class);
     var elders = new ArrayList<ElderPOJO>();
     var findQuery = elderColl.find().into(elders);
