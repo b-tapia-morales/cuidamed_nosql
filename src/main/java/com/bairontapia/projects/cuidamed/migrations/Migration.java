@@ -78,6 +78,7 @@ public class Migration {
           RoutineCheckupDAO.getInstance().findAll(medicalRecord.rut()).stream()
               .map(e -> new RoutineCheckupPOJO(e, elderId)).toList();
       routineCheckupColl.insertMany(routineCheckupPOJOS);
+      elderColl.createIndex(Indexes.hashed("rut"));
       routineCheckupColl.createIndex(Indexes.hashed("elderId"));
     }
   }
