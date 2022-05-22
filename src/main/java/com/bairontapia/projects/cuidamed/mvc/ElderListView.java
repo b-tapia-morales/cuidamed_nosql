@@ -22,7 +22,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class EldersListView {
+public class ElderListView {
 
   private static final ClassLoader CLASS_LOADER = Thread.currentThread().getContextClassLoader();
 
@@ -60,6 +60,11 @@ public class EldersListView {
     genderColumn.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().getGender()));
     admissionColumn.setCellValueFactory(
         e -> new SimpleObjectProperty<>(e.getValue().getAdmissionDate()));
+    tableView.getItems().addAll(ElderPojoDAO.getInstance().findAll());
+  }
+
+  public void updateData() {
+    tableView.getItems().clear();
     tableView.getItems().addAll(ElderPojoDAO.getInstance().findAll());
   }
 
