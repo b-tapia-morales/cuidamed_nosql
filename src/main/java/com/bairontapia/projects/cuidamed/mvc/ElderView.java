@@ -8,8 +8,14 @@ import com.bairontapia.projects.cuidamed.pojo.ElderPOJO;
 import com.bairontapia.projects.cuidamed.pojo.MedicalRecordPOJO;
 import com.bairontapia.projects.cuidamed.pojo.ResponsiblePOJO;
 import com.bairontapia.projects.cuidamed.pojo.RoutineCheckupPojoDAO;
+import java.io.IOException;
+import java.util.Objects;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -17,10 +23,16 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class ElderView {
 
+  private static final ClassLoader CLASS_LOADER = Thread.currentThread().getContextClassLoader();
+
+  @FXML
+  private Button goBackButton;
   @FXML
   private AnchorPane pane;
   @FXML
@@ -127,5 +139,20 @@ public class ElderView {
     responsibleAge.setText(responsible.getAge().toString());
     responsibleGenderComboBox.setValue(Gender.getValueFromName(responsible.getGender()));
     responsibleMobilePhone.setText(responsible.getMobilePhone().toString());
+  }
+
+  @FXML
+  public void onGoBackButtonClicked(MouseEvent event) throws IOException {
+    var node = (Node) event.getSource();
+    var stage = (Stage) node.getScene().getWindow();
+    stage.close();
+    var loader = new FXMLLoader(
+        Objects.requireNonNull(CLASS_LOADER.getResource("fxml/elders_list_view.fxml")));
+    var root = loader.<Parent>load();
+    var controller = loader.<ElderListView>getController();
+    controller.updateData();
+    var scene = new Scene(root);
+    stage.setScene(scene);
+    stage.show();
   }
 }
