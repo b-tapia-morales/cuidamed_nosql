@@ -29,9 +29,9 @@ public class MedicationPrescriptionPOJO {
   }
 
   public MedicationPrescriptionPOJO(final MedicationPrescription medicationPrescription,
-      final Medication medication,
+      final MedicationPOJO medication,
       final List<MedicationAdministrationPOJO> medicationAdministrations) {
-    this.medication = new MedicationPOJO(medication);
+    this.medication = medication;
     this.startDate = medicationPrescription.startDate();
     this.endDate = medicationPrescription.endDate();
     this.quantity = medicationPrescription.quantity();

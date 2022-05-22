@@ -3,9 +3,12 @@ package com.bairontapia.projects.cuidamed.pojo;
 import com.bairontapia.projects.cuidamed.disease.Disease;
 import lombok.Getter;
 import lombok.Setter;
+import org.bson.types.ObjectId;
 
 public class DiseasePOJO {
 
+  @Getter
+  private ObjectId id;
   @Getter
   @Setter
   private String name;
@@ -20,6 +23,7 @@ public class DiseasePOJO {
   }
 
   public DiseasePOJO(final Disease disease) {
+    this.id = new ObjectId();
     this.name = disease.name();
     this.diseaseType = disease.diseaseType().toString();
     this.isChronic = disease.isChronic();
