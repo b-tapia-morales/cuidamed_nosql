@@ -85,6 +85,10 @@ public class ElderView {
   private Tab prescriptionTab;
   @FXML
   private MedicationPrescriptionView prescriptionController;
+  @FXML
+  private Button addCheckupButton;
+  @FXML
+  private Button addPrescriptionButton;
 
   public void initialize() {
     genderComboBox.getItems().addAll(Gender.getValues());
@@ -151,6 +155,33 @@ public class ElderView {
     var root = loader.<Parent>load();
     var controller = loader.<ElderListView>getController();
     controller.updateData();
+    var scene = new Scene(root);
+    stage.setScene(scene);
+    stage.show();
+  }
+
+  @FXML
+  public void onAddCheckupButtonClicked(MouseEvent event) throws IOException {
+    var node = (Node) event.getSource();
+    var stage = (Stage) node.getScene().getWindow();
+    stage.close();
+    var loader = new FXMLLoader(
+        Objects.requireNonNull(CLASS_LOADER.getResource("fxml/routine_checkup_dialog.fxml")));
+    var root = loader.<Parent>load();
+    var scene = new Scene(root);
+    stage.setScene(scene);
+    stage.show();
+  }
+
+  @FXML
+  public void onAddPrescriptionButtonClicked(MouseEvent event) throws IOException {
+    var node = (Node) event.getSource();
+    var stage = (Stage) node.getScene().getWindow();
+    stage.close();
+    var loader = new FXMLLoader(
+        Objects.requireNonNull(
+            CLASS_LOADER.getResource("fxml/medication_prescription_dialog.fxml")));
+    var root = loader.<Parent>load();
     var scene = new Scene(root);
     stage.setScene(scene);
     stage.show();

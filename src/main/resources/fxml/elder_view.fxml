@@ -306,12 +306,12 @@
       </TabPane>
     </VBox>
     <HBox alignment="CENTER" prefHeight="35.0" spacing="25.0">
-      <Button mnemonicParsing="false" text="Añadir chequeo rutinario">
+      <Button fx:id="addCheckupButton" mnemonicParsing="false" onMouseClicked="#onAddCheckupButtonClicked" text="Añadir chequeo rutinario">
         <font>
           <Font name="System Bold" size="12.0" />
         </font>
       </Button>
-      <Button mnemonicParsing="false" text="Añadir prescripción">
+      <Button fx:id="addPrescriptionButton" mnemonicParsing="false" onMouseClicked="#onAddPrescriptionButtonClicked" text="Añadir prescripción">
         <font>
           <Font name="System Bold" size="12.0" />
         </font>
