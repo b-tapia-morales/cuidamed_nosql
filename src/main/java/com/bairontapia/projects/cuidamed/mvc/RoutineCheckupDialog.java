@@ -1,5 +1,6 @@
 package com.bairontapia.projects.cuidamed.mvc;
 
+import com.bairontapia.projects.cuidamed.pojo.ElderPOJO;
 import java.io.IOException;
 import java.util.Objects;
 import javafx.event.ActionEvent;
@@ -12,10 +13,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import lombok.Getter;
+import lombok.Setter;
 
 public class RoutineCheckupDialog {
 
   private static final ClassLoader CLASS_LOADER = Thread.currentThread().getContextClassLoader();
+
+  @Getter
+  @Setter
+  private ElderPOJO elder;
 
   @FXML
   private DatePicker checkupDatePicker;
@@ -48,7 +55,8 @@ public class RoutineCheckupDialog {
     var loader = new FXMLLoader(
         Objects.requireNonNull(CLASS_LOADER.getResource("fxml/elder_view.fxml")));
     var root = loader.<Parent>load();
-    // var controller = loader.<ElderView>getController();
+    var controller = loader.<ElderView>getController();
+    controller.receiveData(elder);
     var scene = new Scene(root);
     stage.setScene(scene);
     stage.show();

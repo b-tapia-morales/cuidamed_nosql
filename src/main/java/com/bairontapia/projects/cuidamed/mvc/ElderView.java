@@ -26,10 +26,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lombok.Getter;
+import lombok.Setter;
 
 public class ElderView {
 
   private static final ClassLoader CLASS_LOADER = Thread.currentThread().getContextClassLoader();
+
+  @Getter
+  @Setter
+  private ElderPOJO elder;
 
   @FXML
   private Button goBackButton;
@@ -102,6 +108,7 @@ public class ElderView {
   }
 
   public void receiveData(ElderPOJO elder) {
+    setElder(elder);
     fillFields(elder);
   }
 
@@ -168,6 +175,8 @@ public class ElderView {
     var loader = new FXMLLoader(
         Objects.requireNonNull(CLASS_LOADER.getResource("fxml/routine_checkup_dialog.fxml")));
     var root = loader.<Parent>load();
+    var controller = loader.<RoutineCheckupDialog>getController();
+    controller.setElder(elder);
     var scene = new Scene(root);
     stage.setScene(scene);
     stage.show();
@@ -178,10 +187,11 @@ public class ElderView {
     var node = (Node) event.getSource();
     var stage = (Stage) node.getScene().getWindow();
     stage.close();
-    var loader = new FXMLLoader(
-        Objects.requireNonNull(
-            CLASS_LOADER.getResource("fxml/medication_prescription_dialog.fxml")));
+    var loader = new FXMLLoader(Objects.requireNonNull(
+        CLASS_LOADER.getResource("fxml/medication_prescription_dialog.fxml")));
     var root = loader.<Parent>load();
+    var controller = loader.<MedicationPrescriptionDialog>getController();
+    controller.setElder(elder);
     var scene = new Scene(root);
     stage.setScene(scene);
     stage.show();
