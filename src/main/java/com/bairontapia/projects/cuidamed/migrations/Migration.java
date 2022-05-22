@@ -1,15 +1,15 @@
 package com.bairontapia.projects.cuidamed.migrations;
 
 import com.bairontapia.projects.cuidamed.connection.MongoClientSingleton;
-import com.bairontapia.projects.cuidamed.disease.DiseaseDAO;
-import com.bairontapia.projects.cuidamed.disease.diagnostic.DiagnosticDAO;
-import com.bairontapia.projects.cuidamed.disease.medication.MedicationDAO;
-import com.bairontapia.projects.cuidamed.disease.medicationadministration.MedicationAdministrationDAO;
-import com.bairontapia.projects.cuidamed.disease.medicationprescription.MedicationPrescriptionDAO;
-import com.bairontapia.projects.cuidamed.medicalrecord.MedicalRecordDAO;
-import com.bairontapia.projects.cuidamed.medicalrecord.routinecheckup.RoutineCheckupDAO;
-import com.bairontapia.projects.cuidamed.person.elder.ElderDAO;
-import com.bairontapia.projects.cuidamed.person.responsible.ResponsibleDAO;
+import com.bairontapia.projects.cuidamed.relational.disease.DiseaseDAO;
+import com.bairontapia.projects.cuidamed.relational.disease.diagnostic.DiagnosticDAO;
+import com.bairontapia.projects.cuidamed.relational.disease.medication.MedicationDAO;
+import com.bairontapia.projects.cuidamed.relational.disease.medicationadministration.MedicationAdministrationDAO;
+import com.bairontapia.projects.cuidamed.relational.disease.medicationprescription.MedicationPrescriptionDAO;
+import com.bairontapia.projects.cuidamed.relational.medicalrecord.MedicalRecordDAO;
+import com.bairontapia.projects.cuidamed.relational.medicalrecord.routinecheckup.RoutineCheckupDAO;
+import com.bairontapia.projects.cuidamed.relational.person.elder.ElderDAO;
+import com.bairontapia.projects.cuidamed.relational.person.responsible.ResponsibleDAO;
 import com.bairontapia.projects.cuidamed.pojo.DiagnosticPOJO;
 import com.bairontapia.projects.cuidamed.pojo.DiseasePOJO;
 import com.bairontapia.projects.cuidamed.pojo.DiseasePojoDAO;

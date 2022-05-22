@@ -1,6 +1,6 @@
 package com.bairontapia.projects.cuidamed.pojo;
 
-import com.bairontapia.projects.cuidamed.medicalrecord.routinecheckup.RoutineCheckup;
+import com.bairontapia.projects.cuidamed.relational.medicalrecord.routinecheckup.RoutineCheckup;
 import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;

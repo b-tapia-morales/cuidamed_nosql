@@ -1,6 +1,6 @@
 package com.bairontapia.projects.cuidamed.pojo;
 
-import com.bairontapia.projects.cuidamed.medicalrecord.MedicalRecord;
+import com.bairontapia.projects.cuidamed.relational.medicalrecord.MedicalRecord;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,6 +1,6 @@
 package com.bairontapia.projects.cuidamed.pojo;
 
-import com.bairontapia.projects.cuidamed.person.elder.Elder;
+import com.bairontapia.projects.cuidamed.relational.person.elder.Elder;
 import com.bairontapia.projects.cuidamed.utils.validation.RutUtils;
 import java.time.LocalDate;
 import java.util.List;

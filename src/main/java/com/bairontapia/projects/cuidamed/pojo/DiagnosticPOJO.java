@@ -1,6 +1,6 @@
 package com.bairontapia.projects.cuidamed.pojo;
 
-import com.bairontapia.projects.cuidamed.disease.diagnostic.Diagnostic;
+import com.bairontapia.projects.cuidamed.relational.disease.diagnostic.Diagnostic;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.Getter;

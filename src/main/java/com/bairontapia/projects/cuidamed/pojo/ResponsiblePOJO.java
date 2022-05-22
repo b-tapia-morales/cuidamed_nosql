@@ -1,6 +1,6 @@
 package com.bairontapia.projects.cuidamed.pojo;
 
-import com.bairontapia.projects.cuidamed.person.responsible.Responsible;
+import com.bairontapia.projects.cuidamed.relational.person.responsible.Responsible;
 import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;

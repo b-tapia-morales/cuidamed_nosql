@@ -1,6 +1,6 @@
 package com.bairontapia.projects.cuidamed.pojo;
 
-import com.bairontapia.projects.cuidamed.disease.Disease;
+import com.bairontapia.projects.cuidamed.relational.disease.Disease;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.types.ObjectId;
