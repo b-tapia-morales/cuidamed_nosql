@@ -80,6 +80,7 @@ public class Migration {
       routineCheckupColl.insertMany(routineCheckupPOJOS);
       elderColl.createIndex(Indexes.hashed("rut"));
       routineCheckupColl.createIndex(Indexes.hashed("elderId"));
+      routineCheckupColl.createIndex(Indexes.descending("checkupDate"));
     }
   }
 
