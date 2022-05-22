@@ -36,14 +36,14 @@ public class MedicationPrescriptionView {
 
   public void initialize() {
     diseaseName.setCellValueFactory(
-        e -> new SimpleStringProperty(e.getValue().getDiseaseName()));
+        e -> new SimpleStringProperty(e.getValue().diseaseName()));
     diagnosticDate.setCellValueFactory(
-        e -> new SimpleStringProperty(e.getValue().getDiagnosticDate().format(DATE_FORMATTER)));
+        e -> new SimpleStringProperty(e.getValue().diagnosticDate().format(DATE_FORMATTER)));
     medicationName.setCellValueFactory(
-        e -> new SimpleStringProperty(e.getValue().getMedicationName()));
+        e -> new SimpleStringProperty(e.getValue().medicationName()));
     intakeDateTime.setCellValueFactory(
         e -> new SimpleStringProperty(
-            e.getValue().getIntakeDateTime().format(DATE_TIME_FORMATTER)));
-    intakeStatus.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().getIntakeStatus()));
+            e.getValue().intakeDateTime().format(DATE_TIME_FORMATTER)));
+    intakeStatus.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().intakeStatus()));
   }
 }

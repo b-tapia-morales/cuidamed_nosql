@@ -6,27 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 
-public class CustomAdministration {
-
-  @Getter
-  private final String diseaseName;
-  @Getter
-  private final LocalDate diagnosticDate;
-  @Getter
-  private final String medicationName;
-  @Getter
-  private final LocalDateTime intakeDateTime;
-  @Getter
-  private final String intakeStatus;
-
-  public CustomAdministration(String diseaseName, LocalDate diagnosticDate, String medicationName,
-      LocalDateTime intakeDateTime, String intakeStatus) {
-    this.diseaseName = diseaseName;
-    this.diagnosticDate = diagnosticDate;
-    this.medicationName = medicationName;
-    this.intakeDateTime = intakeDateTime;
-    this.intakeStatus = intakeStatus;
-  }
+public record CustomAdministration(@Getter String diseaseName,
+                                   @Getter LocalDate diagnosticDate,
+                                   @Getter String medicationName,
+                                   @Getter LocalDateTime intakeDateTime,
+                                   @Getter String intakeStatus) {
 
   public static List<CustomAdministration> map(List<DiagnosticPOJO> diagnostics) {
     var list = new ArrayList<CustomAdministration>();
