@@ -1,19 +1,16 @@
 package com.bairontapia.projects.cuidamed.pojo;
 
-import com.bairontapia.projects.cuidamed.daotemplate.IReadOnlyDAO;
-import com.mongodb.Block;
-import org.bson.types.ObjectId;
+import static com.mongodb.client.model.Filters.eq;
 
 import com.bairontapia.projects.cuidamed.connection.MongoClientSingleton;
 import com.bairontapia.projects.cuidamed.daotemplate.IReadOnlyDAO;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
-
-import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Filters.lte;
+import org.bson.types.ObjectId;
 
 public class ResponsiblePOJODAO implements IReadOnlyDAO<ResponsiblePOJO, ObjectId> {
+
   @Override
   public Optional<ResponsiblePOJO> find(ObjectId elderId) {
     var mongoConnection = MongoClientSingleton.getInstance();

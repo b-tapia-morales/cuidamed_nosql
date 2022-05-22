@@ -7,14 +7,13 @@ import static com.mongodb.client.model.Updates.set;
 import com.bairontapia.projects.cuidamed.connection.MongoClientSingleton;
 import com.bairontapia.projects.cuidamed.daotemplate.IOneToManyDAO;
 import com.bairontapia.projects.cuidamed.daotemplate.IReadAndWriteDAO;
-import org.bson.types.ObjectId;
-
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
+import org.bson.types.ObjectId;
 
 public class DiagnosticPOJODAO
     implements IOneToManyDAO<DiagnosticPOJO, ObjectId>, IReadAndWriteDAO<DiagnosticPOJO, ObjectId> {
+
   @Override
   public void save(DiagnosticPOJO diagnosticPOJO) {
   }
