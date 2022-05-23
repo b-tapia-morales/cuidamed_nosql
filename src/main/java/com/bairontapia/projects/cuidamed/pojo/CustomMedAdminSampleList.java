@@ -41,8 +41,9 @@ public class CustomMedAdminSampleList {
   }
 
   public static LocalDateTime roundToNearestHour(final LocalDateTime current) {
-    return current.getMinute() >= 30 ? current.truncatedTo(ChronoUnit.HOURS).plusHours(1) :
-        current.truncatedTo(ChronoUnit.HOURS);
+    return current.getMinute() >= 30
+        ? current.truncatedTo(ChronoUnit.HOURS).plusHours(1)
+        : current.truncatedTo(ChronoUnit.HOURS);
   }
 
   public static Pair<LocalDateTime, LocalDateTime> createInterval(int from, int to) {
@@ -57,7 +58,8 @@ public class CustomMedAdminSampleList {
     if (to == 0) {
       return Pair.of(roundToNearestHour(currentDateTime.minusHours(from)), currentDateTime);
     }
-    return Pair.of(roundToNearestHour(currentDateTime.minusHours(from)),
+    return Pair.of(
+        roundToNearestHour(currentDateTime.minusHours(from)),
         roundToNearestHour(currentDateTime.plusHours(to)));
   }
 
@@ -65,8 +67,8 @@ public class CustomMedAdminSampleList {
     var pair = createInterval(from, to);
     var list = new ArrayList<CustomMedicationAdministrationSample>();
     for (var administration : ADMINISTRATIONS) {
-      if ((administration.intakeDateTime().isAfter(pair.getLeft()) &&
-          administration.intakeDateTime().isBefore(pair.getRight()))) {
+      if ((administration.intakeDateTime().isAfter(pair.getLeft())
+          && administration.intakeDateTime().isBefore(pair.getRight()))) {
         list.add(administration);
       }
     }
@@ -75,11 +77,16 @@ public class CustomMedAdminSampleList {
 
   public static List<CustomMedicationAdministrationSample> generateListOfAdministrations() {
     var unwindedDocuments =
-        COLLECTION.aggregate(Arrays.asList(
-            new Document("$unwind", new Document("path", "$diagnostics")),
-            new Document("$unwind", new Document("path", "$diagnostics.medicationPrescriptions")),
-            new Document("$unwind", new Document("path",
-                "$diagnostics.medicationPrescriptions.medicationAdministrations"))));
+        COLLECTION.aggregate(
+            Arrays.asList(
+                new Document("$unwind", new Document("path", "$diagnostics")),
+                new Document(
+                    "$unwind", new Document("path", "$diagnostics.medicationPrescriptions")),
+                new Document(
+                    "$unwind",
+                    new Document(
+                        "path",
+                        "$diagnostics.medicationPrescriptions.medicationAdministrations"))));
     var docList = unwindedDocuments.into(new ArrayList<>());
     var list = new ArrayList<CustomMedicationAdministrationSample>();
     for (Document document : docList) {
@@ -88,6 +95,11 @@ public class CustomMedAdminSampleList {
       var lastName = document.getString("lastName");
       var secondLastName = document.getString("secondLastName");
       var fullName = String.join(" ", firstName, lastName, secondLastName);
+      var diseaseName =
+          document
+              .get("diagnostics", Document.class)
+              .get("disease", Document.class)
+              .getString("name");
       var diagnosticDate =
           document
               .get("diagnostics", Document.class)
@@ -117,6 +129,7 @@ public class CustomMedAdminSampleList {
           new CustomMedicationAdministrationSample(
               elderRut,
               fullName,
+              diseaseName,
               diagnosticDate,
               medication,
               LocalDateTime.ofInstant(medAdmin.toInstant(), ZoneId.of("UTC")),
