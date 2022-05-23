@@ -7,6 +7,7 @@ import lombok.Getter;
 
 public record CustomMedicationAdministrationSample(@Getter String rut,
                                                    @Getter String fullName,
+                                                   @Getter String diseaseName,
                                                    @Getter LocalDate diagnosticDate,
                                                    @Getter String medicationName,
                                                    @Getter LocalDateTime intakeDateTime,
@@ -14,9 +15,14 @@ public record CustomMedicationAdministrationSample(@Getter String rut,
 
   @Override
   public String toString() {
-    return "CustomMedicationAdministrationSample{" + "rut='" + RutUtils.format(rut) + '\''
-        + ", fullName='" + fullName + '\'' + ", diagnosticDate=" + diagnosticDate
-        + ", medicationName='" + medicationName + '\'' + ", intakeDateTime=" + intakeDateTime
-        + ", state='" + state + '\'' + "}\n";
+    return "CustomMedicationAdministrationSample{" +
+        "rut='" + rut + '\'' +
+        ", fullName='" + fullName + '\'' +
+        ", diseaseName='" + diseaseName + '\'' +
+        ", diagnosticDate=" + diagnosticDate +
+        ", medicationName='" + medicationName + '\'' +
+        ", intakeDateTime=" + intakeDateTime +
+        ", state='" + state + '\'' +
+        "}\n";
   }
 }
