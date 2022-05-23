@@ -5,7 +5,9 @@ import com.bairontapia.projects.cuidamed.pojo.RoutineCheckupPOJO;
 import com.bairontapia.projects.cuidamed.pojo.RoutineCheckupPojoDAO;
 import com.bairontapia.projects.cuidamed.relational.medicalrecord.routinecheckup.RoutineCheckup;
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,6 +32,9 @@ public class RoutineCheckupDialog {
   @Getter
   @Setter
   private ElderPOJO elder;
+  @Getter
+  @Setter
+  private RoutineCheckupPOJO lastRoutineCheckup;
 
   @FXML
   private DatePicker checkupDatePicker;
@@ -54,10 +59,23 @@ public class RoutineCheckupDialog {
     checkupDatePicker.setValue(LocalDate.now());
   }
 
+  public void receiveData(final ElderPOJO elder) {
+    var routineCheckup = RoutineCheckupPojoDAO.getInstance().findMax(elder.getId()).orElseThrow();
+    setElder(elder);
+    setLastRoutineCheckup(routineCheckup);
+    fillFields();
+  }
+
   @FXML
   public void addRoutineCheckup(ActionEvent event) throws IOException {
     trimFields();
-    if (checkIncorrectFields()) {
+    if (fieldsAreEmpty()) {
+      return;
+    }
+    if (!fieldsAreCorrect()) {
+      return;
+    }
+    if (!fieldsAreValid()) {
       return;
     }
     var checkupDate = checkupDatePicker.getValue();
@@ -94,6 +112,15 @@ public class RoutineCheckupDialog {
     stage.show();
   }
 
+  private void fillFields() {
+    height.setText(lastRoutineCheckup.getHeight().toString());
+    weight.setText(lastRoutineCheckup.getWeight().toString());
+    heartRate.setText(lastRoutineCheckup.getHeartRate().toString());
+    diastolicPressure.setText(lastRoutineCheckup.getDiastolicPressure().toString());
+    systolicPressure.setText(lastRoutineCheckup.getSystolicPressure().toString());
+    bodyTemperature.setText(lastRoutineCheckup.getBodyTemperature().toString());
+  }
+
   private void trimFields() {
     height.setText(StringUtils.trim(height.getText()));
     weight.setText(StringUtils.trim(weight.getText()));
@@ -103,12 +130,50 @@ public class RoutineCheckupDialog {
     bodyTemperature.setText(StringUtils.trim(bodyTemperature.getText()));
   }
 
-  private boolean checkIncorrectFields() {
+  private boolean fieldsAreEmpty() {
+    return checkupDatePicker.getValue() == null || StringUtils.isEmpty(height.getText()) ||
+        StringUtils.isEmpty(weight.getText()) || StringUtils.isEmpty(heartRate.getText()) ||
+        StringUtils.isEmpty(diastolicPressure.getText()) ||
+        StringUtils.isEmpty(systolicPressure.getText()) ||
+        StringUtils.isEmpty(bodyTemperature.getText());
+  }
+
+  private boolean fieldsAreValid() {
     return NumberUtils.isCreatable(height.getText()) && NumberUtils.isCreatable(weight.getText()) &&
         NumberUtils.isCreatable(heartRate.getText()) &&
         NumberUtils.isCreatable(diastolicPressure.getText()) &&
         NumberUtils.isCreatable(systolicPressure.getText()) &&
         NumberUtils.isCreatable(bodyTemperature.getText());
+  }
+
+  private boolean fieldsAreCorrect() {
+    var dayDifference = checkupDatePicker.getValue().until(LocalDate.now(), ChronoUnit.DAYS);
+    if (dayDifference < 0) {
+      return false;
+    }
+    var heightValue = Precision.round(Double.parseDouble(height.getText()), 2);
+    var weightValue = Precision.round(Double.parseDouble(weight.getText()), 1);
+    var bmiValue = Precision.round(weightValue / Math.pow(heightValue, 2), 1);
+    if (bmiValue <= 16.7 || bmiValue >= 35.3) {
+      return false;
+    }
+    var heartValue = Integer.parseInt(heartRate.getText());
+    if (heartValue < 50 || heartValue > 110) {
+      return false;
+    }
+    var diastolicValue = Integer.parseInt(diastolicPressure.getText());
+    if (diastolicValue < 70 || diastolicValue > 120) {
+      return false;
+    }
+    var systolicValue = Integer.parseInt(systolicPressure.getText());
+    if (systolicValue < 110 || systolicValue > 180) {
+      return false;
+    }
+    var temperatureValue = Precision.round(Double.parseDouble(bodyTemperature.getText()), 1);
+    if (temperatureValue < 35.0 || temperatureValue > 41.0) {
+      return false;
+    }
+    return true;
   }
 
 }

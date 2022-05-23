@@ -176,7 +176,7 @@ public class ElderView {
         Objects.requireNonNull(CLASS_LOADER.getResource("fxml/routine_checkup_dialog.fxml")));
     var root = loader.<Parent>load();
     var controller = loader.<RoutineCheckupDialog>getController();
-    controller.setElder(elder);
+    controller.receiveData(elder);
     var scene = new Scene(root);
     stage.setScene(scene);
     stage.show();
