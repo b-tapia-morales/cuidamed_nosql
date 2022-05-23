@@ -30,6 +30,7 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.swing.*;
 import javax.swing.plaf.synth.SynthTextAreaUI;
 
 public class MedicationPrescriptionDialog {
@@ -68,12 +69,26 @@ public class MedicationPrescriptionDialog {
   }
 
   @FXML
-  public void onAddButtonClicked(MouseEvent event) {
+  public void onAddButtonClicked(MouseEvent event) throws IOException {
 
-    var diseasePojo = DiseasePojoDAO.getInstance().find(diseaseComboBox.getValue()).orElseThrow();
-    var diagnostic = new Diagnostic("", "", prescriptionDate.getValue(), "");
-    var diagnosticPojo = new DiagnosticPOJO(diagnostic, diseasePojo, listMedicationPrescription());
-    DiagnosticPOJODAO.getInstance().saveIntoElder(elder.getId(), diagnosticPojo);
+    if (check()) {
+      var diseasePojo = DiseasePojoDAO.getInstance().find(diseaseComboBox.getValue()).orElseThrow();
+      var diagnostic = new Diagnostic("", "", prescriptionDate.getValue(), "");
+      var diagnosticPojo = new DiagnosticPOJO(diagnostic, diseasePojo, listMedicationPrescription());
+      DiagnosticPOJODAO.getInstance().saveIntoElder(elder.getId(), diagnosticPojo);
+
+      var node = (Node) event.getSource();
+      var stage = (Stage) node.getScene().getWindow();
+      stage.close();
+      var loader = new FXMLLoader(
+              Objects.requireNonNull(CLASS_LOADER.getResource("fxml/elder_view.fxml")));
+      var root = loader.<Parent>load();
+      var controller = loader.<ElderView>getController();
+      controller.receiveData(elder);
+      var scene = new Scene(root);
+      stage.setScene(scene);
+      stage.show();
+    }
   }
 
   @FXML
@@ -99,6 +114,7 @@ public class MedicationPrescriptionDialog {
     int days = Integer.parseInt(prescriptionDuration.getText());
     var medicationPOJO = MedicationPojoDAO.getInstance().find(medicationComboBox.getValue()).orElseThrow();
     LocalDate endDate = prescriptionDate.getValue().plusDays(days);
+
     for (int i = 0; i < days; i++) {
 
       date = date.plusDays(1);
@@ -124,12 +140,21 @@ public class MedicationPrescriptionDialog {
         }
       }
     }
-
     var medicationPrescription = new MedicationPrescription("", "", diagnosticDate.getValue(),
             "", date, endDate, Short.valueOf(String.valueOf(quantityComboBox.getValue())));
     var medicationPrescriptionPOJO = new MedicationPrescriptionPOJO(medicationPrescription, medicationPOJO, listMedicationAdministration);
     listMedicationPrescription.add(medicationPrescriptionPOJO);
 
     return listMedicationPrescription;
+  }
+
+
+  public boolean check() {
+    if (medicationComboBox.getSelectionModel().isEmpty() || diseaseComboBox.getSelectionModel().isEmpty() ||
+            quantityComboBox.getSelectionModel().isEmpty() || prescriptionDuration.getText().equals("")) {
+      JOptionPane.showConfirmDialog(null, "Error en algunos de los campos!!", "CUIDADO!!", JOptionPane.OK_CANCEL_OPTION);
+      return false;
+    }
+    return true;
   }
 }
