@@ -10,7 +10,6 @@ import com.bairontapia.projects.cuidamed.pojo.ResponsiblePOJO;
 import com.bairontapia.projects.cuidamed.pojo.RoutineCheckupPojoDAO;
 import java.io.IOException;
 import java.util.Objects;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -20,7 +19,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -150,10 +148,8 @@ public class ElderView {
     var stage = (Stage) node.getScene().getWindow();
     stage.close();
     var loader = new FXMLLoader(
-        Objects.requireNonNull(CLASS_LOADER.getResource("fxml/elder_list_view.fxml")));
+        Objects.requireNonNull(CLASS_LOADER.getResource("fxml/main_window.fxml")));
     var root = loader.<Parent>load();
-    var controller = loader.<ElderListView>getController();
-    controller.updateData();
     var scene = new Scene(root);
     stage.setScene(scene);
     stage.show();
