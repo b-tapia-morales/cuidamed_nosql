@@ -14,39 +14,56 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bson.Document;
 
-public class CustomMedAdminSampleList {
+public class AdministrationGeneration {
 
   private static final MongoClient CLIENT;
   private static final MongoDatabase DATABASE;
   private static final MongoCollection<Document> COLLECTION;
-  private static final List<CustomMedicationAdministrationSample> ADMINISTRATIONS;
+  private static final List<Administration> ADMINISTRATIONS;
 
   static {
     CLIENT = MongoClientSingleton.getInstance();
     DATABASE = CLIENT.getDatabase("admin");
     COLLECTION = DATABASE.getCollection("elder");
-    ADMINISTRATIONS = new ArrayList<>();
+    ADMINISTRATIONS = generate();
   }
 
   public static void update() {
     ADMINISTRATIONS.clear();
-    ADMINISTRATIONS.addAll(generateListOfAdministrations());
+    ADMINISTRATIONS.addAll(generate());
   }
 
-  public static List<CustomMedicationAdministrationSample> getAdministrations() {
+  public static List<Administration> getAdministrations() {
     return ADMINISTRATIONS;
   }
 
-  public static LocalDateTime roundToNearestHour(final LocalDateTime current) {
+  public static List<Administration> filterByRut(final String rut) {
+    return ADMINISTRATIONS.stream().filter(e -> StringUtils.equals(e.rut(), rut)).toList();
+  }
+
+  public static List<Administration> filterByHourDifference(int from, int to) {
+    var pair = createInterval(from, to);
+    var list = new ArrayList<Administration>();
+    for (var administration : ADMINISTRATIONS) {
+      if ((administration.intakeDateTime().isAfter(pair.getLeft())
+          && administration.intakeDateTime().isBefore(pair.getRight()))) {
+        list.add(administration);
+      }
+    }
+    return list;
+  }
+
+  private static LocalDateTime roundToNearestHour(final LocalDateTime current) {
     return current.getMinute() >= 30
         ? current.truncatedTo(ChronoUnit.HOURS).plusHours(1)
         : current.truncatedTo(ChronoUnit.HOURS);
   }
 
-  public static Pair<LocalDateTime, LocalDateTime> createInterval(int from, int to) {
+  private static Pair<LocalDateTime, LocalDateTime> createInterval(int from, int to) {
     var currentDate = LocalDate.now();
     if (from == 0 && to == 0) {
       return Pair.of(LocalDateTime.of(currentDate, MIN), LocalDateTime.of(currentDate, MAX));
@@ -63,20 +80,8 @@ public class CustomMedAdminSampleList {
         roundToNearestHour(currentDateTime.plusHours(to)));
   }
 
-  public static List<CustomMedicationAdministrationSample> findByHourDifference(int from, int to) {
-    var pair = createInterval(from, to);
-    var list = new ArrayList<CustomMedicationAdministrationSample>();
-    for (var administration : ADMINISTRATIONS) {
-      if ((administration.intakeDateTime().isAfter(pair.getLeft())
-          && administration.intakeDateTime().isBefore(pair.getRight()))) {
-        list.add(administration);
-      }
-    }
-    return list;
-  }
-
-  public static List<CustomMedicationAdministrationSample> generateListOfAdministrations() {
-    var unwindedDocuments =
+  private static List<Administration> generate() {
+    var iterable =
         COLLECTION.aggregate(
             Arrays.asList(
                 new Document("$unwind", new Document("path", "$diagnostics")),
@@ -87,10 +92,11 @@ public class CustomMedAdminSampleList {
                     new Document(
                         "path",
                         "$diagnostics.medicationPrescriptions.medicationAdministrations"))));
-    var docList = unwindedDocuments.into(new ArrayList<>());
-    var list = new ArrayList<CustomMedicationAdministrationSample>();
-    for (Document document : docList) {
-      var elderRut = document.getString("rut");
+    var documents = iterable.into(new ArrayList<>());
+    var list = new ArrayList<Administration>();
+    for (Document document : documents) {
+      var id = document.getObjectId("_id");
+      var rut = document.getString("rut");
       var firstName = document.getString("firstName");
       var lastName = document.getString("lastName");
       var secondLastName = document.getString("secondLastName");
@@ -107,13 +113,13 @@ public class CustomMedAdminSampleList {
               .toInstant()
               .atZone(ZoneId.of("Chile/Continental"))
               .toLocalDate();
-      var medication =
+      var medicationName =
           document
               .get("diagnostics", Document.class)
               .get("medicationPrescriptions", Document.class)
               .get("medication", Document.class)
               .getString("name");
-      var medAdmin =
+      var intakeDateTime =
           document
               .get("diagnostics", Document.class)
               .get("medicationPrescriptions", Document.class)
@@ -125,16 +131,11 @@ public class CustomMedAdminSampleList {
               .get("medicationPrescriptions", Document.class)
               .get("medicationAdministrations", Document.class)
               .getString("status");
-      var ma =
-          new CustomMedicationAdministrationSample(
-              elderRut,
-              fullName,
-              diseaseName,
-              diagnosticDate,
-              medication,
-              LocalDateTime.ofInstant(medAdmin.toInstant(), ZoneId.of("UTC")),
+      var administration =
+          new Administration(rut, fullName, diseaseName, diagnosticDate, medicationName,
+              LocalDateTime.ofInstant(intakeDateTime.toInstant(), ZoneId.of("UTC")),
               intakeStatus);
-      list.add(ma);
+      list.add(administration);
     }
     return list;
   }

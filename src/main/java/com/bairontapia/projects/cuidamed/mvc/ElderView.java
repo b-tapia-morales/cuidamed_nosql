@@ -3,7 +3,7 @@ package com.bairontapia.projects.cuidamed.mvc;
 import com.bairontapia.projects.cuidamed.mappings.bloodtype.BloodType;
 import com.bairontapia.projects.cuidamed.mappings.gender.Gender;
 import com.bairontapia.projects.cuidamed.mappings.healthcaresystem.HealthCare;
-import com.bairontapia.projects.cuidamed.pojo.CustomAdministration;
+import com.bairontapia.projects.cuidamed.pojo.AdministrationGeneration;
 import com.bairontapia.projects.cuidamed.pojo.ElderPOJO;
 import com.bairontapia.projects.cuidamed.pojo.MedicalRecordPOJO;
 import com.bairontapia.projects.cuidamed.pojo.ResponsiblePOJO;
@@ -121,7 +121,7 @@ public class ElderView {
     routineCheckupController.getCheckupTableView().getItems().addAll(routineCheckups);
     prescriptionController.getAdministrationTable().getItems().clear();
     prescriptionController.getAdministrationTable().getItems()
-        .addAll(CustomAdministration.map(elder.getDiagnostics()));
+        .addAll(AdministrationGeneration.filterByRut(elder.getRut()));
   }
 
   private void fillElderFields(ElderPOJO elder) {

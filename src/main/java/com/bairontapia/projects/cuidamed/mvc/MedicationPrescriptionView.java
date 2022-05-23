@@ -1,6 +1,6 @@
 package com.bairontapia.projects.cuidamed.mvc;
 
-import com.bairontapia.projects.cuidamed.pojo.CustomAdministration;
+import com.bairontapia.projects.cuidamed.pojo.Administration;
 import java.time.format.DateTimeFormatter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -17,22 +17,22 @@ public class MedicationPrescriptionView {
 
   @FXML
   @Getter
-  private TableView<CustomAdministration> administrationTable;
+  private TableView<Administration> administrationTable;
   @FXML
   @Getter
-  private TableColumn<CustomAdministration, String> diseaseName;
+  private TableColumn<Administration, String> diseaseName;
   @FXML
   @Getter
-  private TableColumn<CustomAdministration, String> diagnosticDate;
+  private TableColumn<Administration, String> diagnosticDate;
   @FXML
   @Getter
-  private TableColumn<CustomAdministration, String> medicationName;
+  private TableColumn<Administration, String> medicationName;
   @FXML
   @Getter
-  private TableColumn<CustomAdministration, String> intakeDateTime;
+  private TableColumn<Administration, String> intakeDateTime;
   @FXML
   @Getter
-  private TableColumn<CustomAdministration, String> intakeStatus;
+  private TableColumn<Administration, String> intakeStatus;
 
   public void initialize() {
     diseaseName.setCellValueFactory(
