@@ -32,6 +32,9 @@ public class AdministrationGeneration {
     ADMINISTRATIONS = generate();
   }
 
+  private AdministrationGeneration() {
+  }
+
   public static void update() {
     ADMINISTRATIONS.clear();
     ADMINISTRATIONS.addAll(generate());

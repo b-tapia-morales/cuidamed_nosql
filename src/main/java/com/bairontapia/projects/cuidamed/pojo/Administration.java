@@ -3,7 +3,6 @@ package com.bairontapia.projects.cuidamed.pojo;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.Getter;
-import org.bson.types.ObjectId;
 
 public record Administration(@Getter String rut, @Getter String fullName,
                              @Getter String diseaseName, @Getter LocalDate diagnosticDate,
