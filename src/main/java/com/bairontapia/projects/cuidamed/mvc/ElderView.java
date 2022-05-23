@@ -158,7 +158,7 @@ public class ElderView {
     var stage = (Stage) node.getScene().getWindow();
     stage.close();
     var loader = new FXMLLoader(
-        Objects.requireNonNull(CLASS_LOADER.getResource("fxml/elders_list_view.fxml")));
+        Objects.requireNonNull(CLASS_LOADER.getResource("fxml/elder_list_view.fxml")));
     var root = loader.<Parent>load();
     var controller = loader.<ElderListView>getController();
     controller.updateData();
