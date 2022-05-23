@@ -70,16 +70,15 @@
   <dependencies>
 
     <dependency>
-      <artifactId>commons-io</artifactId>
-      <groupId>commons-io</groupId>
-      <version>2.11.0</version>
-    </dependency>
-    <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
       <version>31.1-jre</version>
     </dependency>
-
+    <dependency>
+      <artifactId>commons-io</artifactId>
+      <groupId>commons-io</groupId>
+      <version>2.11.0</version>
+    </dependency>
     <dependency>
       <artifactId>commons-lang3</artifactId>
       <groupId>org.apache.commons</groupId>
@@ -89,16 +88,6 @@
       <artifactId>commons-math3</artifactId>
       <groupId>org.apache.commons</groupId>
       <version>3.6.1</version>
-    </dependency>
-    <dependency>
-      <artifactId>commons-dbcp2</artifactId>
-      <groupId>org.apache.commons</groupId>
-      <version>2.9.0</version>
-    </dependency>
-    <dependency>
-      <artifactId>commons-dbutils</artifactId>
-      <groupId>commons-dbutils</groupId>
-      <version>1.7</version>
     </dependency>
     <dependency>
       <artifactId>javafx-fxml</artifactId>
