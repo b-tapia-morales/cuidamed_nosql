@@ -1,5 +1,6 @@
 package com.bairontapia.projects.cuidamed.mvc;
 
+import com.bairontapia.projects.cuidamed.mappings.dosagestatus.DosageStatus;
 import com.bairontapia.projects.cuidamed.pojo.*;
 
 import java.io.Console;
@@ -13,6 +14,8 @@ import java.util.stream.IntStream;
 
 import com.bairontapia.projects.cuidamed.relational.disease.Disease;
 import com.bairontapia.projects.cuidamed.relational.disease.diagnostic.Diagnostic;
+import com.bairontapia.projects.cuidamed.relational.disease.medicationadministration.MedicationAdministration;
+import com.bairontapia.projects.cuidamed.relational.disease.medicationprescription.MedicationPrescription;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -66,7 +69,7 @@ public class MedicationPrescriptionDialog {
     var diseasePojo = DiseasePojoDAO.getInstance().find("Bupivacaína").orElseThrow();
     var diagnostic = new Diagnostic("", "", prescriptionDate.getValue(), "");
     var diagnosticPojo = new DiagnosticPOJO(diagnostic, diseasePojo, listMedicationPrescription());
-    //DiagnosticPOJODAO.getInstance().saveIntoElder(elder.getId(), diagnosticPojo);
+    DiagnosticPOJODAO.getInstance().saveIntoElder(elder.getId(), diagnosticPojo);
   }
 
   @FXML
@@ -85,20 +88,44 @@ public class MedicationPrescriptionDialog {
   }
 
   private List<MedicationPrescriptionPOJO> listMedicationPrescription() {
-    ArrayList<MedicationAdministrationPOJO> listMedicationAdministration = new ArrayList<>();
+    List<MedicationPrescriptionPOJO> listMedicationPrescription = new ArrayList<>();
+    List<MedicationAdministrationPOJO> listMedicationAdministration = new ArrayList<>();
+
     LocalDate date = prescriptionDate.getValue();
     int days = Integer.parseInt(prescriptionDuration.getText());
-    var MedicationPjo = MedicationPojoDAO.getInstance().find(diseaseComboBox.getValue());
+    var medicationPOJO = MedicationPojoDAO.getInstance().find(diseaseComboBox.getValue()).orElseThrow();
     LocalDate endDate = prescriptionDate.getValue().plusDays(days);
     for (int i = 0; i < days; i++) {
-      date = date.plusDays(1);
 
-      for (int j= 0; j < quantityComboBox.getValue();j++){
-          LocalDateTime schedule = date.atStartOfDay();
-          System.out.println(schedule);
+      date = date.plusDays(1);
+      int interval;
+      LocalDateTime schedule = date.atStartOfDay().plusHours(8);
+
+      for (int j = 0; j < quantityComboBox.getValue(); j++) {
+
+        if (j > 0) {
+
+          interval = (20 - 8) / (quantityComboBox.getValue() - 1);
+          schedule = schedule.plusHours(interval);
+          var medicationAdministration = new MedicationAdministration("", "", schedule, null, DosageStatus.UNDEFINED, "");
+          var medicationAdministrationPOJO = new MedicationAdministrationPOJO(medicationAdministration);
+          listMedicationAdministration.add(medicationAdministrationPOJO);
+
+        } else {
+
+          var medicationAdministration = new MedicationAdministration("", "", schedule, null, DosageStatus.UNDEFINED, "");
+          var medicationAdministrationPOJO = new MedicationAdministrationPOJO(medicationAdministration);
+          listMedicationAdministration.add(medicationAdministrationPOJO);
+
+        }
       }
     }
 
-    return null;
+    var medicationPrescription = new MedicationPrescription("", "", diagnosticDate.getValue(),
+            "", date, endDate, Short.valueOf(String.valueOf(quantityComboBox.getValue())));
+    var medicationPrescriptionPOJO = new MedicationPrescriptionPOJO(medicationPrescription, medicationPOJO, listMedicationAdministration);
+    listMedicationPrescription.add(medicationPrescriptionPOJO);
+
+    return listMedicationPrescription;
   }
 }
