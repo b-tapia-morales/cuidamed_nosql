@@ -28,4 +28,13 @@ public class DiseasePOJO {
     this.diseaseType = disease.diseaseType().toString();
     this.isChronic = disease.isChronic();
   }
+
+  @Override
+  public String toString() {
+    return "DiseasePOJO{" +
+            ", name='" + name + '\'' +
+            ", diseaseType='" + diseaseType + '\'' +
+            ", isChronic=" + isChronic +
+            '}';
+  }
 }
