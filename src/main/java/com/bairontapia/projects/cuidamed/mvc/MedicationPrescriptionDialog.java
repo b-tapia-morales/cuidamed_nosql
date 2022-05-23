@@ -36,10 +36,13 @@ public class MedicationPrescriptionDialog {
 
   private static final ClassLoader CLASS_LOADER = Thread.currentThread().getContextClassLoader();
 
+
   @Getter
   @Setter
   private ElderPOJO elder;
 
+  @FXML
+  public ComboBox<String> medicationComboBox;
   @FXML
   private ComboBox<String> diseaseComboBox;
   @FXML
@@ -56,8 +59,9 @@ public class MedicationPrescriptionDialog {
   private Button cancel;
 
   public void initialize() {
-    diseaseComboBox.getItems().addAll(MedicationPojoDAO.getInstance().findAll().stream().map(
-            MedicationPOJO::getName).toList());
+    diseaseComboBox.getItems().addAll(DiseasePojoDAO.getInstance().findAll().stream().map(
+            DiseasePOJO::getName).toList());
+    medicationComboBox.getItems().addAll(MedicationPojoDAO.getInstance().findAll().stream().map(MedicationPOJO::getName).toList());
     diagnosticDate.setValue(LocalDate.now());
     prescriptionDate.setValue(LocalDate.now());
     quantityComboBox.getItems().addAll(IntStream.rangeClosed(1, 5).boxed().toList());
@@ -66,7 +70,7 @@ public class MedicationPrescriptionDialog {
   @FXML
   public void onAddButtonClicked(MouseEvent event) {
 
-    var diseasePojo = DiseasePojoDAO.getInstance().find("Bupivacaína").orElseThrow();
+    var diseasePojo = DiseasePojoDAO.getInstance().find(diseaseComboBox.getValue()).orElseThrow();
     var diagnostic = new Diagnostic("", "", prescriptionDate.getValue(), "");
     var diagnosticPojo = new DiagnosticPOJO(diagnostic, diseasePojo, listMedicationPrescription());
     DiagnosticPOJODAO.getInstance().saveIntoElder(elder.getId(), diagnosticPojo);
@@ -93,7 +97,7 @@ public class MedicationPrescriptionDialog {
 
     LocalDate date = prescriptionDate.getValue();
     int days = Integer.parseInt(prescriptionDuration.getText());
-    var medicationPOJO = MedicationPojoDAO.getInstance().find(diseaseComboBox.getValue()).orElseThrow();
+    var medicationPOJO = MedicationPojoDAO.getInstance().find(medicationComboBox.getValue()).orElseThrow();
     LocalDate endDate = prescriptionDate.getValue().plusDays(days);
     for (int i = 0; i < days; i++) {
 
