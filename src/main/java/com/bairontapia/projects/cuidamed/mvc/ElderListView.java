@@ -84,10 +84,6 @@ public class ElderListView {
     loadPanelAndData(event);
   }
 
-  public void onAddRegistryButtonClicked(final MouseEvent event) {
-
-  }
-
   private void loadPanelAndData(final MouseEvent event) throws IOException {
     var elder = tableView.getSelectionModel().getSelectedItem();
     var node = (Node) event.getSource();

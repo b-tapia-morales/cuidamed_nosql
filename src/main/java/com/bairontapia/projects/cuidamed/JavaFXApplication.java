@@ -17,7 +17,7 @@ public class JavaFXApplication extends Application {
   @Override
   public void start(final Stage stage) throws IOException {
     final Parent root = FXMLLoader.load(
-        Objects.requireNonNull(getClass().getResource("/fxml/intake_list_view.fxml")));
+        Objects.requireNonNull(getClass().getResource("/fxml/main_window.fxml")));
     final var scene = new Scene(root);
     stage.setTitle("CuidaMed");
     stage.setScene(scene);

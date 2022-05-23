@@ -1,26 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="pane" prefHeight="680.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bairontapia.projects.cuidamed.mvc.ElderView">
+<AnchorPane fx:id="pane" prefHeight="680.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bairontapia.projects.cuidamed.mvc.ElderView">
   <VBox layoutX="240.0" layoutY="29.0" prefHeight="640.0" prefWidth="720.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
     <HBox alignment="CENTER" prefHeight="55.0">
       <Button fx:id="goBackButton" mnemonicParsing="false" onMouseClicked="#onGoBackButtonClicked" style="-fx-background-radius: 32;">
@@ -146,27 +132,27 @@
                   <Insets right="10.0" />
                 </GridPane.margin>
               </Label>
-              <TextField fx:id="rut" GridPane.columnIndex="1">
+              <TextField fx:id="rut" editable="false" GridPane.columnIndex="1">
                 <GridPane.margin>
                   <Insets left="5.0" right="5.0" />
                 </GridPane.margin>
               </TextField>
-              <TextField fx:id="name" GridPane.columnIndex="1" GridPane.rowIndex="1">
+              <TextField fx:id="name" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
                 <GridPane.margin>
                   <Insets left="5.0" right="5.0" />
                 </GridPane.margin>
               </TextField>
-              <TextField fx:id="lastName" GridPane.columnIndex="1" GridPane.rowIndex="2">
+              <TextField fx:id="lastName" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
                 <GridPane.margin>
                   <Insets left="5.0" right="5.0" />
                 </GridPane.margin>
               </TextField>
-              <TextField fx:id="secondLastName" GridPane.columnIndex="1" GridPane.rowIndex="3">
+              <TextField fx:id="secondLastName" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="3">
                 <GridPane.margin>
                   <Insets left="5.0" right="5.0" />
                 </GridPane.margin>
               </TextField>
-              <TextField fx:id="age" editable="false" opacity="0.67" GridPane.columnIndex="1" GridPane.rowIndex="5">
+              <TextField fx:id="age" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="5">
                 <GridPane.margin>
                   <Insets left="5.0" right="5.0" />
                 </GridPane.margin>
@@ -241,17 +227,17 @@
                   <Insets left="5.0" right="5.0" />
                 </GridPane.margin>
               </TextField>
-              <TextField fx:id="responsibleAge" editable="false" opacity="0.67" GridPane.columnIndex="1" GridPane.rowIndex="5">
+              <TextField fx:id="responsibleAge" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="5">
                 <GridPane.margin>
                   <Insets left="5.0" right="5.0" />
                 </GridPane.margin>
               </TextField>
-              <TextField fx:id="responsibleMobilePhone" GridPane.columnIndex="1" GridPane.rowIndex="7">
+              <TextField fx:id="responsibleMobilePhone" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="7">
                 <GridPane.margin>
                   <Insets left="5.0" right="5.0" />
                 </GridPane.margin>
               </TextField>
-              <DatePicker fx:id="responsibleBirthDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="4">
+              <DatePicker fx:id="responsibleBirthDatePicker" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4">
                 <GridPane.margin>
                   <Insets left="5.0" />
                 </GridPane.margin>
@@ -271,12 +257,12 @@
                   <Insets right="10.0" />
                 </GridPane.margin>
               </Label>
-              <TextField fx:id="responsibleLastName" GridPane.columnIndex="1" GridPane.rowIndex="2">
+              <TextField fx:id="responsibleLastName" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
                 <GridPane.margin>
                   <Insets left="5.0" right="5.0" />
                 </GridPane.margin>
               </TextField>
-              <TextField fx:id="responsibleSecondLastName" GridPane.columnIndex="1" GridPane.rowIndex="3">
+              <TextField fx:id="responsibleSecondLastName" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="3">
                 <GridPane.margin>
                   <Insets left="5.0" right="5.0" />
                 </GridPane.margin>
@@ -287,7 +273,7 @@
       </HBox>
     </AnchorPane>
     <HBox alignment="CENTER" prefHeight="55.0">
-      <Button fx:id="updateRegister" minHeight="36.0" minWidth="36.0" mnemonicParsing="false" onAction="#addColumn" style="-fx-background-radius: 32;">
+      <Button fx:id="updateRegister" disable="true" minHeight="36.0" minWidth="36.0" mnemonicParsing="false" style="-fx-background-radius: 32;">
         <graphic>
           <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
             <Image url="@../icons/update.png" />
@@ -297,10 +283,10 @@
     </HBox>
     <VBox>
       <TabPane fx:id="tabPane" prefHeight="215.0" tabClosingPolicy="UNAVAILABLE">
-        <Tab fx:id="routineCheckupTab" text="Chequeos rutinarios">
+        <Tab text="Chequeos rutinarios">
           <fx:include fx:id="routineCheckup" source="routine_checkup_tab_pane.fxml" />
         </Tab>
-        <Tab fx:id="prescriptionTab" text="Medicamentos">
+        <Tab text="Medicamentos">
           <fx:include fx:id="prescription" source="medication_prescription_tab_pane.fxml" />
         </Tab>
       </TabPane>

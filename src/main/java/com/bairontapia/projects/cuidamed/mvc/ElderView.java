@@ -84,11 +84,7 @@ public class ElderView {
   @FXML
   private TabPane tabPane;
   @FXML
-  private Tab routineCheckupTab;
-  @FXML
   private RoutineCheckupView routineCheckupController;
-  @FXML
-  private Tab prescriptionTab;
   @FXML
   private MedicationPrescriptionView prescriptionController;
   @FXML
@@ -101,10 +97,6 @@ public class ElderView {
     bloodTypeComboBox.getItems().addAll(BloodType.getValues());
     healthCareComboBox.getItems().addAll(HealthCare.getValues());
     responsibleGenderComboBox.getItems().addAll(Gender.getValues());
-  }
-
-  @FXML
-  public void addColumn(ActionEvent event) {
   }
 
   public void receiveData(ElderPOJO elder) {
