@@ -70,14 +70,14 @@ public class IntakeListView {
   }
 
   @FXML
-  public void onLowerBoundSelected(MouseEvent actionEvent) {
+  public void onLowerBoundSelected(MouseEvent event) {
     var isDisabled = !lowerBoundCheckBox.isSelected();
     lowerBoundComboBox.setDisable(isDisabled);
     lowerBoundLabel.setDisable(isDisabled);
   }
 
   @FXML
-  public void onUpperBoundSelected(MouseEvent actionEvent) {
+  public void onUpperBoundSelected(MouseEvent event) {
     var isDisabled = !upperBoundCheckBox.isSelected();
     upperBoundComboBox.setDisable(isDisabled);
     upperBoundLabel.setDisable(isDisabled);
@@ -90,7 +90,7 @@ public class IntakeListView {
         !lowerBoundCheckBox.isSelected() || lowerBoundComboBox.getSelectionModel().isEmpty();
     var isUpperBoundDisabled =
         !upperBoundCheckBox.isSelected() || upperBoundComboBox.getSelectionModel().isEmpty();
-    List<Administration> administrations = null;
+    List<Administration> administrations;
     if (isLowerBoundDisabled && isUpperBoundDisabled) {
       administrations = AdministrationGeneration.filterByHourDifference(0, 0);
     } else if (isLowerBoundDisabled) {
