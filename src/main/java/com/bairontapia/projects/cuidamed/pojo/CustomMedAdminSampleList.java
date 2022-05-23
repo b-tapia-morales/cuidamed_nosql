@@ -1,83 +1,86 @@
 package com.bairontapia.projects.cuidamed.pojo;
 
+import static java.time.LocalTime.MAX;
+import static java.time.LocalTime.MIN;
+
 import com.bairontapia.projects.cuidamed.connection.MongoClientSingleton;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import lombok.Getter;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bson.Document;
 
 public class CustomMedAdminSampleList {
-  @Getter private final List<CustomMedicationAdministrationSample> medicationAdministrations;
+
   private static final MongoClient CLIENT;
   private static final MongoDatabase DATABASE;
   private static final MongoCollection<Document> COLLECTION;
+  private static final List<CustomMedicationAdministrationSample> ADMINISTRATIONS;
 
   static {
     CLIENT = MongoClientSingleton.getInstance();
     DATABASE = CLIENT.getDatabase("admin");
     COLLECTION = DATABASE.getCollection("elder");
+    ADMINISTRATIONS = new ArrayList<>();
   }
 
-  public CustomMedAdminSampleList() {
-    this.medicationAdministrations = this.generateListOfAdministrations();
+  public static void update() {
+    ADMINISTRATIONS.clear();
+    ADMINISTRATIONS.addAll(generateListOfAdministrations());
   }
 
-  public Pair<LocalDateTime, LocalDateTime> findInterval(LocalDate date, int from, int to) {
+  public static List<CustomMedicationAdministrationSample> getAdministrations() {
+    return ADMINISTRATIONS;
+  }
+
+  public static LocalDateTime roundToNearestHour(final LocalDateTime current) {
+    return current.getMinute() >= 30 ? current.truncatedTo(ChronoUnit.HOURS).plusHours(1) :
+        current.truncatedTo(ChronoUnit.HOURS);
+  }
+
+  public static Pair<LocalDateTime, LocalDateTime> createInterval(int from, int to) {
+    var currentDate = LocalDate.now();
     if (from == 0 && to == 0) {
-      return Pair.of(date.atStartOfDay(), LocalDateTime.of(date, LocalTime.of(23,59)));
+      return Pair.of(LocalDateTime.of(currentDate, MIN), LocalDateTime.of(currentDate, MAX));
     }
+    var currentDateTime = LocalDateTime.now();
     if (from == 0) {
-      return Pair.of(
-          LocalDateTime.of(date, LocalTime.now()),
-          LocalDateTime.of(date, LocalTime.now()).plusHours(to));
+      return Pair.of(currentDateTime, roundToNearestHour(currentDateTime.plusHours(to)));
     }
     if (to == 0) {
-      return Pair.of(
-          LocalDateTime.of(date, LocalTime.now()).minusHours(from),
-          LocalDateTime.of(date, LocalTime.now()));
+      return Pair.of(roundToNearestHour(currentDateTime.minusHours(from)), currentDateTime);
     }
-    return Pair.of(
-        LocalDateTime.of(date, LocalTime.of(from, 0).minusSeconds(1)), LocalDateTime.of(date, LocalTime.of(to, 59)));
+    return Pair.of(roundToNearestHour(currentDateTime.minusHours(from)),
+        roundToNearestHour(currentDateTime.plusHours(to)));
   }
 
-  public List<CustomMedicationAdministrationSample> findbyHourDifference(
-      LocalDate date, int from, int to) {
-    var pair = this.findInterval(date,from,to);
-    var filteredList = new ArrayList<CustomMedicationAdministrationSample>();
-    for (CustomMedicationAdministrationSample ma : this.getMedicationAdministrations()) {
-      if ((ma.getIntakeDateTime().isAfter(pair.getLeft())
-          && ma.getIntakeDateTime().isBefore(pair.getRight()))) {
-        filteredList.add(ma);
+  public static List<CustomMedicationAdministrationSample> findByHourDifference(int from, int to) {
+    var pair = createInterval(from, to);
+    var list = new ArrayList<CustomMedicationAdministrationSample>();
+    for (var administration : ADMINISTRATIONS) {
+      if ((administration.intakeDateTime().isAfter(pair.getLeft()) &&
+          administration.intakeDateTime().isBefore(pair.getRight()))) {
+        list.add(administration);
       }
     }
-    return filteredList;
+    return list;
   }
 
-  public List<CustomMedicationAdministrationSample> generateListOfAdministrations() {
+  public static List<CustomMedicationAdministrationSample> generateListOfAdministrations() {
     var unwindedDocuments =
-        COLLECTION.aggregate(
-            Arrays.asList(
-                new Document("$unwind", new Document("path", "$diagnostics")),
-                new Document(
-                    "$unwind", new Document("path", "$diagnostics.medicationPrescriptions")),
-                new Document(
-                    "$unwind",
-                    new Document(
-                        "path",
-                        "$diagnostics.medicationPrescriptions.medicationAdministrations"))));
-    var docList = new ArrayList<Document>();
-    for (Document document : unwindedDocuments) {
-      docList.add(document);
-    }
+        COLLECTION.aggregate(Arrays.asList(
+            new Document("$unwind", new Document("path", "$diagnostics")),
+            new Document("$unwind", new Document("path", "$diagnostics.medicationPrescriptions")),
+            new Document("$unwind", new Document("path",
+                "$diagnostics.medicationPrescriptions.medicationAdministrations"))));
+    var docList = unwindedDocuments.into(new ArrayList<>());
     var list = new ArrayList<CustomMedicationAdministrationSample>();
     for (Document document : docList) {
       var elderRut = document.getString("rut");
@@ -90,7 +93,7 @@ public class CustomMedAdminSampleList {
               .get("diagnostics", Document.class)
               .getDate("date")
               .toInstant()
-              .atZone(ZoneId.of("UTC"))
+              .atZone(ZoneId.of("Chile/Continental"))
               .toLocalDate();
       var medication =
           document
