@@ -4,8 +4,9 @@ import com.bairontapia.projects.cuidamed.pojo.ElderPOJO;
 import com.bairontapia.projects.cuidamed.pojo.RoutineCheckupPOJO;
 import com.bairontapia.projects.cuidamed.pojo.RoutineCheckupPojoDAO;
 import com.bairontapia.projects.cuidamed.relational.medicalrecord.routinecheckup.RoutineCheckup;
+import com.google.common.primitives.Doubles;
+import com.google.common.primitives.Ints;
 import java.io.IOException;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
@@ -22,12 +23,13 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.math3.util.Precision;
 
 public class RoutineCheckupDialog {
 
   private static final ClassLoader CLASS_LOADER = Thread.currentThread().getContextClassLoader();
+
+  private final StringBuilder errorMessageBuilder = new StringBuilder();
 
   @Getter
   @Setter
@@ -139,11 +141,12 @@ public class RoutineCheckupDialog {
   }
 
   private boolean fieldsAreValid() {
-    return NumberUtils.isCreatable(height.getText()) && NumberUtils.isCreatable(weight.getText()) &&
-        NumberUtils.isCreatable(heartRate.getText()) &&
-        NumberUtils.isCreatable(diastolicPressure.getText()) &&
-        NumberUtils.isCreatable(systolicPressure.getText()) &&
-        NumberUtils.isCreatable(bodyTemperature.getText());
+    return Doubles.tryParse(height.getText()) != null &&
+        Doubles.tryParse(weight.getText()) != null &&
+        Ints.tryParse(heartRate.getText()) != null &&
+        Ints.tryParse(diastolicPressure.getText()) != null &&
+        Ints.tryParse(systolicPressure.getText()) != null &&
+        Doubles.tryParse(bodyTemperature.getText()) != null;
   }
 
   private boolean fieldsAreCorrect() {
@@ -174,6 +177,14 @@ public class RoutineCheckupDialog {
       return false;
     }
     return true;
+  }
+
+  private void appendFieldsEmpty() {
+    errorMessageBuilder.append("Hay campos vacíos o sin selección.");
+  }
+
+  private void appendFieldsInvalid() {
+    errorMessageBuilder.append("Hay campos que no tienen un formato correcto.");
   }
 
 }
