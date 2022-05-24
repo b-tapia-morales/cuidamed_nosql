@@ -13,6 +13,7 @@ import com.bairontapia.projects.cuidamed.pojo.MedicationPrescriptionPOJO;
 import com.bairontapia.projects.cuidamed.relational.disease.diagnostic.Diagnostic;
 import com.bairontapia.projects.cuidamed.relational.disease.medicationadministration.MedicationAdministration;
 import com.bairontapia.projects.cuidamed.relational.disease.medicationprescription.MedicationPrescription;
+import com.google.common.primitives.Ints;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -24,13 +25,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
@@ -39,6 +41,7 @@ public class MedicationPrescriptionDialog {
 
   private static final ClassLoader CLASS_LOADER = Thread.currentThread().getContextClassLoader();
 
+  private final StringBuilder errorMessageBuilder = new StringBuilder();
 
   @Getter
   @Setter
@@ -73,8 +76,21 @@ public class MedicationPrescriptionDialog {
 
   @FXML
   public void onAddButtonClicked(MouseEvent event) throws IOException {
+    errorMessageBuilder.setLength(0);
     trimFields();
     if (fieldsAreEmpty()) {
+      errorMessageBuilder.append("Existen campos sin selección o sin rellenar");
+      createErrorAlert().show();
+      return;
+    }
+    if (!fieldsAreValid()) {
+      errorMessageBuilder.append("Hay campos con formatos incorrectos");
+      createErrorAlert().show();
+      return;
+    }
+    if (!fieldsAreCorrect()) {
+      buildErrorMessage();
+      createErrorAlert().show();
       return;
     }
     ElderPojoDAO.getInstance().updateDiagnostics(elder.getId(), generateDiagnostic());
@@ -98,6 +114,56 @@ public class MedicationPrescriptionDialog {
     var scene = new Scene(root);
     stage.setScene(scene);
     stage.show();
+  }
+
+  private Alert createErrorAlert() {
+    final var alert = new Alert(AlertType.ERROR);
+    alert.setHeaderText("Error en el llenado de campos");
+    alert.setContentText(errorMessageBuilder.toString());
+    return alert;
+  }
+
+  private void trimFields() {
+    prescriptionDuration.setText(StringUtils.trim(prescriptionDuration.getText()));
+  }
+
+  private boolean fieldsAreEmpty() {
+    return diseaseComboBox.getSelectionModel().isEmpty() ||
+        diagnosticDatePicker.getValue() == null ||
+        prescriptionDatePicker.getValue() == null ||
+        medicationComboBox.getSelectionModel().isEmpty() ||
+        StringUtils.isEmpty(prescriptionDuration.getText()) ||
+        quantityComboBox.getSelectionModel().isEmpty();
+  }
+
+  private boolean fieldsAreValid() {
+    return Ints.tryParse(prescriptionDuration.getText()) != null;
+  }
+
+  private boolean fieldsAreCorrect() {
+    var diagnosticDate = diagnosticDatePicker.getValue();
+    var prescriptionDate = prescriptionDatePicker.getValue();
+    if (ChronoUnit.DAYS.between(diagnosticDate, prescriptionDate) < 0) {
+      return false;
+    }
+    var days = Integer.parseInt(prescriptionDuration.getText());
+    return days >= 1 && days <= 90;
+  }
+
+  private void buildErrorMessage() {
+    var diagnosticDate = diagnosticDatePicker.getValue();
+    var prescriptionDate = prescriptionDatePicker.getValue();
+    if (ChronoUnit.DAYS.between(diagnosticDate, prescriptionDate) < 0) {
+      errorMessageBuilder.append(
+          "La fecha de diagnóstico no puede ser posterior a la fecha de prescripción");
+    }
+    var days = Integer.parseInt(prescriptionDuration.getText());
+    if (days < 0) {
+      errorMessageBuilder.append("La duración de la prescripción no puede ser negativa");
+    }
+    if (days > 90) {
+      errorMessageBuilder.append("La duración de la prescripción no puede superar los 90 días");
+    }
   }
 
   private DiagnosticPOJO generateDiagnostic() {
@@ -150,19 +216,6 @@ public class MedicationPrescriptionDialog {
     }
     prescriptions.add(new MedicationPrescriptionPOJO(prescription, medication, administrations));
     return new DiagnosticPOJO(diagnostic, disease, prescriptions);
-  }
-
-  private void trimFields() {
-    prescriptionDuration.setText(StringUtils.trim(prescriptionDuration.getText()));
-  }
-
-  private boolean fieldsAreEmpty() {
-    return diseaseComboBox.getSelectionModel().isEmpty() ||
-        diagnosticDatePicker.getValue() == null ||
-        prescriptionDatePicker.getValue() == null ||
-        medicationComboBox.getSelectionModel().isEmpty() ||
-        StringUtils.isEmpty(prescriptionDuration.getText()) ||
-        quantityComboBox.getSelectionModel().isEmpty();
   }
 
 }
