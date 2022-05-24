@@ -42,7 +42,7 @@ public class DiagnosticPOJODAO
     diagnostics.add(diagnosticPOJO);
 
     elderColl.updateOne(
-        eq("rut", elder.getRut()),
+        eq("_id", elder.getId()),
         combine(
             set("rut", elder.getRut()),
             set("firstName", elder.getFirstName()),

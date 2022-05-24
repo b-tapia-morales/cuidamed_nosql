@@ -97,8 +97,7 @@ public class AdministrationGeneration {
                         "$diagnostics.medicationPrescriptions.medicationAdministrations"))));
     var documents = iterable.into(new ArrayList<>());
     var list = new ArrayList<Administration>();
-    for (Document document : documents) {
-      var id = document.getObjectId("_id");
+    for (var document : documents) {
       var rut = document.getString("rut");
       var firstName = document.getString("firstName");
       var lastName = document.getString("lastName");

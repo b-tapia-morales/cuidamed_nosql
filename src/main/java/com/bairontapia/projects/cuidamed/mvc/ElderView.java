@@ -109,6 +109,7 @@ public class ElderView {
     var routineCheckups = RoutineCheckupPojoDAO.getInstance().findAll(elder.getId());
     routineCheckupController.getCheckupTableView().getItems().clear();
     routineCheckupController.getCheckupTableView().getItems().addAll(routineCheckups);
+    AdministrationGeneration.update();
     prescriptionController.getAdministrationTable().getItems().clear();
     prescriptionController.getAdministrationTable().getItems()
         .addAll(AdministrationGeneration.filterByRut(elder.getRut()));

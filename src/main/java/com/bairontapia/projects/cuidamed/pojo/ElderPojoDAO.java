@@ -32,6 +32,18 @@ public class ElderPojoDAO implements ICrudDAO<ElderPOJO, ObjectId> {
     return INSTANCE;
   }
 
+  public Optional<ElderPOJO> findByRut(String rut) {
+    var elder = COLLECTION.find(eq("rut", rut)).first();
+    return Optional.ofNullable(elder);
+  }
+
+  public void updateDiagnostics(ObjectId id, DiagnosticPOJO diagnostic) {
+    var elder = COLLECTION.find(eq("_id", id)).first();
+    var diagnostics = elder.getDiagnostics();
+    diagnostics.add(diagnostic);
+    COLLECTION.updateOne(eq("_id", id), set("diagnostics", diagnostics));
+  }
+
   @Override
   public void update(ElderPOJO elderPOJO) {
     COLLECTION.updateOne(eq("_id", elderPOJO.getId()),
@@ -52,11 +64,6 @@ public class ElderPojoDAO implements ICrudDAO<ElderPOJO, ObjectId> {
   @Override
   public Optional<ElderPOJO> find(ObjectId elderId) {
     var elder = COLLECTION.find(eq("_id", elderId)).first();
-    return Optional.ofNullable(elder);
-  }
-
-  public Optional<ElderPOJO> findByRut(String rut) {
-    var elder = COLLECTION.find(eq("rut", rut)).first();
     return Optional.ofNullable(elder);
   }
 
