@@ -2,7 +2,6 @@ package com.bairontapia.projects.cuidamed.mvc;
 
 import com.bairontapia.projects.cuidamed.mappings.dosagestatus.DosageStatus;
 import com.bairontapia.projects.cuidamed.pojo.DiagnosticPOJO;
-import com.bairontapia.projects.cuidamed.pojo.DiagnosticPOJODAO;
 import com.bairontapia.projects.cuidamed.pojo.DiseasePOJO;
 import com.bairontapia.projects.cuidamed.pojo.DiseasePojoDAO;
 import com.bairontapia.projects.cuidamed.pojo.ElderPOJO;
@@ -73,27 +72,19 @@ public class MedicationPrescriptionDialog {
 
   @FXML
   public void onAddButtonClicked(MouseEvent event) throws IOException {
-
     if (!check()) {
       return;
     }
     ElderPojoDAO.getInstance().updateDiagnostics(elder.getId(), generateDiagnostic());
-
-    var node = (Node) event.getSource();
-    var stage = (Stage) node.getScene().getWindow();
-    stage.close();
-    var loader = new FXMLLoader(
-        Objects.requireNonNull(CLASS_LOADER.getResource("fxml/elder_view.fxml")));
-    var root = loader.<Parent>load();
-    var controller = loader.<ElderView>getController();
-    controller.receiveData(elder);
-    var scene = new Scene(root);
-    stage.setScene(scene);
-    stage.show();
+    loadPreviousPanel(event);
   }
 
   @FXML
   public void onCancelButtonClicked(MouseEvent event) throws IOException {
+    loadPreviousPanel(event);
+  }
+
+  private void loadPreviousPanel(MouseEvent event) throws IOException {
     var node = (Node) event.getSource();
     var stage = (Stage) node.getScene().getWindow();
     stage.close();
