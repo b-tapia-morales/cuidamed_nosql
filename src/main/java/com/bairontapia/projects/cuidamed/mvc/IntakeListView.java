@@ -12,7 +12,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.input.MouseEvent;
 
 public class IntakeListView {
 
@@ -38,8 +37,6 @@ public class IntakeListView {
   @FXML
   private TableView<Administration> tableView;
   @FXML
-  private TableColumn<Administration, String> rutColumn;
-  @FXML
   private TableColumn<Administration, String> fullNameColumn;
   @FXML
   private TableColumn<Administration, String> diseaseColumn;
@@ -53,10 +50,9 @@ public class IntakeListView {
   private TableColumn<Administration, String> intakeStatusColumn;
 
   public void initialize() {
-    var hours = List.of(1, 2, 3, 4, 6, 8, 12);
+    var hours = List.of(1, 2, 3, 4, 6, 8, 12, 24);
     lowerBoundComboBox.getItems().addAll(hours);
     upperBoundComboBox.getItems().addAll(hours);
-    rutColumn.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().rut()));
     fullNameColumn.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().fullName()));
     diseaseColumn.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().diseaseName()));
     diagnosticDateColumn.setCellValueFactory(
@@ -70,21 +66,21 @@ public class IntakeListView {
   }
 
   @FXML
-  public void onLowerBoundSelected(MouseEvent event) {
+  public void onLowerBoundSelected() {
     var isDisabled = !lowerBoundCheckBox.isSelected();
     lowerBoundComboBox.setDisable(isDisabled);
     lowerBoundLabel.setDisable(isDisabled);
   }
 
   @FXML
-  public void onUpperBoundSelected(MouseEvent event) {
+  public void onUpperBoundSelected() {
     var isDisabled = !upperBoundCheckBox.isSelected();
     upperBoundComboBox.setDisable(isDisabled);
     upperBoundLabel.setDisable(isDisabled);
   }
 
   @FXML
-  public void onRefreshViewClicked(MouseEvent event) {
+  public void onRefreshViewClicked() {
     tableView.getItems().clear();
     var isLowerBoundDisabled =
         !lowerBoundCheckBox.isSelected() || lowerBoundComboBox.getSelectionModel().isEmpty();

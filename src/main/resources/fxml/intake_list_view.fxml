@@ -11,12 +11,11 @@
     <center>
       <TableView fx:id="tableView" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn fx:id="rutColumn" editable="false" text="Rut" />
-          <TableColumn fx:id="fullNameColumn" editable="false" prefWidth="150.0" text="Nombre completo" />
-          <TableColumn fx:id="diseaseColumn" editable="false" prefWidth="120.0" text="Enfermedad" />
+          <TableColumn fx:id="fullNameColumn" editable="false" prefWidth="180.0" text="Nombre completo" />
+          <TableColumn fx:id="diseaseColumn" editable="false" prefWidth="135.0" text="Enfermedad" />
           <TableColumn fx:id="diagnosticDateColumn" editable="false" text="Fecha" />
-          <TableColumn fx:id="medicationColumn" editable="false" prefWidth="120.0" text="Medicamento" />
-          <TableColumn fx:id="intakeDateTimeColumn" editable="false" prefWidth="100.0" text="Fecha y hora" />
+          <TableColumn fx:id="medicationColumn" editable="false" prefWidth="135.0" text="Medicamento" />
+          <TableColumn fx:id="intakeDateTimeColumn" editable="false" prefWidth="120.0" text="Fecha y hora" />
           <TableColumn fx:id="intakeStatusColumn" prefWidth="90.0" text="Estado" />
         </columns>
       </TableView>
