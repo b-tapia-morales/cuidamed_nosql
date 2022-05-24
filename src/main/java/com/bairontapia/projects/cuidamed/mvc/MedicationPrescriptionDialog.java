@@ -33,6 +33,7 @@ import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 
 public class MedicationPrescriptionDialog {
 
@@ -46,15 +47,15 @@ public class MedicationPrescriptionDialog {
   @FXML
   private ComboBox<String> diseaseComboBox;
   @FXML
-  public ComboBox<String> medicationComboBox;
-  @FXML
   private DatePicker diagnosticDatePicker;
   @FXML
   private DatePicker prescriptionDatePicker;
   @FXML
-  private ComboBox<Integer> quantityComboBox;
+  public ComboBox<String> medicationComboBox;
   @FXML
   private TextField prescriptionDuration;
+  @FXML
+  private ComboBox<Integer> quantityComboBox;
   @FXML
   private Button add;
   @FXML
@@ -72,7 +73,8 @@ public class MedicationPrescriptionDialog {
 
   @FXML
   public void onAddButtonClicked(MouseEvent event) throws IOException {
-    if (!check()) {
+    trimFields();
+    if (fieldsAreEmpty()) {
       return;
     }
     ElderPojoDAO.getInstance().updateDiagnostics(elder.getId(), generateDiagnostic());
@@ -150,15 +152,17 @@ public class MedicationPrescriptionDialog {
     return new DiagnosticPOJO(diagnostic, disease, prescriptions);
   }
 
-
-  public boolean check() {
-    if (medicationComboBox.getSelectionModel().isEmpty() || diseaseComboBox.getSelectionModel()
-        .isEmpty() || quantityComboBox.getSelectionModel().isEmpty()
-        || prescriptionDuration.getText().equals("")) {
-      JOptionPane.showConfirmDialog(null, "Error en algunos de los campos!!", "CUIDADO!!",
-          JOptionPane.OK_CANCEL_OPTION);
-      return false;
-    }
-    return true;
+  private void trimFields() {
+    prescriptionDuration.setText(StringUtils.trim(prescriptionDuration.getText()));
   }
+
+  private boolean fieldsAreEmpty() {
+    return diseaseComboBox.getSelectionModel().isEmpty() ||
+        diagnosticDatePicker.getValue() == null ||
+        prescriptionDatePicker.getValue() == null ||
+        medicationComboBox.getSelectionModel().isEmpty() ||
+        StringUtils.isEmpty(prescriptionDuration.getText()) ||
+        quantityComboBox.getSelectionModel().isEmpty();
+  }
+
 }
