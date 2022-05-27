@@ -29,7 +29,6 @@ public class AdministrationAggregation {
   private static final String PRESCRIPTION_PATH;
   private static final String ADMINISTRATION_PATH;
   private static final List<Administration> ADMINISTRATIONS;
-  private static final ZoneId LOCAL_ZONE;
 
   static {
     CLIENT = MongoClientSingleton.getInstance();
@@ -45,7 +44,6 @@ public class AdministrationAggregation {
     ADMINISTRATION_PATH = String.format("$%s.%s.%s", DIAGNOSTIC_KEY, PRESCRIPTION_KEY,
         ADMINISTRATION_KEY);
     ADMINISTRATIONS = generateAdministrations();
-    LOCAL_ZONE = ZoneId.of("Chile/Continental");
   }
 
   private AdministrationAggregation() {
@@ -78,10 +76,6 @@ public class AdministrationAggregation {
     return list;
   }
 
-  public static List<Administration> filterByHourDifference(final int from, final int to) {
-    return filterByHourDifference(LocalDateTime.now(LOCAL_ZONE), from, to);
-  }
-
   private static Pair<LocalDateTime, LocalDateTime> createInterval(final LocalDateTime dateTime,
       final int from, final int to) {
     var roundedDateTime = dateTime.truncatedTo(ChronoUnit.SECONDS);
@@ -95,10 +89,6 @@ public class AdministrationAggregation {
       return Pair.of(roundedDateTime.minusHours(from), roundedDateTime);
     }
     return Pair.of(roundedDateTime.minusHours(from), roundedDateTime.plusHours(to));
-  }
-
-  private static Pair<LocalDateTime, LocalDateTime> createInterval(final int from, final int to) {
-    return createInterval(LocalDateTime.now(LOCAL_ZONE), from, to);
   }
 
   private static List<Document> generateDocuments() {
