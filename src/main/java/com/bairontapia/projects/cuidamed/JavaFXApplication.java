@@ -12,9 +12,16 @@ import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
 
 public class JavaFXApplication extends Application {
-  
+
   public static void main(final String... args) {
     launch();
+  }
+
+  private static List<Image> generateIcons() {
+    var sizes = List.of(16, 24, 32, 64);
+    var fileNames = sizes.stream()
+        .map(e -> StringUtils.join("/icons/nursing-", e.toString(), ".png")).toList();
+    return fileNames.stream().map(Image::new).toList();
   }
 
   @Override
@@ -27,13 +34,6 @@ public class JavaFXApplication extends Application {
     stage.getIcons().addAll(generateIcons());
     stage.setResizable(false);
     stage.show();
-  }
-
-  private static List<Image> generateIcons() {
-    var sizes = List.of(16, 24, 32, 64);
-    var fileNames = sizes.stream()
-        .map(e -> StringUtils.join("/icons/nursing-", e.toString(), ".png")).toList();
-    return fileNames.stream().map(Image::new).toList();
   }
 
 }
