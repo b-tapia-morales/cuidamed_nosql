@@ -4,7 +4,7 @@ import com.bairontapia.projects.cuidamed.mappings.bloodtype.BloodType;
 import com.bairontapia.projects.cuidamed.mappings.gender.Gender;
 import com.bairontapia.projects.cuidamed.mappings.healthcaresystem.HealthCare;
 import com.bairontapia.projects.cuidamed.pojo.Administration;
-import com.bairontapia.projects.cuidamed.pojo.AdministrationGeneration;
+import com.bairontapia.projects.cuidamed.pojo.AdministrationAggregation;
 import com.bairontapia.projects.cuidamed.pojo.ElderPOJO;
 import com.bairontapia.projects.cuidamed.pojo.MedicalRecordPOJO;
 import com.bairontapia.projects.cuidamed.pojo.ResponsiblePOJO;
@@ -114,10 +114,10 @@ public class ElderView {
     checkupList.clear();
     checkupList.addAll(elderCheckups);
     checkupList.sort(Comparator.comparing(RoutineCheckupPOJO::getCheckupDate).reversed());
-    AdministrationGeneration.update();
+    AdministrationAggregation.update();
     var administrationList = prescriptionController.getAdministrationTable().getItems();
     administrationList.clear();
-    administrationList.addAll(AdministrationGeneration.filterByRut(elder.getRut()));
+    administrationList.addAll(AdministrationAggregation.filterByRut(elder.getRut()));
     administrationList.sort(Comparator.comparing(Administration::diagnosticDate)
         .thenComparing(Administration::diseaseName)
         .thenComparing(Administration::medicationName)

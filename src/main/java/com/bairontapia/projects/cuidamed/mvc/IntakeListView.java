@@ -1,7 +1,7 @@
 package com.bairontapia.projects.cuidamed.mvc;
 
 import com.bairontapia.projects.cuidamed.pojo.Administration;
-import com.bairontapia.projects.cuidamed.pojo.AdministrationGeneration;
+import com.bairontapia.projects.cuidamed.pojo.AdministrationAggregation;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -9,7 +9,6 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
 import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
@@ -136,16 +135,16 @@ public class IntakeListView implements ErrorChecking {
         !upperBoundCheckBox.isSelected() || upperBoundComboBox.getSelectionModel().isEmpty();
     List<Administration> administrations;
     if (isLowerBoundDisabled && isUpperBoundDisabled) {
-      administrations = AdministrationGeneration.filterByHourDifference(dateTime, 0, 0);
+      administrations = AdministrationAggregation.filterByHourDifference(dateTime, 0, 0);
     } else if (isLowerBoundDisabled) {
-      administrations = AdministrationGeneration.filterByHourDifference(dateTime, 0,
+      administrations = AdministrationAggregation.filterByHourDifference(dateTime, 0,
           upperBoundComboBox.getValue());
     } else if (isUpperBoundDisabled) {
-      administrations = AdministrationGeneration.filterByHourDifference(dateTime,
+      administrations = AdministrationAggregation.filterByHourDifference(dateTime,
           lowerBoundComboBox.getValue(), 0);
     } else {
       administrations =
-          AdministrationGeneration.filterByHourDifference(dateTime, lowerBoundComboBox.getValue(),
+          AdministrationAggregation.filterByHourDifference(dateTime, lowerBoundComboBox.getValue(),
               upperBoundComboBox.getValue());
     }
     tableView.getItems().clear();
