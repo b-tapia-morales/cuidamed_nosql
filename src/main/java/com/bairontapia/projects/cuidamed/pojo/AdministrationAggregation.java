@@ -28,6 +28,7 @@ public class AdministrationAggregation {
   private static final String DIAGNOSTIC_PATH;
   private static final String PRESCRIPTION_PATH;
   private static final String ADMINISTRATION_PATH;
+  private static final List<Document> DOCUMENTS;
   private static final List<Administration> ADMINISTRATIONS;
 
   static {
@@ -43,6 +44,7 @@ public class AdministrationAggregation {
     PRESCRIPTION_PATH = String.format("$%s.%s", DIAGNOSTIC_KEY, PRESCRIPTION_KEY);
     ADMINISTRATION_PATH = String.format("$%s.%s.%s", DIAGNOSTIC_KEY, PRESCRIPTION_KEY,
         ADMINISTRATION_KEY);
+    DOCUMENTS = generateDocuments();
     ADMINISTRATIONS = generateAdministrations();
   }
 
@@ -50,8 +52,14 @@ public class AdministrationAggregation {
   }
 
   public static void update() {
+    DOCUMENTS.clear();
+    DOCUMENTS.addAll(generateDocuments());
     ADMINISTRATIONS.clear();
     ADMINISTRATIONS.addAll(generateAdministrations());
+  }
+
+  public static List<Document> getDocuments() {
+    return DOCUMENTS;
   }
 
   public static List<Administration> getAdministrations() {
@@ -127,9 +135,8 @@ public class AdministrationAggregation {
   }
 
   private static List<Administration> generateAdministrations() {
-    var documents = generateDocuments();
     var list = new ArrayList<Administration>();
-    for (var document : documents) {
+    for (var document : DOCUMENTS) {
       var rut = document.getString("rut");
       var firstName = document.getString("firstName");
       var lastName = document.getString("lastName");
