@@ -51,8 +51,9 @@ public class AdministrationGeneration {
     var pair = createInterval(dateTime, from, to);
     var list = new ArrayList<Administration>();
     for (var administration : ADMINISTRATIONS) {
-      if ((administration.intakeDateTime().isAfter(pair.getLeft())
-          && administration.intakeDateTime().isBefore(pair.getRight()))) {
+      var intake = administration.intakeDateTime();
+      if ((intake.isEqual(pair.getLeft()) || intake.isAfter(pair.getLeft())) &&
+          (intake.isEqual(pair.getRight()) || intake.isBefore(pair.getRight()))) {
         list.add(administration);
       }
     }
@@ -63,15 +64,9 @@ public class AdministrationGeneration {
     return filterByHourDifference(LocalDateTime.now(LOCAL_ZONE), from, to);
   }
 
-  private static LocalDateTime roundToNearestHour(final LocalDateTime dateTime) {
-    return dateTime.getMinute() >= 30
-        ? dateTime.truncatedTo(ChronoUnit.HOURS).plusHours(1)
-        : dateTime.truncatedTo(ChronoUnit.HOURS);
-  }
-
   private static Pair<LocalDateTime, LocalDateTime> createInterval(LocalDateTime dateTime, int from,
       int to) {
-    var roundedDateTime = roundToNearestHour(dateTime);
+    var roundedDateTime = dateTime.truncatedTo(ChronoUnit.SECONDS);
     if (from == 0 && to == 0) {
       return Pair.of(roundedDateTime.minusHours(12), roundedDateTime.plusHours(12));
     }
