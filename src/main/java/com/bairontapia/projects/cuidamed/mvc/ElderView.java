@@ -109,17 +109,17 @@ public class ElderView {
     fillElderFields(elder);
     fillMedicalRecordFields(elder.getMedicalRecord());
     fillResponsibleFields(elder.getResponsible());
-    var routineCheckups = RoutineCheckupPojoDAO.getInstance().findAll(elder.getId());
-    routineCheckupController.getCheckupTableView().getItems().clear();
-    routineCheckupController.getCheckupTableView().getItems().addAll(routineCheckups);
-    routineCheckupController.getCheckupTableView().getItems().sort(Comparator.comparing(
-        RoutineCheckupPOJO::getCheckupDate).reversed());
+    var elderCheckups = RoutineCheckupPojoDAO.getInstance().findAll(elder.getId());
+    var checkupList = routineCheckupController.getCheckupTableView().getItems();
+    checkupList.clear();
+    checkupList.addAll(elderCheckups);
+    checkupList.sort(Comparator.comparing(RoutineCheckupPOJO::getCheckupDate).reversed());
     AdministrationGeneration.update();
-    prescriptionController.getAdministrationTable().getItems().clear();
-    prescriptionController.getAdministrationTable().getItems()
-        .addAll(AdministrationGeneration.filterByRut(elder.getRut()));
-    prescriptionController.getAdministrationTable().getItems().sort(Comparator.comparing(
-            Administration::diagnosticDate).thenComparing(Administration::diseaseName)
+    var administrationList = prescriptionController.getAdministrationTable().getItems();
+    administrationList.clear();
+    administrationList.addAll(AdministrationGeneration.filterByRut(elder.getRut()));
+    administrationList.sort(Comparator.comparing(Administration::diagnosticDate)
+        .thenComparing(Administration::diseaseName)
         .thenComparing(Administration::medicationName)
         .thenComparing(Administration::intakeDateTime));
   }

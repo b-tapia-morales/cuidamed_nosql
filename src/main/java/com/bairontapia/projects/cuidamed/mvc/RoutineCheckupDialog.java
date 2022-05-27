@@ -9,6 +9,9 @@ import com.google.common.primitives.Ints;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Objects;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -38,7 +41,7 @@ public class RoutineCheckupDialog implements ErrorChecking {
   private ElderPOJO elder;
   @Getter
   @Setter
-  private RoutineCheckupPOJO lastRoutineCheckup;
+  private RoutineCheckupPOJO latestCheckup;
 
   @FXML
   private DatePicker checkupDatePicker;
@@ -171,15 +174,17 @@ public class RoutineCheckupDialog implements ErrorChecking {
     var temperatureValue = Precision.round(Double.parseDouble(bodyTemperature.getText()), 1);
     var routineCheckup = new RoutineCheckup("", checkupDate, heightValue, weightValue, bmiValue,
         heartRateValue, diastolicValue, systolicValue, temperatureValue);
-    var routineCheckupPOJO = new RoutineCheckupPOJO(routineCheckup, getElder().getId());
-    RoutineCheckupPojoDAO.getInstance().save(routineCheckupPOJO);
+    var checkup = new RoutineCheckupPOJO(routineCheckup, getElder().getId());
+    RoutineCheckupPojoDAO.getInstance().save(checkup);
+    latestCheckup = Collections.max(Arrays.asList(latestCheckup, checkup),
+        Comparator.comparing(RoutineCheckupPOJO::getCheckupDate));
     loadPreviousScene((ActionEvent) event);
   }
 
   public void receiveData(final ElderPOJO elder) {
     var routineCheckup = RoutineCheckupPojoDAO.getInstance().findMax(elder.getId()).orElseThrow();
     setElder(elder);
-    setLastRoutineCheckup(routineCheckup);
+    setLatestCheckup(routineCheckup);
     fillFields();
   }
 
@@ -208,12 +213,12 @@ public class RoutineCheckupDialog implements ErrorChecking {
   }
 
   private void fillFields() {
-    height.setText(lastRoutineCheckup.getHeight().toString());
-    weight.setText(lastRoutineCheckup.getWeight().toString());
-    heartRate.setText(lastRoutineCheckup.getHeartRate().toString());
-    diastolicPressure.setText(lastRoutineCheckup.getDiastolicPressure().toString());
-    systolicPressure.setText(lastRoutineCheckup.getSystolicPressure().toString());
-    bodyTemperature.setText(lastRoutineCheckup.getBodyTemperature().toString());
+    height.setText(latestCheckup.getHeight().toString());
+    weight.setText(latestCheckup.getWeight().toString());
+    heartRate.setText(latestCheckup.getHeartRate().toString());
+    diastolicPressure.setText(latestCheckup.getDiastolicPressure().toString());
+    systolicPressure.setText(latestCheckup.getSystolicPressure().toString());
+    bodyTemperature.setText(latestCheckup.getBodyTemperature().toString());
   }
 
 }
