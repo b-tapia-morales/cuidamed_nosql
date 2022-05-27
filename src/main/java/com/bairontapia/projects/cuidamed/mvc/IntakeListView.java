@@ -10,6 +10,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
 import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.Event;
@@ -149,6 +150,7 @@ public class IntakeListView implements ErrorChecking {
     }
     tableView.getItems().clear();
     tableView.getItems().addAll(administrations);
+    tableView.getItems().sort(Comparator.comparing(Administration::intakeDateTime));
   }
 
   @FXML

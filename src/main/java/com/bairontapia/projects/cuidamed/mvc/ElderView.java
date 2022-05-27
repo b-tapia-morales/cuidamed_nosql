@@ -3,12 +3,15 @@ package com.bairontapia.projects.cuidamed.mvc;
 import com.bairontapia.projects.cuidamed.mappings.bloodtype.BloodType;
 import com.bairontapia.projects.cuidamed.mappings.gender.Gender;
 import com.bairontapia.projects.cuidamed.mappings.healthcaresystem.HealthCare;
+import com.bairontapia.projects.cuidamed.pojo.Administration;
 import com.bairontapia.projects.cuidamed.pojo.AdministrationGeneration;
 import com.bairontapia.projects.cuidamed.pojo.ElderPOJO;
 import com.bairontapia.projects.cuidamed.pojo.MedicalRecordPOJO;
 import com.bairontapia.projects.cuidamed.pojo.ResponsiblePOJO;
+import com.bairontapia.projects.cuidamed.pojo.RoutineCheckupPOJO;
 import com.bairontapia.projects.cuidamed.pojo.RoutineCheckupPojoDAO;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.Objects;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -109,10 +112,16 @@ public class ElderView {
     var routineCheckups = RoutineCheckupPojoDAO.getInstance().findAll(elder.getId());
     routineCheckupController.getCheckupTableView().getItems().clear();
     routineCheckupController.getCheckupTableView().getItems().addAll(routineCheckups);
+    routineCheckupController.getCheckupTableView().getItems().sort(Comparator.comparing(
+        RoutineCheckupPOJO::getCheckupDate).reversed());
     AdministrationGeneration.update();
     prescriptionController.getAdministrationTable().getItems().clear();
     prescriptionController.getAdministrationTable().getItems()
         .addAll(AdministrationGeneration.filterByRut(elder.getRut()));
+    prescriptionController.getAdministrationTable().getItems().sort(Comparator.comparing(
+            Administration::diagnosticDate).thenComparing(Administration::diseaseName)
+        .thenComparing(Administration::medicationName)
+        .thenComparing(Administration::intakeDateTime));
   }
 
   private void fillElderFields(ElderPOJO elder) {
