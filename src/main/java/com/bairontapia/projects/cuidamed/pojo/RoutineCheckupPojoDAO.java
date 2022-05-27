@@ -38,7 +38,7 @@ public class RoutineCheckupPojoDAO implements IOneToManyDAO<RoutineCheckupPOJO, 
   }
 
   public Collection<RoutineCheckupPOJO> findMax(ObjectId elderId, int n) {
-    return COLLECTION.find(eq("elderId", elderId)).sort(descending("{checkupDate:+1}")).limit(n)
+    return COLLECTION.find(eq("elderId", elderId)).sort(descending("{checkupDate:-1}")).limit(n)
         .into(new ArrayList<>());
   }
 

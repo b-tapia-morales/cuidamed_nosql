@@ -9,8 +9,6 @@ import com.google.common.primitives.Ints;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Objects;
 import javafx.event.ActionEvent;
@@ -176,13 +174,13 @@ public class RoutineCheckupDialog implements ErrorChecking {
         heartRateValue, diastolicValue, systolicValue, temperatureValue);
     var checkup = new RoutineCheckupPOJO(routineCheckup, getElder().getId());
     RoutineCheckupPojoDAO.getInstance().save(checkup);
-    latestCheckup = Collections.max(Arrays.asList(latestCheckup, checkup),
-        Comparator.comparing(RoutineCheckupPOJO::getCheckupDate));
     loadPreviousScene((ActionEvent) event);
   }
 
   public void receiveData(final ElderPOJO elder) {
-    var routineCheckup = RoutineCheckupPojoDAO.getInstance().findMax(elder.getId()).orElseThrow();
+    var routineCheckup =
+        RoutineCheckupPojoDAO.getInstance().findAll(elder.getId()).stream()
+            .max(Comparator.comparing(RoutineCheckupPOJO::getCheckupDate)).orElseThrow();
     setElder(elder);
     setLatestCheckup(routineCheckup);
     fillFields();
