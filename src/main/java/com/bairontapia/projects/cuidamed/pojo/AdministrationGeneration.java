@@ -1,13 +1,9 @@
 package com.bairontapia.projects.cuidamed.pojo;
 
-import static java.time.LocalTime.MAX;
-import static java.time.LocalTime.MIN;
-
 import com.bairontapia.projects.cuidamed.connection.MongoClientSingleton;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
@@ -24,12 +20,14 @@ public class AdministrationGeneration {
   private static final MongoDatabase DATABASE;
   private static final MongoCollection<Document> COLLECTION;
   private static final List<Administration> ADMINISTRATIONS;
+  private static final ZoneId LOCAL_ZONE;
 
   static {
     CLIENT = MongoClientSingleton.getInstance();
     DATABASE = CLIENT.getDatabase("admin");
     COLLECTION = DATABASE.getCollection("elder");
     ADMINISTRATIONS = generate();
+    LOCAL_ZONE = ZoneId.of("Chile/Continental");
   }
 
   private AdministrationGeneration() {
@@ -48,39 +46,41 @@ public class AdministrationGeneration {
     return ADMINISTRATIONS.stream().filter(e -> StringUtils.equals(e.rut(), rut)).toList();
   }
 
-  public static List<Administration> filterByHourDifference(int from, int to) {
-    var pair = createInterval(from, to);
+  public static List<Administration> filterByHourDifference(LocalDateTime dateTime, int from,
+      int to) {
+    var pair = createInterval(dateTime, from, to);
     var list = new ArrayList<Administration>();
     for (var administration : ADMINISTRATIONS) {
-      if ((administration.intakeDateTime().isAfter(pair.getLeft())
-          && administration.intakeDateTime().isBefore(pair.getRight()))) {
+      var intake = administration.intakeDateTime();
+      if ((intake.isEqual(pair.getLeft()) || intake.isAfter(pair.getLeft())) &&
+          (intake.isEqual(pair.getRight()) || intake.isBefore(pair.getRight()))) {
         list.add(administration);
       }
     }
     return list;
   }
 
-  private static LocalDateTime roundToNearestHour(final LocalDateTime current) {
-    return current.getMinute() >= 30
-        ? current.truncatedTo(ChronoUnit.HOURS).plusHours(1)
-        : current.truncatedTo(ChronoUnit.HOURS);
+  public static List<Administration> filterByHourDifference(int from, int to) {
+    return filterByHourDifference(LocalDateTime.now(LOCAL_ZONE), from, to);
+  }
+
+  private static Pair<LocalDateTime, LocalDateTime> createInterval(LocalDateTime dateTime, int from,
+      int to) {
+    var roundedDateTime = dateTime.truncatedTo(ChronoUnit.SECONDS);
+    if (from == 0 && to == 0) {
+      return Pair.of(roundedDateTime.minusHours(12), roundedDateTime.plusHours(12));
+    }
+    if (from == 0) {
+      return Pair.of(roundedDateTime, roundedDateTime.plusHours(to));
+    }
+    if (to == 0) {
+      return Pair.of(roundedDateTime.minusHours(from), roundedDateTime);
+    }
+    return Pair.of(roundedDateTime.minusHours(from), roundedDateTime.plusHours(to));
   }
 
   private static Pair<LocalDateTime, LocalDateTime> createInterval(int from, int to) {
-    var currentDate = LocalDate.now();
-    if (from == 0 && to == 0) {
-      return Pair.of(LocalDateTime.of(currentDate, MIN), LocalDateTime.of(currentDate, MAX));
-    }
-    var currentDateTime = LocalDateTime.now();
-    if (from == 0) {
-      return Pair.of(currentDateTime, roundToNearestHour(currentDateTime.plusHours(to)));
-    }
-    if (to == 0) {
-      return Pair.of(roundToNearestHour(currentDateTime.minusHours(from)), currentDateTime);
-    }
-    return Pair.of(
-        roundToNearestHour(currentDateTime.minusHours(from)),
-        roundToNearestHour(currentDateTime.plusHours(to)));
+    return createInterval(LocalDateTime.now(LOCAL_ZONE), from, to);
   }
 
   private static List<Administration> generate() {
@@ -113,7 +113,7 @@ public class AdministrationGeneration {
               .get("diagnostics", Document.class)
               .getDate("date")
               .toInstant()
-              .atZone(ZoneId.of("Chile/Continental"))
+              .atZone(ZoneId.of("UTC"))
               .toLocalDate();
       var medicationName =
           document

@@ -1,63 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bairontapia.projects.cuidamed.mvc.IntakeListView">
-  <BorderPane prefHeight="600.0" prefWidth="750.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="750.0"
+  xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="com.bairontapia.projects.cuidamed.mvc.IntakeListView">
+  <BorderPane prefHeight="600.0" prefWidth="750.0" AnchorPane.bottomAnchor="0.0"
+    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
     <center>
       <TableView fx:id="tableView" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn fx:id="fullNameColumn" editable="false" prefWidth="180.0" text="Nombre completo" />
-          <TableColumn fx:id="diseaseColumn" editable="false" prefWidth="135.0" text="Enfermedad" />
-          <TableColumn fx:id="diagnosticDateColumn" editable="false" text="Fecha" />
-          <TableColumn fx:id="medicationColumn" editable="false" prefWidth="135.0" text="Medicamento" />
-          <TableColumn fx:id="intakeDateTimeColumn" editable="false" prefWidth="120.0" text="Fecha y hora" />
-          <TableColumn fx:id="intakeStatusColumn" prefWidth="90.0" text="Estado" />
+          <TableColumn fx:id="fullNameColumn" editable="false" prefWidth="180.0"
+            text="Nombre completo"/>
+          <TableColumn fx:id="diseaseColumn" editable="false" prefWidth="135.0" text="Enfermedad"/>
+          <TableColumn fx:id="diagnosticDateColumn" editable="false" text="Fecha"/>
+          <TableColumn fx:id="medicationColumn" editable="false" prefWidth="135.0"
+            text="Medicamento"/>
+          <TableColumn fx:id="intakeDateTimeColumn" editable="false" prefWidth="120.0"
+            text="Fecha y hora"/>
+          <TableColumn fx:id="intakeStatusColumn" prefWidth="90.0" text="Estado"/>
         </columns>
       </TableView>
     </center>
     <top>
       <HBox alignment="CENTER" prefHeight="45.0" spacing="10.0" BorderPane.alignment="CENTER">
-        <CheckBox fx:id="lowerBoundCheckBox" mnemonicParsing="false" onMouseClicked="#onLowerBoundSelected" text="Desde hace">
+        <DatePicker fx:id="datePicker" maxWidth="120.0"/>
+        <TextField fx:id="timeField" prefWidth="80.0">
+          <HBox.margin>
+            <Insets right="25.0"/>
+          </HBox.margin>
+        </TextField>
+        <CheckBox fx:id="lowerBoundCheckBox" mnemonicParsing="false"
+          onMouseClicked="#onLowerBoundSelected" text="Desde">
           <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="12.0"/>
           </font>
         </CheckBox>
-        <ComboBox fx:id="lowerBoundComboBox" disable="true" prefWidth="100.0" />
+        <ComboBox fx:id="lowerBoundComboBox" disable="true" prefWidth="80.0"/>
         <Label fx:id="lowerBoundLabel" disable="true" text="Horas">
           <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="12.0"/>
           </font>
           <HBox.margin>
-            <Insets right="40.0" />
+            <Insets right="25.0"/>
           </HBox.margin>
         </Label>
-        <CheckBox fx:id="upperBoundCheckBox" mnemonicParsing="false" onMouseClicked="#onUpperBoundSelected" text="Hasta en">
+        <CheckBox fx:id="upperBoundCheckBox" mnemonicParsing="false"
+          onMouseClicked="#onUpperBoundSelected" text="Hasta">
           <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="12.0"/>
           </font>
         </CheckBox>
-        <ComboBox fx:id="upperBoundComboBox" disable="true" prefWidth="100.0" />
+        <ComboBox fx:id="upperBoundComboBox" disable="true" prefWidth="80.0"/>
         <Label fx:id="upperBoundLabel" disable="true" text="Horas">
           <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="12.0"/>
           </font>
           <HBox.margin>
-            <Insets right="40.0" />
+            <Insets right="40.0"/>
           </HBox.margin>
         </Label>
-        <Button fx:id="refreshView" mnemonicParsing="false" onMouseClicked="#onRefreshViewClicked" style="-fx-background-radius: 32;">
+      </HBox>
+    </top>
+    <bottom>
+      <HBox alignment="CENTER" prefHeight="45.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <Button fx:id="refreshView" mnemonicParsing="false" onMouseClicked="#onRefreshViewClicked"
+          style="-fx-background-radius: 32;">
           <graphic>
             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-              <Image url="@../icons/update.png" />
+              <Image url="@../icons/update.png"/>
             </ImageView>
           </graphic>
         </Button>
       </HBox>
-    </top>
+    </bottom>
   </BorderPane>
 </AnchorPane>
