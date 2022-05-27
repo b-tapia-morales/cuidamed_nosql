@@ -2,24 +2,51 @@ package com.bairontapia.projects.cuidamed.mvc;
 
 import com.bairontapia.projects.cuidamed.pojo.Administration;
 import com.bairontapia.projects.cuidamed.pojo.AdministrationGeneration;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
 
-public class IntakeListView {
+public class IntakeListView implements ErrorChecking {
 
-  private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(
-      "yyyy/MM/dd");
-  private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(
-      "yyyy/MM/dd HH:mm:ss");
+  private static final ZoneId LOCAL_ZONE;
+  private static final DateTimeFormatter DATE_FORMATTER;
+  private static final DateTimeFormatter DATE_TIME_FORMATTER;
+  private static final DateTimeFormatter TIME_FORMATTER;
 
+  static {
+    LOCAL_ZONE = ZoneId.of("Chile/Continental");
+    DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+    TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
+    DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+  }
+
+  @Getter
+  private final StringBuilder messageBuilder = new StringBuilder();
+
+  @FXML
+  private DatePicker datePicker;
+  @FXML
+  private TextField timeField;
   @FXML
   private CheckBox lowerBoundCheckBox;
   @FXML
@@ -51,6 +78,8 @@ public class IntakeListView {
 
   public void initialize() {
     var hours = List.of(1, 2, 3, 4, 6, 8, 12, 24);
+    datePicker.setValue(LocalDate.now(LOCAL_ZONE));
+    timeField.setText(LocalTime.now(LOCAL_ZONE).format(TIME_FORMATTER));
     lowerBoundComboBox.getItems().addAll(hours);
     upperBoundComboBox.getItems().addAll(hours);
     fullNameColumn.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().fullName()));
@@ -63,6 +92,63 @@ public class IntakeListView {
         e -> new SimpleStringProperty(e.getValue().intakeDateTime().format(DATE_TIME_FORMATTER)));
     intakeStatusColumn.setCellValueFactory(
         e -> new SimpleStringProperty(e.getValue().intakeStatus()));
+  }
+
+  @Override
+  public void trimFields() {
+    timeField.setText(StringUtils.trim(timeField.getText()));
+  }
+
+  @Override
+  public boolean fieldsAreEmpty() {
+    return datePicker.getValue() == null || StringUtils.isEmpty(timeField.getText());
+  }
+
+  @Override
+  public boolean fieldsAreValid() {
+    try {
+      LocalTime.parse(timeField.getText());
+    } catch (DateTimeParseException exception) {
+      return false;
+    }
+    return true;
+  }
+
+  @Override
+  public boolean fieldsAreCorrect() {
+    return true;
+  }
+
+  @Override
+  public void buildErrorMessage() {
+    // Unneeded
+  }
+
+  @Override
+  public void performAction(Event event) {
+    var date = datePicker.getValue();
+    var time = LocalTime.parse(timeField.getText());
+    var dateTime = LocalDateTime.of(date, time);
+    var isLowerBoundDisabled =
+        !lowerBoundCheckBox.isSelected() || lowerBoundComboBox.getSelectionModel().isEmpty();
+    var isUpperBoundDisabled =
+        !upperBoundCheckBox.isSelected() || upperBoundComboBox.getSelectionModel().isEmpty();
+    List<Administration> administrations;
+    if (isLowerBoundDisabled && isUpperBoundDisabled) {
+      administrations = AdministrationGeneration.filterByHourDifference(dateTime, 0, 0);
+    } else if (isLowerBoundDisabled) {
+      administrations = AdministrationGeneration.filterByHourDifference(dateTime, 0,
+          upperBoundComboBox.getValue());
+    } else if (isUpperBoundDisabled) {
+      administrations = AdministrationGeneration.filterByHourDifference(dateTime,
+          lowerBoundComboBox.getValue(), 0);
+    } else {
+      administrations =
+          AdministrationGeneration.filterByHourDifference(dateTime, lowerBoundComboBox.getValue(),
+              upperBoundComboBox.getValue());
+    }
+    tableView.getItems().clear();
+    tableView.getItems().addAll(administrations);
   }
 
   @FXML
@@ -80,26 +166,8 @@ public class IntakeListView {
   }
 
   @FXML
-  public void onRefreshViewClicked() {
-    tableView.getItems().clear();
-    var isLowerBoundDisabled =
-        !lowerBoundCheckBox.isSelected() || lowerBoundComboBox.getSelectionModel().isEmpty();
-    var isUpperBoundDisabled =
-        !upperBoundCheckBox.isSelected() || upperBoundComboBox.getSelectionModel().isEmpty();
-    List<Administration> administrations;
-    if (isLowerBoundDisabled && isUpperBoundDisabled) {
-      administrations = AdministrationGeneration.filterByHourDifference(0, 0);
-    } else if (isLowerBoundDisabled) {
-      administrations = AdministrationGeneration.filterByHourDifference(0,
-          upperBoundComboBox.getValue());
-    } else if (isUpperBoundDisabled) {
-      administrations = AdministrationGeneration.filterByHourDifference(
-          lowerBoundComboBox.getValue(), 0);
-    } else {
-      administrations =
-          AdministrationGeneration.filterByHourDifference(lowerBoundComboBox.getValue(),
-              upperBoundComboBox.getValue());
-    }
-    tableView.getItems().addAll(administrations);
+  public void onRefreshViewClicked(MouseEvent event) throws IOException {
+    check(event);
   }
+
 }
