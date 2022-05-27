@@ -7,15 +7,15 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" minHeight="0.0" minWidth="0.0" prefHeight="600.0"
-  prefWidth="750.0" xmlns="http://javafx.com/javafx/16" fx:controller="com.bairontapia.projects.cuidamed.mvc.ElderListView"
-  fx:id="eldersListPane">
-  <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-    AnchorPane.topAnchor="0.0" prefHeight="600.0" prefWidth="750.0">
+<AnchorPane fx:id="eldersListPane" minHeight="0.0" minWidth="0.0" prefHeight="600.0"
+  prefWidth="750.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="com.bairontapia.projects.cuidamed.mvc.ElderListView">
+  <BorderPane prefHeight="600.0" prefWidth="750.0" AnchorPane.bottomAnchor="0.0"
+    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
     <bottom>
-      <HBox BorderPane.alignment="CENTER" alignment="CENTER" prefHeight="45.0" spacing="25.0">
-        <Button mnemonicParsing="false" onMouseClicked="#onViewRegistryButtonClicked"
-          text="Ver adulto mayor" fx:id="viewRegisterButton">
+      <HBox alignment="CENTER" prefHeight="45.0" spacing="25.0" BorderPane.alignment="CENTER">
+        <Button fx:id="viewRegisterButton" mnemonicParsing="false"
+          onMouseClicked="#onViewRegistryButtonClicked" text="Ver adulto mayor">
           <font>
             <Font name="System Bold" size="12.0"/>
           </font>
@@ -29,17 +29,17 @@
       </HBox>
     </bottom>
     <center>
-      <TableView BorderPane.alignment="CENTER" onMouseClicked="#onTableRegistryDoubleClicked"
-        fx:id="tableView">
+      <TableView fx:id="tableView" onMouseClicked="#onTableRegistryDoubleClicked"
+        BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn editable="false" prefWidth="100.0" text="Rut" fx:id="rutColumn"/>
-          <TableColumn editable="false" prefWidth="250.0" text="Nombre completo"
-            fx:id="fullNameColumn"/>
-          <TableColumn editable="false" prefWidth="115.0" text="Nacimiento"
-            fx:id="birthDateColumn"/>
-          <TableColumn editable="false" text="Edad" fx:id="ageColumn"/>
-          <TableColumn editable="false" text="Sexo" fx:id="genderColumn"/>
-          <TableColumn editable="false" prefWidth="115.0" text="Admisión" fx:id="admissionColumn"/>
+          <TableColumn fx:id="rutColumn" editable="false" prefWidth="100.0" text="Rut"/>
+          <TableColumn fx:id="fullNameColumn" editable="false" prefWidth="250.0"
+            text="Nombre completo"/>
+          <TableColumn fx:id="birthDateColumn" editable="false" prefWidth="115.0"
+            text="Nacimiento"/>
+          <TableColumn fx:id="ageColumn" editable="false" text="Edad"/>
+          <TableColumn fx:id="genderColumn" editable="false" text="Sexo"/>
+          <TableColumn fx:id="admissionColumn" editable="false" prefWidth="115.0" text="Admisión"/>
         </columns>
       </TableView>
     </center>
