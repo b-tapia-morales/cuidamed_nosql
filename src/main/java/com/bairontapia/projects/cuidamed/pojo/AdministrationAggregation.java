@@ -1,6 +1,7 @@
 package com.bairontapia.projects.cuidamed.pojo;
 
 import com.bairontapia.projects.cuidamed.connection.MongoClientSingleton;
+import com.google.common.collect.Lists;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -28,6 +29,9 @@ public class AdministrationAggregation {
   private static final String DIAGNOSTIC_PATH;
   private static final String PRESCRIPTION_PATH;
   private static final String ADMINISTRATION_PATH;
+  private static final List<Document> UNWOUND_DIAGNOSTICS;
+  private static final List<Document> UNWOUND_PRESCRIPTIONS;
+  private static final List<Document> UNWOUND_ADMINISTRATIONS;
   private static final List<Document> DOCUMENTS;
   private static final List<Administration> ADMINISTRATIONS;
 
@@ -44,7 +48,11 @@ public class AdministrationAggregation {
     PRESCRIPTION_PATH = String.format("$%s.%s", DIAGNOSTIC_KEY, PRESCRIPTION_KEY);
     ADMINISTRATION_PATH = String.format("$%s.%s.%s", DIAGNOSTIC_KEY, PRESCRIPTION_KEY,
         ADMINISTRATION_KEY);
-    DOCUMENTS = generateDocuments();
+    UNWOUND_DIAGNOSTICS = unwindDiagnostics();
+    UNWOUND_PRESCRIPTIONS = unwindPrescriptions();
+    UNWOUND_ADMINISTRATIONS = unwindAdministrations();
+    DOCUMENTS = new ArrayList<>();
+    COLLECTION.aggregate(UNWOUND_ADMINISTRATIONS).into(DOCUMENTS);
     ADMINISTRATIONS = generateAdministrations();
   }
 
@@ -52,18 +60,32 @@ public class AdministrationAggregation {
   }
 
   public static void update() {
+    UNWOUND_DIAGNOSTICS.clear();
+    UNWOUND_DIAGNOSTICS.addAll(unwindDiagnostics());
+    UNWOUND_PRESCRIPTIONS.clear();
+    UNWOUND_PRESCRIPTIONS.addAll(unwindPrescriptions());
+    UNWOUND_ADMINISTRATIONS.clear();
+    UNWOUND_ADMINISTRATIONS.addAll(unwindAdministrations());
     DOCUMENTS.clear();
-    DOCUMENTS.addAll(generateDocuments());
+    COLLECTION.aggregate(UNWOUND_ADMINISTRATIONS).into(DOCUMENTS);
     ADMINISTRATIONS.clear();
     ADMINISTRATIONS.addAll(generateAdministrations());
   }
 
-  public static List<Document> getDocuments() {
-    return DOCUMENTS;
+  public static List<Document> getUnwoundDocuments(final DocumentChoice choice) {
+    return (switch (choice) {
+      case DIAGNOSTICS -> UNWOUND_DIAGNOSTICS;
+      case PRESCRIPTIONS -> UNWOUND_PRESCRIPTIONS;
+      case ADMINISTRATIONS -> UNWOUND_ADMINISTRATIONS;
+    });
   }
 
-  public static List<Administration> getAdministrations() {
-    return ADMINISTRATIONS;
+  public static String getDocumentPath(final DocumentChoice choice) {
+    return (switch (choice) {
+      case DIAGNOSTICS -> DIAGNOSTIC_PATH;
+      case PRESCRIPTIONS -> PRESCRIPTION_PATH;
+      case ADMINISTRATIONS -> ADMINISTRATION_PATH;
+    });
   }
 
   public static List<Administration> filterByRut(final String rut) {
@@ -99,15 +121,6 @@ public class AdministrationAggregation {
     return Pair.of(roundedDateTime.minusHours(from), roundedDateTime.plusHours(to));
   }
 
-  private static List<Document> generateDocuments() {
-    var iterable =
-        COLLECTION.aggregate(
-            Arrays.asList(new Document(ACTION_KEY, new Document(PATH_KEY, DIAGNOSTIC_PATH)),
-                new Document(ACTION_KEY, new Document(PATH_KEY, PRESCRIPTION_PATH)),
-                new Document(ACTION_KEY, new Document(PATH_KEY, ADMINISTRATION_PATH))));
-    return iterable.into(new ArrayList<>());
-  }
-
   private static Document getFromDiagnostics(final Document document) {
     return document
         .get(DIAGNOSTIC_KEY, Document.class);
@@ -132,6 +145,21 @@ public class AdministrationAggregation {
 
   private static Document getFromMedication(final Document document) {
     return getFromPrescriptions(document).get("medication", Document.class);
+  }
+
+  private static List<Document> unwindDiagnostics() {
+    return Lists.newArrayList(new Document(ACTION_KEY, new Document(PATH_KEY, DIAGNOSTIC_PATH)));
+  }
+
+  private static List<Document> unwindPrescriptions() {
+    return Lists.newArrayList(new Document(ACTION_KEY, new Document(PATH_KEY, DIAGNOSTIC_PATH)),
+        new Document(ACTION_KEY, new Document(PATH_KEY, PRESCRIPTION_PATH)));
+  }
+
+  private static List<Document> unwindAdministrations() {
+    return Lists.newArrayList(new Document(ACTION_KEY, new Document(PATH_KEY, DIAGNOSTIC_PATH)),
+        new Document(ACTION_KEY, new Document(PATH_KEY, PRESCRIPTION_PATH)),
+        new Document(ACTION_KEY, new Document(PATH_KEY, ADMINISTRATION_PATH)));
   }
 
   private static List<Administration> generateAdministrations() {
@@ -160,4 +188,11 @@ public class AdministrationAggregation {
     }
     return list;
   }
+
+  public enum DocumentChoice {
+    DIAGNOSTICS,
+    PRESCRIPTIONS,
+    ADMINISTRATIONS
+  }
+
 }
