@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="750.0"
-  xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
+  xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
   fx:controller="com.bairontapia.projects.cuidamed.mvc.ChartView">
   <BorderPane prefHeight="600.0" prefWidth="750.0" AnchorPane.bottomAnchor="0.0"
     AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -27,19 +27,19 @@
     </top>
     <center>
       <AnchorPane fx:id="pane" BorderPane.alignment="CENTER">
-        <BarChart fx:id="barChart" animated="false" prefHeight="555.0" prefWidth="750.0"
-          visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <BarChart fx:id="barChart" animated="false" legendVisible="false" prefHeight="555.0"
+          prefWidth="750.0" visible="false" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
           <xAxis>
-            <CategoryAxis label="Nombre" side="BOTTOM"/>
+            <CategoryAxis animated="false" label="Nombre" side="BOTTOM"/>
           </xAxis>
           <yAxis>
-            <NumberAxis label="Frecuencia" side="LEFT"/>
+            <NumberAxis animated="false" label="Frecuencia" side="LEFT"/>
           </yAxis>
         </BarChart>
-        <PieChart fx:id="pieChart" animated="false" prefHeight="555.0" prefWidth="750.0"
-          visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+        <PieChart fx:id="pieChart" animated="false" labelsVisible="false" prefHeight="555.0"
+          prefWidth="750.0" visible="false" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
       </AnchorPane>
     </center>
   </BorderPane>
