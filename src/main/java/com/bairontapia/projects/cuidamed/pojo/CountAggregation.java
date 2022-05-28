@@ -26,7 +26,8 @@ public class CountAggregation {
     COLLECTION = DATABASE.getCollection("elder");
   }
 
-  public static Map<String, Long> aggregateByCount(final DocumentChoice choice, final String key) {
+  public static <T> Map<T, Long> aggregateByCount(final DocumentChoice choice, final String key,
+      Class<T> clazz) {
     var field = String.format("%s.%s", AdministrationAggregation.getDocumentPath(choice), key);
     var documents = AdministrationAggregation.getUnwoundDocuments(choice);
     var group = List.of(
@@ -34,14 +35,9 @@ public class CountAggregation {
             new Document("_id", field).append("count", new Document("$sum", 1L))),
         new Document("$sort", new Document("count", -1L)));
     var list = Stream.of(documents, group).flatMap(Collection::stream).toList();
-    return COLLECTION
-        .aggregate(list)
-        .into(new ArrayList<>())
-        .stream()
-        .collect(
-            Collectors.toMap(e -> (String) e.get("_id"), e -> (long) e.get("count"), (a, b) -> a,
-                LinkedHashMap::new))
-        ;
+    return COLLECTION.aggregate(list).into(new ArrayList<>()).stream().collect(
+        Collectors.toMap(e -> e.get("_id", clazz), e -> e.get("count", Long.class), (a, b) -> a,
+            LinkedHashMap::new));
   }
 
 }
