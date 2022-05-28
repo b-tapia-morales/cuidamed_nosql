@@ -3,19 +3,23 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" minHeight="0.0" minWidth="0.0" prefHeight="650.0"
-  prefWidth="750.0" xmlns="http://javafx.com/javafx/18"
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="650.0" prefWidth="750.0"
+  xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
   fx:controller="com.bairontapia.projects.cuidamed.mvc.MainView">
-  <TabPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-    AnchorPane.topAnchor="0.0" prefHeight="600.0" prefWidth="750.0"
-    tabClosingPolicy="UNAVAILABLE">
+  <TabPane prefHeight="600.0" prefWidth="750.0" tabClosingPolicy="UNAVAILABLE"
+    AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+    AnchorPane.topAnchor="0.0">
     <Tab text="Lista de ancianos">
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
-      <fx:include source="elder_list_view.fxml" fx:id="elder"/>
+      <fx:include fx:id="elder" source="elder_list_view.fxml"/>
     </Tab>
     <Tab text="Prescripciones">
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
-      <fx:include source="intake_list_view.fxml" fx:id="intake"/>
+      <fx:include fx:id="intake" source="intake_list_view.fxml"/>
+    </Tab>
+    <Tab text="Gráficos">
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+      <fx:include fx:id="chart" source="chart_view.fxml"/>
     </Tab>
   </TabPane>
 </AnchorPane>

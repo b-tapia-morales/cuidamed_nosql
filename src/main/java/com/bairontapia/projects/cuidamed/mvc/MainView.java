@@ -5,8 +5,10 @@ import javafx.fxml.FXML;
 public class MainView {
 
   @FXML
-  public ElderListView elderController;
+  private ElderListView elderController;
   @FXML
-  public IntakeListView intakeController;
+  private IntakeListView intakeController;
+  @FXML
+  private ChartView chartController;
 
 }
