@@ -2,6 +2,9 @@ package com.bairontapia.projects.cuidamed.mvc;
 
 import com.bairontapia.projects.cuidamed.pojo.AdministrationAggregation.DocumentChoice;
 import com.bairontapia.projects.cuidamed.pojo.CountAggregation;
+import com.bairontapia.projects.cuidamed.utils.time.TimeUtils;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +22,7 @@ import javafx.scene.layout.AnchorPane;
 public class ChartView {
 
   private static final List<String> CHOICES = List.of("Enfermedades", "Medicamentos",
-      "Ingesta diaria");
+      "Ingesta diaria", "Hora de ingesta");
 
   @FXML
   private ComboBox<String> chartComboBox;
@@ -85,6 +88,14 @@ public class ChartView {
             Integer.class);
         yield mapCount.entrySet().stream().collect(
             Collectors.toMap(String::valueOf, Entry::getValue, (a, b) -> a, LinkedHashMap::new));
+      }
+      case 3 -> {
+        var mapCount = CountAggregation.aggregateByCount(DocumentChoice.ADMINISTRATIONS,
+            "estimatedDateTime", Date.class);
+        yield mapCount.entrySet().stream().collect(
+            Collectors.toMap(
+                e -> TimeUtils.toLocalTime(e.getKey()).toString(),
+                Entry::getValue, (a, b) -> a, LinkedHashMap::new));
       }
       default -> throw new IllegalStateException("Unexpected value: " + index);
     };
