@@ -1,7 +1,7 @@
 package com.bairontapia.projects.cuidamed.mvc;
 
 import com.bairontapia.projects.cuidamed.pojo.Administration;
-import java.time.format.DateTimeFormatter;
+import com.bairontapia.projects.cuidamed.utils.time.TimeUtils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -9,11 +9,6 @@ import javafx.scene.control.TableView;
 import lombok.Getter;
 
 public class MedicationPrescriptionView {
-
-  private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(
-      "yyyy/MM/dd");
-  private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(
-      "yyyy/MM/dd HH:mm:ss");
 
   @FXML
   @Getter
@@ -35,15 +30,13 @@ public class MedicationPrescriptionView {
   private TableColumn<Administration, String> intakeStatus;
 
   public void initialize() {
-    diseaseName.setCellValueFactory(
-        e -> new SimpleStringProperty(e.getValue().diseaseName()));
+    diseaseName.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().diseaseName()));
     diagnosticDate.setCellValueFactory(
-        e -> new SimpleStringProperty(e.getValue().diagnosticDate().format(DATE_FORMATTER)));
+        e -> new SimpleStringProperty(TimeUtils.format(e.getValue().diagnosticDate())));
     medicationName.setCellValueFactory(
         e -> new SimpleStringProperty(e.getValue().medicationName()));
     intakeDateTime.setCellValueFactory(
-        e -> new SimpleStringProperty(
-            e.getValue().intakeDateTime().format(DATE_TIME_FORMATTER)));
+        e -> new SimpleStringProperty(TimeUtils.format(e.getValue().intakeDateTime())));
     intakeStatus.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().intakeStatus()));
   }
 }

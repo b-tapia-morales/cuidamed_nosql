@@ -1,6 +1,7 @@
 package com.bairontapia.projects.cuidamed.pojo;
 
 import com.bairontapia.projects.cuidamed.connection.MongoClientSingleton;
+import com.bairontapia.projects.cuidamed.utils.time.TimeUtils;
 import com.google.common.collect.Lists;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
@@ -8,12 +9,9 @@ import com.mongodb.client.MongoDatabase;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.tuple.Pair;
 import org.bson.Document;
 
 public class AdministrationAggregation {
@@ -60,12 +58,6 @@ public class AdministrationAggregation {
   }
 
   public static void update() {
-    UNWOUND_DIAGNOSTICS.clear();
-    UNWOUND_DIAGNOSTICS.addAll(unwindDiagnostics());
-    UNWOUND_PRESCRIPTIONS.clear();
-    UNWOUND_PRESCRIPTIONS.addAll(unwindPrescriptions());
-    UNWOUND_ADMINISTRATIONS.clear();
-    UNWOUND_ADMINISTRATIONS.addAll(unwindAdministrations());
     DOCUMENTS.clear();
     COLLECTION.aggregate(UNWOUND_ADMINISTRATIONS).into(DOCUMENTS);
     ADMINISTRATIONS.clear();
@@ -94,7 +86,7 @@ public class AdministrationAggregation {
 
   public static List<Administration> filterByHourDifference(final LocalDateTime dateTime,
       final int from, final int to) {
-    var pair = createInterval(dateTime, from, to);
+    var pair = TimeUtils.createInterval(dateTime, from, to);
     var list = new ArrayList<Administration>();
     for (var administration : ADMINISTRATIONS) {
       var intake = administration.intakeDateTime();
@@ -104,21 +96,6 @@ public class AdministrationAggregation {
       }
     }
     return list;
-  }
-
-  private static Pair<LocalDateTime, LocalDateTime> createInterval(final LocalDateTime dateTime,
-      final int from, final int to) {
-    var roundedDateTime = dateTime.truncatedTo(ChronoUnit.SECONDS);
-    if (from == 0 && to == 0) {
-      return Pair.of(roundedDateTime.minusHours(12), roundedDateTime.plusHours(12));
-    }
-    if (from == 0) {
-      return Pair.of(roundedDateTime, roundedDateTime.plusHours(to));
-    }
-    if (to == 0) {
-      return Pair.of(roundedDateTime.minusHours(from), roundedDateTime);
-    }
-    return Pair.of(roundedDateTime.minusHours(from), roundedDateTime.plusHours(to));
   }
 
   private static Document getFromDiagnostics(final Document document) {

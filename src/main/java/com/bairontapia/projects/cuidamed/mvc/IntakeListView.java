@@ -2,12 +2,12 @@ package com.bairontapia.projects.cuidamed.mvc;
 
 import com.bairontapia.projects.cuidamed.pojo.Administration;
 import com.bairontapia.projects.cuidamed.pojo.AdministrationAggregation;
+import com.bairontapia.projects.cuidamed.utils.time.TimeUtils;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Comparator;
 import java.util.List;
@@ -28,17 +28,7 @@ import org.apache.commons.lang3.StringUtils;
 
 public class IntakeListView implements ErrorChecking {
 
-  private static final ZoneId LOCAL_ZONE;
-  private static final DateTimeFormatter DATE_FORMATTER;
-  private static final DateTimeFormatter DATE_TIME_FORMATTER;
-  private static final DateTimeFormatter TIME_FORMATTER;
-
-  static {
-    LOCAL_ZONE = ZoneId.of("Chile/Continental");
-    DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-    TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
-    DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-  }
+  private static final ZoneId LOCAL_ZONE = ZoneId.of("Chile/Continental");
 
   @Getter
   private final StringBuilder messageBuilder = new StringBuilder();
@@ -79,17 +69,17 @@ public class IntakeListView implements ErrorChecking {
   public void initialize() {
     var hours = List.of(1, 2, 3, 4, 6, 8, 12, 24);
     datePicker.setValue(LocalDate.now(LOCAL_ZONE));
-    timeField.setText(LocalTime.now(LOCAL_ZONE).format(TIME_FORMATTER));
+    timeField.setText(TimeUtils.format(LocalTime.now(LOCAL_ZONE)));
     lowerBoundComboBox.getItems().addAll(hours);
     upperBoundComboBox.getItems().addAll(hours);
     fullNameColumn.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().fullName()));
     diseaseColumn.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().diseaseName()));
     diagnosticDateColumn.setCellValueFactory(
-        e -> new SimpleStringProperty(e.getValue().diagnosticDate().format(DATE_FORMATTER)));
+        e -> new SimpleStringProperty(TimeUtils.format(e.getValue().diagnosticDate())));
     medicationColumn.setCellValueFactory(
         e -> new SimpleStringProperty(e.getValue().medicationName()));
     intakeDateTimeColumn.setCellValueFactory(
-        e -> new SimpleStringProperty(e.getValue().intakeDateTime().format(DATE_TIME_FORMATTER)));
+        e -> new SimpleStringProperty(TimeUtils.format(e.getValue().intakeDateTime())));
     intakeStatusColumn.setCellValueFactory(
         e -> new SimpleStringProperty(e.getValue().intakeStatus()));
   }
