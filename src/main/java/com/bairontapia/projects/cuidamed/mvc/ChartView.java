@@ -3,7 +3,6 @@ package com.bairontapia.projects.cuidamed.mvc;
 import com.bairontapia.projects.cuidamed.pojo.AdministrationAggregation.DocumentChoice;
 import com.bairontapia.projects.cuidamed.pojo.CountAggregation;
 import com.bairontapia.projects.cuidamed.utils.time.TimeUtils;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -17,7 +16,6 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.AnchorPane;
 
 public class ChartView {
 
@@ -26,8 +24,6 @@ public class ChartView {
 
   @FXML
   private ComboBox<String> chartComboBox;
-  @FXML
-  private AnchorPane pane;
   @FXML
   private BarChart<String, Long> barChart;
   @FXML
